@@ -6,6 +6,9 @@ class PayMongoService {
         this.baseURL = 'https://api.paymongo.com/v1';
         this.secretKey = process.env.PAYMONGO_SECRET_KEY;
 
+        // Debug: Check if secret key is loaded (masked for security)
+        console.log('PayMongo Secret Key loaded:', this.secretKey ? '✅ Yes (starts with ' + this.secretKey.substring(0, 8) + '...)' : '❌ No');
+
         this.client = axios.create({
             baseURL: this.baseURL,
             headers: {
@@ -17,7 +20,6 @@ class PayMongoService {
 
     // Helper function to format currency for PayMongo
     formatCurrency(currency) {
-        // PayMongo expects uppercase currency codes (PHP, USD, etc.)
         return currency.toUpperCase();
     }
 
@@ -26,49 +28,36 @@ class PayMongoService {
         try {
             const formattedCurrency = this.formatCurrency(currency);
 
-            const response = await this.client.post('/payment_intents', {
+            console.log('1. Creating payment intent with:', {
+                amount: amount * 100,
+                currency: formattedCurrency,
+                description,
+                metadataKeys: Object.keys(metadata)
+            });
+
+            // Step 1: Create payment intent
+            const paymentIntentResponse = await this.client.post('/payment_intents', {
                 data: {
                     attributes: {
-                        amount: amount * 100, // Convert to cents/centavos
-                        currency: formattedCurrency, // Use formatted currency
+                        amount: amount * 100,
+                        currency: formattedCurrency,
                         description,
                         statement_descriptor: 'Nexistry Academy',
                         payment_method_allowed: paymentMethodAllowed || ['gcash', 'card'],
-                        metadata: {
-                            ...metadata,
-                            source: 'nexistry_academy'
-                        }
+                        metadata
                     }
                 }
             });
 
-            // Create checkout URL for the payment intent
-            const checkoutResponse = await this.createCheckoutSession(response.data.data.id, {
-                amount,
-                currency: formattedCurrency, // Pass formatted currency
-                description,
-                metadata
-            });
+            console.log('2. Payment intent created successfully');
 
-            return {
-                ...response.data.data,
-                attributes: {
-                    ...response.data.data.attributes,
-                    checkout_url: checkoutResponse.data.data.attributes.checkout_url
-                }
-            };
+            const paymentIntent = paymentIntentResponse.data.data;
+            console.log('   Payment Intent ID:', paymentIntent.id);
 
-        } catch (error) {
-            console.error('PayMongo create payment intent error:', error.response?.data || error.message);
-            throw new Error(error.response?.data?.errors?.[0]?.detail || 'Failed to create payment intent');
-        }
-    }
+            // Step 2: Create checkout session
+            console.log('3. Creating checkout session...');
 
-    // Create a checkout session
-    async createCheckoutSession(paymentIntentId, { amount, currency, description, metadata }) {
-        try {
-            // Currency should already be formatted when passed from createPaymentIntent
-            const response = await this.client.post('/checkout_sessions', {
+            const checkoutResponse = await this.client.post('/checkout_sessions', {
                 data: {
                     attributes: {
                         send_email_receipt: true,
@@ -77,7 +66,7 @@ class PayMongoService {
                         line_items: [
                             {
                                 amount: amount * 100,
-                                currency: currency, // Use the pre-formatted currency
+                                currency: formattedCurrency,
                                 description,
                                 name: description,
                                 quantity: 1
@@ -86,9 +75,90 @@ class PayMongoService {
                         payment_method_types: ['gcash', 'card', 'paymaya'],
                         description,
                         metadata,
-                        success_url: `${process.env.FRONTEND_SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
-                        failure_url: process.env.FRONTEND_FAILURE_URL,
-                        cancel_url: process.env.FRONTEND_CANCEL_URL
+                        success_url: process.env.FRONTEND_SUCCESS_URL || 'https://nxacademy.nexistrydigitalsolutions.com/success?session_id={CHECKOUT_SESSION_ID}',
+                        failure_url: process.env.FRONTEND_FAILURE_URL || 'https://nxacademy.nexistrydigitalsolutions.com/failed',
+                        cancel_url: process.env.FRONTEND_CANCEL_URL || 'https://nxacademy.nexistrydigitalsolutions.com/cancelled'
+                    }
+                }
+            });
+
+            console.log('4. Checkout session created successfully');
+
+            const checkoutSession = checkoutResponse.data.data;
+            console.log('   Checkout Session ID:', checkoutSession.id);
+            console.log('   Checkout URL:', checkoutSession.attributes.checkout_url);
+
+            // Step 3: Return combined data
+            return {
+                id: paymentIntent.id,
+                type: paymentIntent.type,
+                attributes: {
+                    ...paymentIntent.attributes,
+                    checkout_url: checkoutSession.attributes.checkout_url,
+                    checkout_session_id: checkoutSession.id
+                }
+            };
+
+        } catch (error) {
+            // Enhanced error logging
+            console.error('❌ PayMongo API Error:');
+
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.error('   Status:', error.response.status);
+                console.error('   Headers:', error.response.headers);
+                console.error('   Data:', JSON.stringify(error.response.data, null, 2));
+
+                // Extract the specific error message from PayMongo
+                const payMongoError = error.response.data?.errors?.[0];
+                if (payMongoError) {
+                    console.error('   PayMongo Error Code:', payMongoError.code);
+                    console.error('   PayMongo Error Detail:', payMongoError.detail);
+                    throw new Error(`${payMongoError.code}: ${payMongoError.detail}`);
+                }
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('   No response received from PayMongo');
+                console.error('   Request:', error.request);
+                throw new Error('No response from PayMongo API. Check your network connection.');
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error('   Error setting up request:', error.message);
+                throw new Error(`Request setup error: ${error.message}`);
+            }
+
+            throw new Error('Failed to create payment intent');
+        }
+    }
+
+    // Create a checkout session (kept for backward compatibility)
+    async createCheckoutSession(paymentIntentId, { amount, currency, description, metadata }) {
+        try {
+            const formattedCurrency = this.formatCurrency(currency);
+
+            const response = await this.client.post('/checkout_sessions', {
+                data: {
+                    attributes: {
+                        payment_intent_id: paymentIntentId,
+                        send_email_receipt: true,
+                        show_description: true,
+                        show_line_items: true,
+                        line_items: [
+                            {
+                                amount: amount * 100,
+                                currency: formattedCurrency,
+                                description,
+                                name: description,
+                                quantity: 1
+                            }
+                        ],
+                        payment_method_types: ['gcash', 'card', 'paymaya'],
+                        description,
+                        metadata,
+                        success_url: process.env.FRONTEND_SUCCESS_URL || 'https://nxacademy.nexistrydigitalsolutions.com/success?session_id={CHECKOUT_SESSION_ID}',
+                        failure_url: process.env.FRONTEND_FAILURE_URL || 'https://nxacademy.nexistrydigitalsolutions.com/failed',
+                        cancel_url: process.env.FRONTEND_CANCEL_URL || 'https://nxacademy.nexistrydigitalsolutions.com/cancelled'
                     }
                 }
             });
@@ -114,11 +184,10 @@ class PayMongoService {
     // Attach payment method to intent (for card payments)
     async attachPaymentMethod(paymentIntentId, paymentMethodId) {
         try {
-            const response = await this.client.post('/payment_intents/attach', {
+            const response = await this.client.post(`/payment_intents/${paymentIntentId}/attach`, {
                 data: {
                     attributes: {
-                        payment_intent_id: paymentIntentId,
-                        payment_method_id: paymentMethodId
+                        payment_method: paymentMethodId
                     }
                 }
             });

@@ -15,14 +15,22 @@ class PayMongoService {
         });
     }
 
+    // Helper function to format currency for PayMongo
+    formatCurrency(currency) {
+        // PayMongo expects uppercase currency codes (PHP, USD, etc.)
+        return currency.toUpperCase();
+    }
+
     // Create a payment intent
     async createPaymentIntent({ amount, currency, description, paymentMethodAllowed, metadata }) {
         try {
+            const formattedCurrency = this.formatCurrency(currency);
+
             const response = await this.client.post('/payment_intents', {
                 data: {
                     attributes: {
                         amount: amount * 100, // Convert to cents/centavos
-                        currency: currency,
+                        currency: formattedCurrency, // Use formatted currency
                         description,
                         statement_descriptor: 'Nexistry Academy',
                         payment_method_allowed: paymentMethodAllowed || ['gcash', 'card'],
@@ -37,7 +45,7 @@ class PayMongoService {
             // Create checkout URL for the payment intent
             const checkoutResponse = await this.createCheckoutSession(response.data.data.id, {
                 amount,
-                currency,
+                currency: formattedCurrency, // Pass formatted currency
                 description,
                 metadata
             });
@@ -59,6 +67,7 @@ class PayMongoService {
     // Create a checkout session
     async createCheckoutSession(paymentIntentId, { amount, currency, description, metadata }) {
         try {
+            // Currency should already be formatted when passed from createPaymentIntent
             const response = await this.client.post('/checkout_sessions', {
                 data: {
                     attributes: {
@@ -68,7 +77,7 @@ class PayMongoService {
                         line_items: [
                             {
                                 amount: amount * 100,
-                                currency: currency.toLowerCase(),
+                                currency: currency, // Use the pre-formatted currency
                                 description,
                                 name: description,
                                 quantity: 1

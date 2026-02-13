@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You! - Nexistry Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1976D2;
+            --primary-gold: #F4B840;
+            --dark-blue: #0D47A1;
+            --light-blue: #E3F2FD;
+            --dark: #1A1A1A;
+            --gray: #4A4A4A;
+            --light-gray: #F5F5F5;
+            --white: #FFFFFF;
+            --success-green: #2E7D32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            line-height: 1.7;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 80px;
+            width: auto;
+        }
+
+        /* Main Content */
+        .thank-you-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 60px 0;
+        }
+
+        .thank-you-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thank-you-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-gold));
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--success-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            color: var(--white);
+            font-size: 48px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .thank-you-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--dark-blue);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .thank-you-subtitle {
+            font-size: 20px;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .waiting-message {
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.1) 0%, rgba(244, 184, 64, 0.1) 100%);
+            padding: 32px;
+            border-radius: 16px;
+            margin: 40px 0;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .waiting-message h3 {
+            color: var(--dark-blue);
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+
+        .waiting-message p {
+            color: var(--gray);
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .email-tip {
+            background: #FFF3E0;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary-gold);
+            text-align: center;
+        }
+
+        .email-tip strong {
+            color: var(--dark);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .next-steps {
+            text-align: left;
+            margin: 40px 0;
+            background: var(--light-gray);
+            padding: 32px;
+            border-radius: 16px;
+        }
+
+        .next-steps h3 {
+            color: var(--dark-blue);
+            margin-bottom: 24px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .step-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content strong {
+            color: var(--dark-blue);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .support-section {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid var(--light-gray);
+        }
+
+        .support-section h4 {
+            color: var(--dark-blue);
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .support-options {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .support-button {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .support-button:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.2);
+        }
+
+        .support-button.secondary {
+            background: transparent;
+            border-color: var(--primary-blue);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            background: var(--primary-gold);
+            color: var(--dark);
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .action-button:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(25, 118, 210, 0.3);
+        }
+
+        .action-button.secondary {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            padding: 40px 0;
+            color: var(--white);
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .footer-bottom {
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .header {
+                padding: 16px 0;
+            }
+
+            .logo-img {
+                height: 60px;
+            }
+
+            .thank-you-section {
+                padding: 40px 0;
+            }
+
+            .thank-you-card {
+                padding: 32px 24px;
+            }
+
+            .thank-you-title {
+                font-size: 36px;
+            }
+
+            .thank-you-subtitle {
+                font-size: 18px;
+            }
+
+            .success-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 36px;
+            }
+
+            .step-item {
+                padding: 16px;
+            }
+
+            .support-options {
+                flex-direction: column;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-button {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .thank-you-title {
+                font-size: 28px;
+            }
+
+            .thank-you-subtitle {
+                font-size: 16px;
+            }
+
+            .waiting-message,
+            .next-steps {
+                padding: 20px;
+            }
+
+            .action-button {
+                padding: 14px 24px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="https://storage.googleapis.com/msgsndr/nb61f4OQ7o9Wsxx0zOsY/media/6989c2997305aa171dedd354.png"
+                    alt="Nexistry Academy Logo" class="logo-img">
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="thank-you-section">
+            <div class="thank-you-card">
+                <div class="success-icon">✓</div>
+
+                <h1 class="thank-you-title">Thank You!</h1>
+
+                <p class="thank-you-subtitle">
+                    Your payment has been successfully processed. We're preparing your access.
+                </p>
+
+                <div class="waiting-message">
+                    <h3>Wait for the Email</h3>
+                    <p><strong>Please check your email inbox for the next steps.</strong></p>
+                    <p>We will send you all the necessary information and access details within 24 hours.</p>
+                    <p>Make sure to also check your spam or promotions folder.</p>
+                </div>
+
+                <div class="email-tip">
+                    <strong>Important:</strong>
+                    <p>Add <em>assist@nexistrydigitalsolutions.com</em> to your contacts to ensure our emails reach you.
+                    </p>
+                </div>
+
+                <div class="next-steps">
+                    <h3>What to Expect Next:</h3>
+
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Email Confirmation</strong>
+                            <p>You'll receive a welcome email with your access details and instructions.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Account Setup</strong>
+                            <p>Our team will prepare your account and send you login information.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Access Delivery</strong>
+                            <p>You'll get access to all the materials, tools, and resources included in your purchase.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <strong>Begin Your Journey</strong>
+                            <p>Start learning, practicing, and working toward your goals immediately after receiving
+                                access.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="support-section">
+                    <h4>Need Help?</h4>
+                    <p>If you don't receive an email within 24 hours or have any questions:</p>
+
+                    <div class="support-options">
+                        <a href="mailto:info@nexistryacademy.com" class="support-button">
+                            Email Support
+                        </a>
+                        <a href="https://m.me/nexistryacademy" class="support-button secondary">
+                            Message Us
+                        </a>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="/" class="action-button">
+                        Return to Home
+                    </a>
+                    <a href="/courses" class="action-button secondary">
+                        View Other Courses
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <img src="https://storage.googleapis.com/msgsndr/nb61f4OQ7o9Wsxx0zOsY/media/6989c2997305aa171dedd354.png"
+                alt="Nexistry Academy Logo" class="footer-logo">
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexistry Academy. All rights reserved.</p>
+                <p>Empowering Filipino Virtual Assistants to succeed in the digital world.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add animation to step items
+        document.querySelectorAll('.step-item').forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateX(0)';
+            }, index * 200);
+        });
+
+        // Initial state for step items
+        document.querySelectorAll('.step-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        // Add a reminder after 30 seconds
+        setTimeout(() => {
+            const reminder = document.createElement('div');
+            reminder.className = 'email-tip';
+            reminder.innerHTML = `
+                <strong>Reminder:</strong>
+                <p>Don't forget to check your email inbox and spam folder for our message.</p>
+            `;
+
+            document.querySelector('.support-section').insertAdjacentElement('beforebegin', reminder);
+        }, 30000); // Show reminder after 30 seconds
+    </script>
+</body>
+
+</html>

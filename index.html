@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexistry Academy - Start Your VA Journey with Real Client Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1976D2;
+            --primary-gold: #F4B840;
+            --dark-blue: #0D47A1;
+            --light-blue: #E3F2FD;
+            --dark: #1A1A1A;
+            --gray: #4A4A4A;
+            --light-gray: #F5F5F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .header {
+            background: var(--white);
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 80px;
+            width: auto;
+        }
+
+        .cta-button {
+            background: var(--primary-gold);
+            color: var(--dark);
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(25, 118, 210, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(25, 118, 210, 0.4);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
+            padding: 120px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.4;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(244, 184, 64, 0.2);
+            color: var(--primary-gold);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(244, 184, 64, 0.3);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            max-width: 800px;
+        }
+
+        .hero-highlight {
+            color: var(--primary-gold);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            opacity: 0.95;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .cta-button-large {
+            background: var(--primary-gold);
+            color: var(--dark);
+            padding: 18px 48px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button-large::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(244, 184, 64, 0.4) 0%, transparent 70%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s ease;
+        }
+
+        .cta-button-large:hover::after {
+            transform: translate(-50%, -50%) scale(2);
+        }
+
+        .cta-button-large:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(244, 184, 64, 0.5);
+        }
+
+        .cta-button-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 18px 48px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-button-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .problem-section {
+            background: var(--light-gray);
+        }
+
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .problem-card {
+            background: var(--white);
+            padding: 40px 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-gold));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .problem-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .problem-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .problem-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-blue);
+        }
+
+        .problem-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .solution-section {
+            background: var(--white);
+            position: relative;
+        }
+
+        .solution-section.full-width .container {
+            max-width: 100%;
+            padding-left: 64px;
+            padding-right: 64px;
+        }
+
+        .solution-section .features-grid {
+            width: 100%;
+        }
+
+        .solution-highlight {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            padding: 60px;
+            border-radius: 16px;
+            color: var(--white);
+            margin-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(244, 184, 64, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .solution-highlight h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .solution-highlight p {
+            font-size: 18px;
+            line-height: 1.7;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .feature-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(180deg, var(--primary-blue), var(--primary-gold));
+            transition: height 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateX(12px);
+            box-shadow: -8px 8px 24px rgba(25, 118, 210, 0.1);
+        }
+
+        .feature-card:hover .feature-number {
+            transform: scale(1.2) rotate(360deg);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .feature-number {
+            display: inline-block;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .inclusions-section {
+            background: var(--light-gray);
+        }
+
+        .inclusions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .inclusion-item {
+            background: var(--white);
+            padding: 32px 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .inclusion-item:hover {
+            box-shadow: 0 12px 32px rgba(25, 118, 210, 0.15);
+            transform: translateY(-8px) scale(1.03);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(227, 242, 253, 0.3) 100%);
+        }
+
+        .inclusion-item:hover .inclusion-check {
+            transform: scale(1.2) rotate(360deg);
+            box-shadow: 0 4px 16px rgba(244, 184, 64, 0.4);
+        }
+
+        .inclusion-check {
+            width: 24px;
+            height: 24px;
+            background: var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .inclusion-item h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .inclusion-item p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .pricing-section {
+            background: var(--white);
+        }
+
+        .pricing-content {
+            flex-grow: 1;
+        }
+
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border: 2px solid #E0E0E0;
+            border-radius: 16px;
+            padding: 48px 40px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-cta {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+        }
+
+        .pricing-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-btn {
+            margin-top: 16px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(25, 118, 210, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .pricing-card:hover::before {
+            left: 100%;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 20px 60px rgba(25, 118, 210, 0.25);
+            transform: translateY(-12px) scale(1.02);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-blue);
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.02) 0%, rgba(244, 184, 64, 0.02) 100%);
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.12);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            right: 32px;
+            background: var(--primary-gold);
+            color: var(--dark);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .pricing-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .pricing-card .price {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .price-note {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .pricing-features {
+            margin: 32px 0;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #F0F0F0;
+            color: var(--dark);
+            font-size: 15px;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .faq-section {
+            background: var(--light-gray);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.12);
+            border-color: var(--primary-blue);
+            transform: translateX(8px);
+        }
+
+        .faq-question {
+            padding: 28px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-blue);
+        }
+
+        .faq-answer {
+            padding: 0 32px 28px;
+            color: var(--gray);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .final-cta {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
+            padding: 100px 0;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .final-cta h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer {
+            background: var(--dark);
+            padding: 60px 0 32px;
+            color: var(--white);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            height: 60px;
+        }
+
+        .powered-by {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .powered-logo {
+            height: 32px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+
+            /* Base mobile adjustments */
+            .container {
+                padding: 0 16px;
+            }
+
+            .header {
+                padding: 16px 0;
+            }
+
+            .logo-img {
+                height: 60px;
+            }
+
+            .cta-button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            /* Hero section fixes */
+            .hero {
+                padding: 80px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+                line-height: 1.3;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 16px;
+            }
+
+            .hero-cta-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .cta-button-large,
+            .cta-button-secondary {
+                width: 100%;
+                text-align: center;
+                padding: 16px 24px;
+                font-size: 16px;
+            }
+
+            /* Section adjustments */
+            .section {
+                padding: 60px 0;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .section-subtitle {
+                font-size: 16px;
+                margin-bottom: 40px;
+            }
+
+            /* Problem cards */
+            .problem-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-top: 40px;
+            }
+
+            .problem-card {
+                padding: 30px 20px;
+            }
+
+            .problem-icon {
+                font-size: 40px;
+            }
+
+            /* Solution section */
+            .solution-section .container {
+                max-width: 100% !important;
+                padding: 0 16px;
+            }
+
+            .solution-highlight {
+                padding: 30px 20px !important;
+                margin-bottom: 40px;
+                max-width: 100% !important;
+                width: 100%;
+            }
+
+            .solution-highlight h2 {
+                font-size: 28px;
+            }
+
+            .solution-highlight p {
+                font-size: 16px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-top: 40px;
+            }
+
+            .feature-card {
+                padding: 24px 20px;
+            }
+
+            /* Inclusions section */
+            .inclusions-section .container {
+                max-width: 100% !important;
+                padding: 0 16px;
+            }
+
+            .inclusions-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-top: 40px;
+            }
+
+            .inclusion-item {
+                padding: 24px 16px;
+            }
+
+            /* Pricing section */
+            .pricing-cards {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                margin-top: 40px;
+            }
+
+            .pricing-card {
+                padding: 30px 20px;
+            }
+
+            .pricing-card .price {
+                font-size: 36px;
+            }
+
+            .pricing-badge {
+                right: 20px;
+                font-size: 10px;
+                padding: 4px 12px;
+            }
+
+            /* FAQ section */
+            .faq-container {
+                margin-top: 40px;
+            }
+
+            .faq-question {
+                padding: 20px 16px;
+                font-size: 16px;
+            }
+
+            .faq-answer {
+                padding: 0 16px 20px;
+                font-size: 14px;
+            }
+
+            /* Final CTA */
+            .final-cta {
+                padding: 60px 0;
+            }
+
+            .final-cta h2 {
+                font-size: 32px;
+            }
+
+            .final-cta p {
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+
+            /* Footer */
+            .footer {
+                padding: 40px 0 24px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .footer-logo {
+                height: 50px;
+            }
+
+            .powered-by {
+                justify-content: center;
+            }
+        }
+
+        /* Additional fixes for very small screens */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .final-cta h2 {
+                font-size: 28px;
+            }
+
+            .pricing-features li {
+                font-size: 14px;
+                padding: 10px 0;
+            }
+        }
+
+        /* Fix for tablet screens */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 0 32px;
+            }
+
+            .features-grid,
+            .problem-cards,
+            .inclusions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="https://storage.googleapis.com/msgsndr/nb61f4OQ7o9Wsxx0zOsY/media/6989c2997305aa171dedd354.png"
+                    alt="Nexistry Academy Logo" class="logo-img">
+                <a href="#pricing" class="cta-button">Simulan ang Journey Mo</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">Para sa Aspiring Virtual Assistants</span>
+                <h1>
+                    START UP VA? <br>
+                    <span class="hero-highlight">No Experience, No Problem!</span>
+                </h1>
+                <p>
+                    Hindi lang theory ang matututunan mo dito. Makakakuha ka ng <strong>40 hours of REAL client
+                        experience</strong> habang nag-aaral. Kaya pagka-graduate mo, ready ka na para sa tunay na
+                    trabaho.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="#pricing" class="cta-button-large">Mag Enroll Na Ngayon!</a>
+                    <a href="#how-it-works" class="cta-button-secondary">Paano Ba Ito Gumagana?</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section problem-section">
+        <div class="container">
+            <h2 class="section-title">Kilala Natin Ang Mga Takot Mo</h2>
+            <p class="section-subtitle">
+                Lahat ng baguhan sa VA industry ay dumaan sa mga tanong na ito. Hindi ka nag-iisa.
+            </p>
+            <div class="problem-cards">
+                <div class="problem-card">
+                    <center class="problem-icon"><svg fill="#1055B0" height="100px" width="100px" version="1.1"
+                            id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 512 512" xml:space="preserve">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M256,0C114.84,0,0,114.842,0,256s114.84,256,256,256s256-114.842,256-256S397.16,0,256,0z M256,474.537 c-120.501,0-218.537-98.036-218.537-218.537S135.499,37.463,256,37.463S474.537,135.499,474.537,256S376.501,474.537,256,474.537z ">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M172.492,119.584c-26.843,34.333-61.415,63.106-99.979,83.206l17.316,33.223c43.273-22.554,82.064-54.836,112.178-93.355 L172.492,119.584z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M339.51,119.584l-29.515,23.074c30.113,38.519,68.904,70.8,112.177,93.355l17.316-33.223 C400.923,182.69,366.352,153.917,339.51,119.584z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M205.895,224.732c-12.87-11.263-25.538-20.781-26.071-21.181l-22.481,29.969c16.391,12.302,32.892,26.834,40.012,34.967 c-7.121,8.133-23.622,22.665-40.01,34.966l22.478,29.971c0.533-0.4,13.201-9.918,26.071-21.181 c26.124-22.86,31.373-33.69,31.373-43.756C237.268,258.421,232.02,247.592,205.895,224.732z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M314.644,268.488c7.121-8.133,23.621-22.665,40.01-34.966l-22.478-29.971c-0.533,0.4-13.201,9.918-26.071,21.181 c-26.124,22.86-31.373,33.69-31.373,43.756c0,10.066,5.249,20.896,31.373,43.756c12.87,11.263,25.538,20.781,26.071,21.181 l22.481-29.969C338.265,291.153,321.765,276.621,314.644,268.488z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M256,337.171c-17.361,0-33.521,4.95-46.734,14.315c-15.074,10.685-26.328,26.799-33.452,47.894l35.495,11.986 c8.346-24.717,22.965-36.732,44.691-36.732c21.795,0,36.804,12.276,44.61,36.488l35.656-11.497 C323.469,359.933,294.214,337.171,256,337.171z">
+                                        </path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg></center>
+                    <h3>Wala Akong Experience</h3>
+                    <p>Paano ako mag-aapply kung zero knowledge ako sa pag-VA? Wala naman akong portfolio o past clients
+                        na pwede kong i-reference.</p>
+                </div>
+                <div class="problem-card">
+                    <center class="problem-icon"><svg fill="#1055B0" version="1.1" id="Layer_1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 512 512" xml:space="preserve" width="100px" height="100px">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M256,0C114.84,0,0,114.84,0,256s114.84,256,256,256s256-114.84,256-256S397.16,0,256,0z M256,474.537 c-120.501,0-218.537-98.036-218.537-218.537S135.499,37.463,256,37.463S474.537,135.499,474.537,256S376.501,474.537,256,474.537z ">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <rect x="168.585" y="362.146" width="174.829" height="37.463"></rect>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M210.16,251.733c-0.211,0.106-21.58,10.511-41.574,10.511c-20.07,0-41.4-10.425-41.613-10.53l-16.715,33.529 c1.181,0.589,29.265,14.465,58.328,14.465s57.147-13.875,58.328-14.466L210.16,251.733z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M384.989,251.733c-0.21,0.106-21.58,10.511-41.574,10.511c-20.07,0-41.4-10.425-41.613-10.53l-16.715,33.529 c1.181,0.589,29.265,14.465,58.328,14.465c29.063,0,57.147-13.875,58.328-14.466L384.989,251.733z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M172.492,119.584c-26.844,34.334-61.415,63.106-99.979,83.206l17.316,33.223c43.273-22.554,82.062-54.836,112.177-93.354 L172.492,119.584z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M339.508,119.584l-29.514,23.075c30.114,38.517,68.904,70.798,112.177,93.354l17.316-33.223 C400.923,182.692,366.352,153.92,339.508,119.584z">
+                                        </path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg></center>
+                    <h3>Para Ba Talaga Sa Akin To?</h3>
+                    <p>Baka kasi hindi ko kaya. Baka sayang lang ang pera at oras. Takot ako na hindi pala ako bagay sa
+                        trabahong ito.</p>
+                </div>
+                <div class="problem-card">
+                    <center class="problem-icon"><svg fill="#1055B0" height="100px" width="100px" version="1.1"
+                            id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 512 512" xml:space="preserve">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M343.415,224.781c-29.063,0-57.147,13.874-58.328,14.466l16.754,33.507c0.21-0.105,21.58-10.51,41.574-10.51 c20.07,0,41.4,10.425,41.613,10.53l16.715-33.527C400.561,238.654,372.478,224.781,343.415,224.781z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M168.585,224.781c-29.063,0-57.147,13.874-58.328,14.466l16.754,33.507c0.21-0.105,21.58-10.51,41.574-10.51 c20.07,0,41.4,10.425,41.613,10.53l16.715-33.527C225.732,238.654,197.648,224.781,168.585,224.781z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M256,325.162c-17.361,0-33.521,4.95-46.734,14.316c-15.074,10.685-26.328,26.799-33.452,47.894l35.495,11.986 c8.346-24.717,22.965-36.732,44.69-36.733c21.796,0,36.805,12.276,44.611,36.488l35.656-11.497 C323.469,347.927,294.214,325.162,256,325.162z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M82.687,107.661l-26.492-26.49l-26.49,26.49c-14.629,14.629-14.631,38.351,0.001,52.981 c14.629,14.631,38.351,14.631,52.981,0.001C97.316,146.012,97.317,122.292,82.687,107.661z">
+                                        </path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M256,0C192.533,0,134.396,23.225,89.615,61.61l19.562,19.561c2.364,2.364,4.514,4.858,6.496,7.442 C153.665,56.71,202.623,37.463,256,37.463c120.501,0,218.537,98.035,218.537,218.537S376.501,474.537,256,474.537 S37.463,376.501,37.463,256c0-16.531,1.856-32.637,5.351-48.127c-12.74-2.285-24.613-7.82-34.625-16.205 C2.848,212.232,0,233.789,0,256c0,141.158,114.84,256,256,256s256-114.842,256-256S397.16,0,256,0z">
+                                        </path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg></center>
+                    <h3>Hindi Ko Alam Paano Magsimula</h3>
+                    <p>Sobrang daming courses online pero puro theory lang. Wala akong idea kung saan ako mag-aapply o
+                        paano makakuha ng first client ko.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section solution-section" id="how-it-works">
+        <div class="container" style="max-width: 80%;">
+            <div class="solution-highlight" style="max-width: 80%; margin: 0 auto 80px auto;">
+                <h2>Ito Ang Solusyon: Real Experience + Proper Preparation</h2>
+                <p>
+                    Ang Nexistry Academy ay hindi lang ordinary VA course. Kami ay nag-aalok ng client-ready preparation
+                    program with video tutorials na pwede mong i-replay anytime, plus actual working experience sa real
+                    company. Study at your own pace, walang pressure ng live classes. Pagka-tapos mo ng program, may
+                    portfolio ka na, may experience ka na, at confident ka na para mag-apply sa clients.
+                </p>
+            </div>
+
+            <h2 class="section-title">Paano Gumagana Ang Aming Program?</h2>
+            <p class="section-subtitle">
+                Simple at straightforward. Walang mahirap na process. Lahat ay designed para sa beginners.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-number">1</span>
+                    <h3>Mag-enroll at Simulan ang Course</h3>
+                    <p>Mag-enroll ka sa preparation program namin. Matutulungan ka naming mag-prepare ng portfolio,
+                        mag-optimize ng profiles, at lahat ng kailangan mo para maging ready sa paghahanap ng clients.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-number">2</span>
+                    <h3>40 Hours Real OJT Experience</h3>
+                    <p>Ito ang game-changer. Mag-OJT ka sa Nexistry Digital Solutions at mag-handle ng REAL tasks para
+                        sa REAL clients. Bibigyan ka namin ng free tracker at project management tool para mamonitor mo
+                        ang progress mo. Hindi simulation, tunay na trabaho.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-number">3</span>
+                    <h3>Mock Interview with Actual Client</h3>
+                    <p>Makaka-experience ka ng mock interview kung saan tunay na client ang mag-interview sa iyo.
+                        Matututo ka kung paano sagutin ang mga tanong nila at makakakuha ka ng feedback.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-number">4</span>
+                    <h3>Get Your Certificate at Support</h3>
+                    <p>Makakakuha ka ng certificate of completion, 1-on-1 session kung may questions ka, at access sa
+                        exclusive community at job board para makahanap ng clients.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section inclusions-section">
+        <div class="container" style="max-width: 85%;">
+            <h2 class="section-title">Ano Ang Kasama Sa Course?</h2>
+            <p class="section-subtitle">
+                Hindi lang video lessons. Preparation program, real OJT, tools, at support system na tutulong sa journey
+                mo as a VA.
+            </p>
+
+            <div class="inclusions-grid">
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>Client-Ready Preparation</h4>
+                    <p>Portfolio building, profile optimization, at lahat ng preparation na kailangan mo para handa kang
+                        mag-apply sa clients</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>Video Tutorials - Self-Paced</h4>
+                    <p>Lifetime access sa video tutorials na pwede mo i-replay anytime. Study at your own pace, walang
+                        pressure ng live classes</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>40 Hours OJT</h4>
+                    <p>Real client experience sa Nexistry Digital Solutions</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>Mock Interview</h4>
+                    <p>Practice interview with actual client feedback at grading</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>Free Time Tracker</h4>
+                    <p>Professional tracker para ma-monitor ang 40 hours mo</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>Project Management Tool</h4>
+                    <p>Sariling tool para ma-organize ang tasks mo</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>Certificate of Completion</h4>
+                    <p>Official certificate pagka-tapos mo ng buong program</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>1-on-1 Session (30 mins)</h4>
+                    <p>Private session para sa additional questions o clarifications</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>Exclusive Community</h4>
+                    <p>Join ng private community para sa support at networking</p>
+                </div>
+                <div class="inclusion-item">
+                    <div class="inclusion-check">✓</div>
+                    <h4>Exclusive Job Board</h4>
+                    <p>Direct access sa beginner-friendly jobs from our clients. Kami na ang mag-post ng opportunities
+                        na perfect para sa baguhan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section pricing-section" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Investment Para Sa Future Mo</h2>
+            <p class="section-subtitle">
+                Competitive pricing with real value. Mas mura pa ito kaysa sa 1 week na sahod mo sa traditional job.
+            </p>
+
+            <div class="pricing-cards">
+
+                <!-- START UP VA COURSE -->
+                <div class="pricing-card featured">
+                    <span class="pricing-badge">Main Course</span>
+
+                    <div class="pricing-content">
+                        <h3>START UP VA Course</h3>
+                        <div class="price">₱1,500</div>
+                        <div class="price-note">One-time payment - LIFETIME ACCESS</div>
+
+                        <ul class="pricing-features">
+                            <li>Client-Ready Preparation Program</li>
+                            <li>Video Tutorials (Self-Paced, Lifetime Access)</li>
+                            <li>40 Hours Real OJT Experience</li>
+                            <li>Free Tracker at PM Tool During OJT</li>
+                            <li>Mock Interview with Client</li>
+                            <li>Certificate of Completion</li>
+                            <li>1-on-1 Session (30 mins)</li>
+                            <li>Exclusive Community Access</li>
+                            <li>Beginner-Friendly Job Board</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://nxacademy.nexistrydigitalsolutions.com/start-up-va-course"
+                        class="cta-button pricing-cta">Enroll Now</a>
+                </div>
+
+                <!-- GHL PRACTICE ACCESS -->
+                <div class="pricing-card">
+                    <div class="pricing-content">
+                        <h3>GHL Practice Access</h3>
+                        <div class="price">₱500</div>
+                        <div class="price-note">per month subscription</div>
+
+                        <p class="pricing-description">
+                            <strong>Sandbox Environment</strong> - Practice unlimited funnels, forms, websites, and
+                            automation
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>GoHighLevel Sandbox Access</li>
+                            <li>Unlimited Funnel Building Practice</li>
+                            <li>Form Builder Practice</li>
+                            <li>Website Builder Practice</li>
+                            <li>Automation Workflow Practice</li>
+                            <li>Community Support</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://nxacademy.nexistrydigitalsolutions.com/ghl-practice-access"
+                        class="cta-button pricing-cta">Add to Cart</a>
+                </div>
+
+                <!-- FREELANCER PLAN -->
+                <div class="pricing-card">
+                    <div class="pricing-content">
+                        <h3>Freelancer Plan</h3>
+                        <div class="price">₱3,500</div>
+                        <div class="price-note">per month subscription</div>
+
+                        <p class="pricing-description">
+                            <strong>Powered by GoHighLevel</strong> - Own your CRM! Perfect para sa mga gustong matuto
+                            ng
+                            GHL
+                            at mag-practice, o magsimula ng sariling business.
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>Up to 5 User Accounts</li>
+                            <li>Save up to 500 Contacts</li>
+                            <li>Send 250 Emails per Day</li>
+                            <li>Conversations & Calendars</li>
+                            <li>Contacts & Opportunities</li>
+                            <li>Marketing & Automation</li>
+                            <li>Memberships & Media Storage</li>
+                            <li>Reputation & Reporting</li>
+                            <li>1 Hour Dedicated Support per Month</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://nxacademy.nexistrydigitalsolutions.com/freelancer-plan"
+                        class="cta-button pricing-cta">Add to Cart</a>
+                </div>
+
+                <!-- CUSTOMIZATION PLAN -->
+                <div class="pricing-card">
+                    <div class="pricing-content">
+                        <h3>Customization Plan</h3>
+                        <div class="price">₱5,000</div>
+                        <div class="price-note">per month subscription</div>
+
+                        <p class="pricing-description">
+                            <strong>Everything in Freelancer Plan PLUS:</strong>
+                            Personalized setup and advanced customization support
+                        </p>
+
+                        <p class="pricing-highlight">
+                            Contact us now para sa personalized consultation at custom package mo!
+                        </p>
+                    </div>
+
+                    <a href="https://nxacademy.nexistrydigitalsolutions.com/customization-plan"
+                        class="cta-button pricing-cta">Contact Us</a>
+                </div>
+
+                <!-- CLIENT FINDER TOOL -->
+                <div class="pricing-card">
+                    <div class="pricing-content">
+                        <h3>Client Finder Tool</h3>
+                        <div class="price">₱500</div>
+                        <div class="price-note">per month subscription</div>
+
+                        <p class="pricing-description">
+                            Advanced prospecting tool para makahanap ng potential clients
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>Client Database Access</li>
+                            <li>Advanced Search Filters</li>
+                            <li>Contact Information</li>
+                            <li>Industry Insights</li>
+                            <li>Regular Updates</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://nxacademy.nexistrydigitalsolutions.com/client-finder-tool"
+                        class="cta-button pricing-cta">Add to Cart</a>
+                </div>
+
+                <!-- DEDICATED COACHING -->
+                <div class="pricing-card">
+                    <div class="pricing-content">
+                        <h3>Dedicated Coaching</h3>
+                        <div class="price">₱999</div>
+                        <div class="price-note">per month subscription</div>
+
+                        <p class="pricing-description">
+                            Personal mentor na sasamahan ka hanggang makahanap ka ng client
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>4x Monthly Coaching Calls (30 mins each)</li>
+                            <li>Personal Accountability</li>
+                            <li>Portfolio Review at Improvement</li>
+                            <li>Application Strategy</li>
+                            <li>Interview Preparation</li>
+                            <li>Direct Messenger Support</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://nxacademy.nexistrydigitalsolutions.com/dedicated-coaching"
+                        class="cta-button pricing-cta">Add to Cart</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section faq-section">
+        <div class="container">
+            <h2 class="section-title">Mga Common Questions</h2>
+            <p class="section-subtitle">
+                Nandito ang mga sagot sa mga tanong na madalas naming naririnig.
+            </p>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Wala talaga akong experience. Pwede ba ako dito?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely! Yan ang purpose ng program namin. Designed siya specifically para sa mga walang
+                        experience. Ang OJT namin ay structured para sa beginners, kaya kahit zero knowledge ka,
+                        tutulungan ka namin step by step.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Paano yung 40 hours OJT? Online ba or need pumunta sa office?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        100% online ang OJT. You can do it from home. Makakatanggap ka ng real tasks from Nexistry
+                        Digital Solutions, and you will work on them remotely. May tracker kami para ma-monitor ang
+                        hours mo.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Guaranteed ba na makakakuha ako ng client after ng course?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Hindi kami nag-guarantee ng instant client dahil depende pa rin yan sa effort mo. Pero ang
+                        NExistry Academy ay tool para maging stepping stone mo. Bibigyan ka namin ng lahat ng skills,
+                        experience, at connections na kailangan mo. Ang rest ay nasa sayo na. Remember, ikaw lang ang
+                        makakatulong sa sarili mo through action.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        May edad ba na requirement?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Wala kaming age discrimination. Basta willing kang matuto at mag-commit sa program, welcome ka.
+                        Meron kaming students na stay-at-home moms, career shifters, fresh grads, at even retirees.
+                        Lahat ay may lugar dito.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Retired na ako pero gusto ko maging VA, pwede ba ako?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Oo naman! Actually, retirees have a big advantage dahil dala ninyo ang years of experience and
+                        professional maturity. Ang VA work ay perfect for retirees na gusto mag-work from home with
+                        flexible hours. Your life experience and work ethic ay mahahalaga sa clients. Age is just a
+                        number dito, ang importante ay willingness to learn at dedication.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Gaano katagal ang buong program?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Ikaw ang mag-control ng pace mo dahil self-paced ang program. Pwede mong i-replay ang video
+                        tutorials anytime, walang pressure ng live classes. Ang 40 hours OJT ay dapat ma-complete mo
+                        within a reasonable timeframe. Remember: The earlier mo matapos ang course, the earlier ka din
+                        makakahanap ng client. Flexible naman tayo, pwede mo gawin part-time habang may work ka pa.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Ano ang difference ng GHL Practice Access, Freelancer Plan, at Customization Plan?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Ang <strong>GHL Practice Access (₱300/month)</strong> ay sandbox environment kung saan pwede
+                        kang mag-practice ng funnels, forms, websites, at automation - perfect para sa learning. Ang
+                        <strong>Freelancer Plan (₱3,500/month)</strong> naman ay own CRM mo na powered by GoHighLevel
+                        with up to 5 users, 500 contacts, full marketing tools, at 1 hour dedicated support per month -
+                        ideal kung gusto mo ng sariling business o mag-offer ng GHL services. Para sa
+                        <strong>Customization Plan (₱5,000/month)</strong>, contact us now para sa personalized
+                        consultation at custom package based sa needs mo. All are optional add-ons.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready Ka Na Ba Simulan Ang VA Journey Mo?</h2>
+            <p>
+                Hindi ka mag-iisa. Sasamahan ka namin from training hanggang sa pag-land mo ng first client. Ang tanong
+                lang, ready ka na bang magsimula?
+            </p>
+            <a href="#pricing" class="cta-button-large">Enroll Now - ₱1,500 Lang</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <img src="https://storage.googleapis.com/msgsndr/nb61f4OQ7o9Wsxx0zOsY/media/6989c2997305aa171dedd354.png"
+                    alt="Nexistry Academy" class="footer-logo">
+                <div class="powered-by">
+                    <span>Powered by</span>
+                    <img src="https://storage.googleapis.com/msgsndr/nb61f4OQ7o9Wsxx0zOsY/media/691a885359ee1dd75f476571.png"
+                        alt="Nexistry Digital Solutions" class="powered-logo">
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexistry Academy. All rights reserved. Empowering Filipino Virtual Assistants.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

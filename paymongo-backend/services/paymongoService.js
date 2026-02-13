@@ -22,7 +22,7 @@ class PayMongoService {
                 data: {
                     attributes: {
                         amount: amount * 100, // Convert to cents/centavos
-                        currency: currency.toLowerCase(),
+                        currency: currency,
                         description,
                         statement_descriptor: 'Nexistry Academy',
                         payment_method_allowed: paymentMethodAllowed || ['gcash', 'card'],

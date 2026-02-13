@@ -58,8 +58,52 @@ exports.createPaymentIntent = async (req, res) => {
         // Generate unique payment reference
         const paymentReference = generateId('PAY');
 
-        // Prepare customer data
-        const customerData = {
+        // ✅ FIXED: Flatten metadata - NO NESTED OBJECTS
+        // PayMongo only accepts flat key-value pairs (strings/numbers/booleans)
+        const flattenedMetadata = {
+            // Required fields
+            fullName: String(fullName || ''),
+            email: String(email || ''),
+            mobile: String(mobile || ''),
+            product: String(product || ''),
+            paymentReference: String(paymentReference || ''),
+
+            // Optional fields - ensure they're strings, not undefined
+            notes: String(notes || ''),
+            businessName: String(businessName || ''),
+            setupType: String(setupType || ''),
+            timezone: String(timezone || ''),
+            experienceLevel: String(experienceLevel || ''),
+            coachingGoals: String(coachingGoals || ''),
+            targetClient: String(targetClient || ''),
+
+            // Timestamp
+            timestamp: new Date().toISOString(),
+
+            // Source
+            source: 'nexistry_academy'
+        };
+
+        // Remove any empty values that PayMongo might reject
+        Object.keys(flattenedMetadata).forEach(key => {
+            if (flattenedMetadata[key] === '' || flattenedMetadata[key] === 'undefined' || flattenedMetadata[key] === 'null') {
+                delete flattenedMetadata[key];
+            }
+        });
+
+        // Create PayMongo payment intent with flattened metadata
+        const paymentIntent = await paymongoService.createPaymentIntent({
+            amount: productInfo.amount,
+            currency: productInfo.currency,
+            description: `${product} - ${fullName}`,
+            paymentMethodAllowed: ['gcash', 'paymaya', 'card'],
+            metadata: flattenedMetadata // Using flattened version
+        });
+
+        console.log('Payment intent created:', paymentIntent.id);
+
+        // Send to LeadConnector webhook (initial request) - this can keep the full data
+        await webhookService.sendToLeadConnector({
             fullName,
             email,
             mobile,
@@ -74,33 +118,10 @@ exports.createPaymentIntent = async (req, res) => {
             experienceLevel,
             coachingGoals,
             targetClient,
-            timestamp: new Date().toISOString(),
-            ...metadata
-        };
-
-        // Create PayMongo payment intent
-        const paymentIntent = await paymongoService.createPaymentIntent({
-            amount: productInfo.amount,
-            currency: productInfo.currency,
-            description: `${product} - ${fullName}`,
-            paymentMethodAllowed: ['gcash', 'paymaya', 'card'],
-            metadata: {
-                ...customerData,
-                paymentReference
-            }
-        });
-
-        // Store payment intent in temporary storage (you'd use Redis/DB in production)
-        // For now, we'll just return it
-        console.log('Payment intent created:', paymentIntent.id);
-
-        // Send to LeadConnector webhook (initial request)
-        await webhookService.sendToLeadConnector({
-            ...customerData,
             status: 'payment_initiated',
             paymentIntentId: paymentIntent.id,
-            paymentReference,
-            checkoutUrl: paymentIntent.attributes.checkout_url
+            checkoutUrl: paymentIntent.attributes.checkout_url,
+            timestamp: new Date().toISOString()
         }).catch(err => console.log('LeadConnector webhook error:', err.message));
 
         // Return payment details to frontend
@@ -158,12 +179,6 @@ exports.handleWebhook = async (req, res) => {
         console.log('Webhook received:', event.data.type);
         console.log('Event data:', JSON.stringify(event.data, null, 2));
 
-        // Verify webhook signature (implement based on PayMongo docs)
-        // const signature = req.headers['paymongo-signature'];
-        // if (!verifyWebhookSignature(signature, req.body)) {
-        //     return res.status(401).json({ error: 'Invalid signature' });
-        // }
-
         // Handle different event types
         switch (event.data.type) {
             case 'payment.paid':
@@ -202,9 +217,6 @@ exports.cancelPayment = async (req, res) => {
             return res.status(400).json({ error: 'Payment ID required' });
         }
 
-        // Cancel payment intent (implement based on PayMongo API)
-        // const cancelled = await paymongoService.cancelPaymentIntent(paymentId, reason);
-
         res.status(200).json({
             success: true,
             message: 'Payment cancelled',
@@ -226,7 +238,6 @@ exports.retryPayment = async (req, res) => {
             return res.status(400).json({ error: 'Payment ID required' });
         }
 
-        // Retry payment logic (implement based on PayMongo API)
         const paymentIntent = await paymongoService.getPaymentIntent(paymentId);
 
         res.status(200).json({
@@ -288,7 +299,6 @@ async function handlePaymentSuccess(attributes) {
     const paymentData = attributes.data || {};
     const metadata = paymentData.attributes?.metadata || {};
 
-    // Send success to LeadConnector
     await webhookService.sendToLeadConnector({
         ...metadata,
         status: 'payment_successful',
@@ -296,12 +306,6 @@ async function handlePaymentSuccess(attributes) {
         paymentDetails: attributes,
         completedAt: new Date().toISOString()
     }).catch(err => console.log('LeadConnector webhook error:', err));
-
-    // You could also:
-    // - Send email confirmation
-    // - Grant course access
-    // - Update database
-    // - Send SMS notification
 }
 
 async function handlePaymentFailure(attributes) {

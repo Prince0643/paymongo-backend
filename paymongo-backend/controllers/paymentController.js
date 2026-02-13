@@ -16,6 +16,7 @@ const PRODUCTS = {
 // Create payment intent
 exports.createPaymentIntent = async (req, res) => {
     try {
+        // ✅ FIXED: Added paymentMethod and source to destructuring
         const {
             fullName,
             email,
@@ -28,6 +29,8 @@ exports.createPaymentIntent = async (req, res) => {
             experienceLevel,
             coachingGoals,
             targetClient,
+            paymentMethod, // ✅ ADD THIS - was missing!
+            source,        // ✅ ADD THIS - was missing!
             metadata = {}
         } = req.body;
 
@@ -58,8 +61,17 @@ exports.createPaymentIntent = async (req, res) => {
         // Generate unique payment reference
         const paymentReference = generateId('PAY');
 
-        // ✅ FIXED: Flatten metadata - NO NESTED OBJECTS
-        // PayMongo only accepts flat key-value pairs (strings/numbers/booleans)
+        // Log what we received for debugging
+        console.log('Received payment request:', {
+            fullName,
+            email,
+            mobile,
+            product,
+            paymentMethod,
+            source
+        });
+
+        // ✅ FIXED: Flatten metadata - include paymentMethod and source
         const flattenedMetadata = {
             // Required fields
             fullName: String(fullName || ''),
@@ -68,7 +80,7 @@ exports.createPaymentIntent = async (req, res) => {
             product: String(product || ''),
             paymentReference: String(paymentReference || ''),
 
-            // Optional fields - ensure they're strings, not undefined
+            // Optional fields
             notes: String(notes || ''),
             businessName: String(businessName || ''),
             setupType: String(setupType || ''),
@@ -77,11 +89,12 @@ exports.createPaymentIntent = async (req, res) => {
             coachingGoals: String(coachingGoals || ''),
             targetClient: String(targetClient || ''),
 
-            // Timestamp
-            timestamp: new Date().toISOString(),
+            // ✅ ADDED: These were missing!
+            paymentMethod: String(paymentMethod || 'gcash'),
+            source: String(source || 'nexistry_academy'),
 
-            // Source
-            source: 'nexistry_academy'
+            // Timestamp
+            timestamp: new Date().toISOString()
         };
 
         // Remove any empty values that PayMongo might reject
@@ -91,18 +104,21 @@ exports.createPaymentIntent = async (req, res) => {
             }
         });
 
+        // Log the metadata being sent to PayMongo
+        console.log('Sending to PayMongo with metadata:', flattenedMetadata);
+
         // Create PayMongo payment intent with flattened metadata
         const paymentIntent = await paymongoService.createPaymentIntent({
             amount: productInfo.amount,
             currency: productInfo.currency,
             description: `${product} - ${fullName}`,
             paymentMethodAllowed: ['gcash', 'paymaya', 'card'],
-            metadata: flattenedMetadata // Using flattened version
+            metadata: flattenedMetadata
         });
 
         console.log('Payment intent created:', paymentIntent.id);
 
-        // Send to LeadConnector webhook (initial request) - this can keep the full data
+        // Send to LeadConnector webhook - include paymentMethod and source
         await webhookService.sendToLeadConnector({
             fullName,
             email,
@@ -118,6 +134,8 @@ exports.createPaymentIntent = async (req, res) => {
             experienceLevel,
             coachingGoals,
             targetClient,
+            paymentMethod, // ✅ Now included
+            source,        // ✅ Now included
             status: 'payment_initiated',
             paymentIntentId: paymentIntent.id,
             checkoutUrl: paymentIntent.attributes.checkout_url,

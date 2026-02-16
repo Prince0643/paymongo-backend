@@ -7,6 +7,10 @@ class WebhookService {
     }
 
     async sendToLeadConnector(data) {
+        if (String(process.env.DISABLE_LEADCONNECTOR_WEBHOOK).toLowerCase() === 'true') {
+            return;
+        }
+
         if (!this.leadConnectorWebhook) {
             console.log('LeadConnector webhook URL not configured');
             return;

@@ -6,11 +6,11 @@ const { generateId, validateEmail, validateMobile } = require('../utils/helpers'
 // Product pricing mapping
 const PRODUCTS = {
     'START UP VA Course': { amount: 1500, currency: 'PHP' },
-    'GHL Practice Access': { amount: 300, currency: 'PHP' },
+    'GHL Practice Access': { amount: 500, currency: 'PHP' },
     'Freelancer Plan': { amount: 3500, currency: 'PHP' },
     'Dedicated Coaching': { amount: 999, currency: 'PHP' },
     'Customization Plan': { amount: 5000, currency: 'PHP' },
-    'Client Finder Tool': { amount: 300, currency: 'PHP' }
+    'Client Finder Tool': { amount: 500, currency: 'PHP' }
 };
 
 // Create payment intent

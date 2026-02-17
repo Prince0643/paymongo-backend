@@ -1,7 +1,7 @@
 // controllers/paymentController.js
 const paymongoService = require('../services/paymongoService');
 const webhookService = require('../services/webhookService');
-const { generateId, validateEmail, validateMobile } = require('../utils/helpers');
+const { generateId, validateEmail, validateMobile, calculateTaxedAmount } = require('../utils/helpers');
 
 // Product pricing mapping
 const PRODUCTS = {
@@ -61,6 +61,9 @@ exports.createPaymentIntent = async (req, res) => {
         // Generate unique payment reference
         const paymentReference = generateId('PAY');
 
+        const taxRate = process.env.TAX_RATE ?? 0.10;
+        const taxed = calculateTaxedAmount(productInfo.amount, taxRate);
+
         // Log what we received for debugging
         console.log('Received payment request:', {
             fullName,
@@ -79,6 +82,11 @@ exports.createPaymentIntent = async (req, res) => {
             mobile: String(mobile || ''),
             product: String(product || ''),
             paymentReference: String(paymentReference || ''),
+
+            baseAmount: String(taxed.baseAmount),
+            taxRate: String(taxed.taxRate),
+            taxAmount: String(taxed.taxAmount),
+            totalAmount: String(taxed.totalAmount),
 
             // Optional fields
             notes: String(notes || ''),
@@ -109,7 +117,7 @@ exports.createPaymentIntent = async (req, res) => {
 
         // Create PayMongo payment intent with flattened metadata
         const paymentIntent = await paymongoService.createPaymentIntent({
-            amount: productInfo.amount,
+            amount: taxed.totalAmount,
             currency: productInfo.currency,
             description: `${product} - ${fullName}`,
             paymentMethodAllowed: ['gcash', 'paymaya', 'card'],
@@ -124,9 +132,12 @@ exports.createPaymentIntent = async (req, res) => {
             email,
             mobile,
             product,
-            amount: productInfo.amount,
+            amount: taxed.totalAmount,
             currency: productInfo.currency,
             paymentReference,
+            baseAmount: taxed.baseAmount,
+            taxRate: taxed.taxRate,
+            taxAmount: taxed.taxAmount,
             notes,
             businessName,
             setupType,
@@ -149,7 +160,10 @@ exports.createPaymentIntent = async (req, res) => {
             clientSecret: paymentIntent.attributes.client_secret,
             checkoutUrl: paymentIntent.attributes.checkout_url,
             paymentReference,
-            amount: productInfo.amount,
+            amount: taxed.totalAmount,
+            baseAmount: taxed.baseAmount,
+            taxRate: taxed.taxRate,
+            taxAmount: taxed.taxAmount,
             currency: productInfo.currency
         });
 

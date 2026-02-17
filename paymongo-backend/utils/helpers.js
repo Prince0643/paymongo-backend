@@ -41,6 +41,24 @@ function generatePaymentReference(product, name) {
     return `${productCode}${nameCode}${timestamp}`;
 }
 
+function calculateTaxedAmount(amount, taxRate = 0.10) {
+    const rate = Number(taxRate);
+    const safeRate = Number.isFinite(rate) ? rate : 0;
+    const baseCentavos = Math.round(Number(amount) * 100);
+    const taxCentavos = Math.round(baseCentavos * safeRate);
+    const totalCentavos = baseCentavos + taxCentavos;
+
+    return {
+        baseAmount: baseCentavos / 100,
+        taxAmount: taxCentavos / 100,
+        totalAmount: totalCentavos / 100,
+        baseCentavos,
+        taxCentavos,
+        totalCentavos,
+        taxRate: safeRate
+    };
+}
+
 // Calculate fees (if needed)
 function calculateFees(amount) {
     const paymongoFee = amount * 0.035; // 3.5% + PHP 15
@@ -97,6 +115,7 @@ module.exports = {
     validateMobile,
     formatAmount,
     generatePaymentReference,
+    calculateTaxedAmount,
     calculateFees,
     sanitizeInput,
     maskSensitive,

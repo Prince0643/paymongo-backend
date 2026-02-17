@@ -120,7 +120,7 @@ exports.createPaymentIntent = async (req, res) => {
             amount: taxed.totalAmount,
             currency: productInfo.currency,
             description: `${product} - ${fullName}`,
-            paymentMethodAllowed: ['gcash', 'paymaya', 'card'],
+            paymentMethodAllowed: ['qrph'],
             metadata: flattenedMetadata
         });
 

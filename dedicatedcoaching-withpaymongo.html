@@ -364,99 +364,49 @@
             font-weight: 700;
         }
 
-        /* QR Code Section */
-        .qr-section {
-            text-align: center;
-            margin-bottom: 40px;
+        /* NEW: Payment Options Section */
+        .payment-options {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .qr-container {
+        .payment-option {
+            flex: 1;
+            min-width: 120px;
             background: var(--light-gray);
-            padding: 40px;
+            border: 2px solid transparent;
             border-radius: 12px;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .qr-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
-            animation: shimmer 2s infinite;
+        .payment-option:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes shimmer {
-            0% {
-                transform: translateX(-100%);
-            }
-
-            100% {
-                transform: translateX(100%);
-            }
-        }
-
-        .qr-code {
-            width: 250px;
-            height: 250px;
-            background: var(--white);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 0 auto 20px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 2;
-        }
-
-        .qr-code img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .gcash-logo {
-            height: 40px;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .qr-instructions {
+        .payment-option.selected {
+            border-color: var(--coaching-teal);
             background: linear-gradient(135deg, rgba(0, 137, 123, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
-            padding: 24px;
-            border-radius: 12px;
-            margin-top: 24px;
-            text-align: left;
-            border-left: 4px solid var(--coaching-teal);
         }
 
-        .qr-instructions h4 {
-            color: var(--coaching-teal);
-            margin-bottom: 12px;
-            font-size: 18px;
+        .payment-option span {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 16px;
         }
 
-        .qr-instructions ol {
-            padding-left: 20px;
-            margin-bottom: 16px;
-        }
-
-        .qr-instructions li {
-            margin-bottom: 8px;
+        .payment-option small {
+            display: block;
             color: var(--gray);
-        }
-
-        .important-note {
-            background: #FFF3E0;
-            padding: 16px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-gold);
-            font-size: 14px;
-            margin-top: 16px;
+            font-size: 12px;
+            margin-top: 4px;
         }
 
         /* Payment Form */
@@ -506,48 +456,6 @@
             color: var(--error-red);
         }
 
-        /* Upload Section */
-        .upload-section {
-            border: 2px dashed var(--light-gray);
-            border-radius: 8px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .upload-section:hover {
-            border-color: var(--coaching-teal);
-            background: linear-gradient(135deg, rgba(0, 137, 123, 0.05) 0%, rgba(25, 118, 210, 0.05) 100%);
-        }
-
-        .upload-icon {
-            font-size: 48px;
-            color: var(--coaching-teal);
-            margin-bottom: 16px;
-        }
-
-        .upload-text {
-            color: var(--gray);
-            margin-bottom: 16px;
-        }
-
-        .browse-button {
-            background: var(--coaching-teal);
-            color: var(--white);
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .browse-button:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-        }
-
         /* Submit Button */
         .submit-button {
             width: 100%;
@@ -575,6 +483,45 @@
 
         .submit-button:active {
             transform: translateY(-2px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: #ffebee;
+            color: var(--error-red);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border-left: 4px solid var(--error-red);
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Security Badge */
@@ -712,9 +659,8 @@
                 flex-shrink: 0;
             }
 
-            .qr-code {
-                width: 200px;
-                height: 200px;
+            .payment-options {
+                flex-direction: column;
             }
 
             .benefit-item {
@@ -727,18 +673,9 @@
         }
 
         @media (max-width: 480px) {
-            .qr-code {
-                width: 180px;
-                height: 180px;
-            }
-
             .submit-button {
                 padding: 16px;
                 font-size: 16px;
-            }
-
-            .upload-section {
-                padding: 24px;
             }
 
             .description-box p {
@@ -856,63 +793,54 @@
                 </div>
 
                 <div class="security-badge">
-                    <span class="lock-icon"></span>
+                    <span class="lock-icon">🔒</span>
                     <span>Secure Payment • 100% Safe & Encrypted</span>
                 </div>
             </div>
 
-            <!-- Payment Section -->
+            <!-- Payment Section - UPDATED with PayMongo -->
             <div class="payment-section">
                 <div class="payment-header">
                     <h2>Start Your Coaching Journey</h2>
-                    <p>Follow these 3 simple steps to begin your personalized mentorship</p>
+                    <p>Choose your payment method below</p>
                 </div>
 
                 <div class="payment-steps">
                     <div class="step active">
                         <div class="step-number">1</div>
-                        <div class="step-label">Scan QR Code</div>
+                        <div class="step-label">Enter Details</div>
                     </div>
                     <div class="step">
                         <div class="step-number">2</div>
-                        <div class="step-label">Upload Receipt</div>
+                        <div class="step-label">Choose Payment</div>
                     </div>
                     <div class="step">
                         <div class="step-number">3</div>
-                        <div class="step-label">Wait For the Email</div>
+                        <div class="step-label">Complete Payment</div>
                     </div>
                 </div>
 
-                <div class="qr-section">
-                    <div class="qr-container">
-                        <div class="qr-code">
-                            <!-- GCASH QR CODE IMAGE HERE -->
-                            <img src="YOUR_GCASH_QR_CODE_IMAGE_URL_HERE" alt="GCash QR Code"
-                                onerror="this.onerror=null; this.src='https://via.placeholder.com/250x250/00897B/FFFFFF?text=GCash+QR+Code'">
-                        </div>
-                        <p><strong>Amount to Send:</strong> ₱999.00</p>
-                        <p>Scan this QR code using your GCash app</p>
+                <!-- Error Message Container -->
+                <div id="errorMessage" class="error-message"></div>
+
+                <!-- Payment Options -->
+                <div class="payment-options">
+                    <div class="payment-option selected" data-method="gcash" onclick="selectPaymentMethod('gcash')">
+                        <span>GCash</span>
+                        <small>Instant Payment</small>
                     </div>
-
-                    <div class="qr-instructions">
-                        <h4>How to Pay via GCash:</h4>
-                        <ol>
-                            <li>Open your GCash app</li>
-                            <li>Tap "Scan QR" from the dashboard</li>
-                            <li>Point your camera at the QR code above</li>
-                            <li>Enter ₱999 as the amount</li>
-                            <li>Add "Dedicated Coaching" as the description</li>
-                            <li>Confirm and complete the payment</li>
-                        </ol>
-
-                        <div class="important-note">
-                            <strong>Important:</strong> Save your transaction receipt! You'll need to upload it in the
-                            next step.
-                        </div>
+                    <div class="payment-option" data-method="paymaya" onclick="selectPaymentMethod('paymaya')">
+                        <span>PayMaya</span>
+                        <small>Via PayMaya App</small>
+                    </div>
+                    <div class="payment-option" data-method="card" onclick="selectPaymentMethod('card')">
+                        <span>Card</span>
+                        <small>Credit/Debit Card</small>
                     </div>
                 </div>
 
-                <form class="payment-form">
+                <!-- PayMongo Payment Form -->
+                <form class="payment-form" id="paymentForm">
                     <div class="form-group">
                         <label for="fullName">Full Name <span class="required">*</span></label>
                         <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
@@ -927,7 +855,7 @@
 
                     <div class="form-group">
                         <label for="mobile">Mobile Number <span class="required">*</span></label>
-                        <input type="tel" id="mobile" name="mobile" required placeholder="0917XXXXXXX">
+                        <input type="tel" id="mobile" name="mobile" required placeholder="09171234567">
                         <small>For direct messenger support and appointment reminders</small>
                     </div>
 
@@ -975,23 +903,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Payment Receipt <span class="required">*</span></label>
-                        <div class="upload-section" onclick="document.getElementById('receiptUpload').click()">
-                            <div class="upload-icon">📄</div>
-                            <p class="upload-text">Click to upload your GCash payment receipt</p>
-                            <button type="button" class="browse-button">Browse Files</button>
-                            <input type="file" id="receiptUpload" accept="image/*,.pdf" style="display: none;">
-                            <small>Accepted: JPG, PNG, PDF (Max: 5MB)</small>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="reference">GCash Reference Number <span class="required">*</span></label>
-                        <input type="text" id="reference" name="reference" required placeholder="e.g., 1234567890">
-                        <small>Find this in your GCash transaction history</small>
-                    </div>
-
-                    <div class="form-group">
                         <label for="coachingGoals">Your Coaching Goals <span class="required">*</span></label>
                         <textarea id="coachingGoals" name="coachingGoals" rows="4" required placeholder="What do you hope to achieve with dedicated coaching? 
 Example: 'Land my first VA client within 2 months'
@@ -1000,8 +911,10 @@ Example: 'Land my first VA client within 2 months'
                         <small>Be specific about what you want to accomplish with your mentor</small>
                     </div>
 
-                    <button type="submit" class="submit-button">
-                        Start My Coaching Journey & Wait For the Email
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="gcash">
+
+                    <button type="submit" class="submit-button" id="submitBtn">
+                        Proceed to Payment (₱999/month)
                     </button>
 
                     <div class="subscription-note">
@@ -1011,8 +924,8 @@ Example: 'Land my first VA client within 2 months'
                     </div>
 
                     <div class="security-badge">
-                        <span class="lock-icon"></span>
-                        <span>256-bit SSL Encryption • Your data is secure</span>
+                        <span class="lock-icon">🔒</span>
+                        <span>256-bit SSL Encryption • Powered by PayMongo</span>
                     </div>
                 </form>
             </div>
@@ -1020,150 +933,243 @@ Example: 'Land my first VA client within 2 months'
     </main>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLdQHcegiWvwcjArai6UzRCiEu0cUuYIXDg5KEkQkja9fKDcttf2maag1rHP578FZ_/exec';
+        // ==================== CONFIGURATION ====================
+        const BACKEND_URL = 'https://paymongo-backend-5if2.onrender.com';
 
-        // Your inbound webhook URL
-        const INBOUND_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/nb61f4OQ7o9Wsxx0zOsY/webhook-trigger/fc39940d-3d16-4920-8285-1a038a3da630';
-
-        document.querySelector('.payment-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            // Validate required fields
-            const requiredFields = ['fullName', 'email', 'mobile', 'timezone', 'experienceLevel', 'reference', 'coachingGoals'];
-            let isValid = true;
-
-            requiredFields.forEach(field => {
-                const input = document.getElementById(field);
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.style.borderColor = '#D32F2F';
-                } else {
-                    input.style.borderColor = '#E0E0E0';
-                }
+        // ==================== PAYMENT METHOD SELECTION ====================
+        window.selectPaymentMethod = function (method) {
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.classList.remove('selected');
             });
+            const selectedOption = document.querySelector(`[data-method="${method}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+            document.getElementById('paymentMethod').value = method;
+        };
 
-            // Check file upload
-            const fileInput = document.getElementById('receiptUpload');
-            if (fileInput.files.length === 0) {
-                isValid = false;
-                document.querySelector('.upload-section').style.borderColor = '#D32F2F';
+        // ==================== FORM VALIDATION ====================
+        function validateForm() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const timezone = document.getElementById('timezone').value;
+            const experienceLevel = document.getElementById('experienceLevel').value;
+            const coachingGoals = document.getElementById('coachingGoals').value.trim();
+
+            const errors = [];
+
+            if (!fullName) {
+                errors.push('Full name is required');
+                document.getElementById('fullName').style.borderColor = '#D32F2F';
             } else {
-                document.querySelector('.upload-section').style.borderColor = '#00897B';
+                document.getElementById('fullName').style.borderColor = '#E0E0E0';
             }
 
-            if (!isValid) {
-                alert('Please fill in all required fields and upload your payment receipt.');
+            if (!email) {
+                errors.push('Email address is required');
+                document.getElementById('email').style.borderColor = '#D32F2F';
+            } else if (!isValidEmail(email)) {
+                errors.push('Please enter a valid email address');
+                document.getElementById('email').style.borderColor = '#D32F2F';
+            } else {
+                document.getElementById('email').style.borderColor = '#E0E0E0';
+            }
+
+            if (!mobile) {
+                errors.push('Mobile number is required');
+                document.getElementById('mobile').style.borderColor = '#D32F2F';
+            } else if (!isValidMobile(mobile)) {
+                errors.push('Please enter a valid Philippine mobile number (e.g., 09171234567)');
+                document.getElementById('mobile').style.borderColor = '#D32F2F';
+            } else {
+                document.getElementById('mobile').style.borderColor = '#E0E0E0';
+            }
+
+            if (!timezone) {
+                errors.push('Timezone is required');
+                document.getElementById('timezone').style.borderColor = '#D32F2F';
+            } else {
+                document.getElementById('timezone').style.borderColor = '#E0E0E0';
+            }
+
+            if (!experienceLevel) {
+                errors.push('Experience level is required');
+                document.getElementById('experienceLevel').style.borderColor = '#D32F2F';
+            } else {
+                document.getElementById('experienceLevel').style.borderColor = '#E0E0E0';
+            }
+
+            if (!coachingGoals) {
+                errors.push('Coaching goals are required');
+                document.getElementById('coachingGoals').style.borderColor = '#D32F2F';
+            } else {
+                document.getElementById('coachingGoals').style.borderColor = '#E0E0E0';
+            }
+
+            return errors;
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function isValidMobile(mobile) {
+            const cleaned = mobile.replace(/\D/g, '');
+            return /^(09|\+639)\d{9}$/.test(cleaned) || /^09\d{9}$/.test(mobile);
+        }
+
+        // ==================== SHOW ERROR ====================
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            if (errorDiv) {
+                errorDiv.textContent = message;
+                errorDiv.classList.add('show');
+                setTimeout(() => {
+                    errorDiv.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        // ==================== MAIN FORM SUBMISSION ====================
+        document.getElementById('paymentForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const errors = validateForm();
+            if (errors.length > 0) {
+                showError(errors.join('. '));
                 return;
             }
 
-            // Show loading state
-            const submitBtn = document.querySelector('.submit-button');
-            submitBtn.textContent = 'Processing...';
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const timezone = document.getElementById('timezone').value;
+            const availability = document.getElementById('availability').value.trim();
+            const experienceLevel = document.getElementById('experienceLevel').value;
+            const targetClient = document.getElementById('targetClient').value.trim();
+            const coachingGoals = document.getElementById('coachingGoals').value.trim();
+            const paymentMethod = document.getElementById('paymentMethod').value;
+
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="spinner"></span> Creating payment...';
             submitBtn.disabled = true;
 
             try {
-                // Prepare form data
-                const formData = {
-                    fullName: document.getElementById('fullName').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    mobile: document.getElementById('mobile').value.trim(),
-                    reference: document.getElementById('reference').value.trim(),
-                    notes: document.getElementById('notes').value.trim(),
+                console.log('Creating payment intent with data:', {
+                    fullName,
+                    email,
+                    mobile,
                     product: 'Dedicated Coaching',
-                    amount: '₱999',
-                    amountRaw: 999,
-                    paymentMethod: 'GCash',
-                    paymentDate: new Date().toISOString().split('T')[0],
-                    timestamp: new Date().toISOString(),
-                    pageUrl: window.location.href,
-                    timezone: document.getElementById('timezone')?.value.trim() || '',
-                    experienceLevel: document.getElementById('experienceLevel')?.value.trim() || '',
-                    coachingGoals: document.getElementById('coachingGoals')?.value.trim() || '',
-                    targetClient: document.getElementById('targetClient')?.value.trim() || '',
-                    availability: document.getElementById('availability')?.value.trim() || ''
-                };
-
-                // Handle file upload
-                const receiptFile = fileInput.files[0];
-                if (receiptFile) {
-                    try {
-                        const fileData = await readFileAsBase64(receiptFile);
-                        formData.receiptFile = {
-                            name: receiptFile.name,
-                            type: receiptFile.type,
-                            data: fileData.split(',')[1]
-                        };
-                    } catch (fileError) {
-                        console.log('File processing skipped');
-                    }
-                }
-
-                // Send data to Google Apps Script
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
+                    timezone,
+                    availability,
+                    experienceLevel,
+                    targetClient,
+                    coachingGoals,
+                    paymentMethod
                 });
 
-                // Send to inbound webhook - NO IMAGE DATA
-                const webhookData = { ...formData };
-                delete webhookData.receiptFile; // Remove image data
-
-                fetch(INBOUND_WEBHOOK_URL, {
+                const response = await fetch(`${BACKEND_URL}/api/payments/create-payment-intent`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(webhookData)
-                }).catch(err => console.log('Webhook error:', err));
+                    body: JSON.stringify({
+                        fullName: fullName,
+                        email: email,
+                        mobile: mobile,
+                        product: 'Dedicated Coaching',
+                        timezone: timezone,
+                        availability: availability,
+                        experienceLevel: experienceLevel,
+                        targetClient: targetClient,
+                        coachingGoals: coachingGoals,
+                        paymentMethod: paymentMethod,
+                        source: 'dedicated_coaching'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to create payment');
+                }
+
+                if (data.success && data.checkoutUrl) {
+                    console.log('Payment intent created:', data.paymentIntentId);
+
+                    localStorage.setItem('lastPayment', JSON.stringify({
+                        paymentIntentId: data.paymentIntentId,
+                        paymentReference: data.paymentReference,
+                        amount: data.amount,
+                        product: 'Dedicated Coaching',
+                        fullName: fullName,
+                        email: email,
+                        timezone: timezone,
+                        experienceLevel: experienceLevel,
+                        coachingGoals: coachingGoals,
+                        timestamp: new Date().toISOString()
+                    }));
+
+                    window.location.href = data.checkoutUrl;
+                } else {
+                    throw new Error('Invalid response from server');
+                }
+
+            } catch (error) {
+                console.error('Payment error:', error);
+
+                if (error.message && (error.message.includes('ECONNREFUSED') || error.message.includes('Failed to fetch'))) {
+                    showError('Cannot connect to payment server. Please try again.');
+                } else {
+                    showError(error.message || 'Payment failed. Please try again.');
+                }
+
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // ==================== CHECK PAYMENT STATUS ON RETURN ====================
+        window.addEventListener('load', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+            const paymentId = urlParams.get('payment_intent_id');
+
+            if (sessionId || paymentId) {
+                const submitBtn = document.getElementById('submitBtn');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '✓ Payment completed! Redirecting...';
+                    submitBtn.disabled = true;
+                }
+
+                // Clear the stored payment
+                localStorage.removeItem('lastPayment');
 
                 setTimeout(() => {
                     window.location.href = 'https://nxacademy.nexistrydigitalsolutions.com/thank-you';
                 }, 2000);
-
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Submitted! Please check your email for confirmation.');
-                window.location.href = 'https://nxacademy.nexistrydigitalsolutions.com/thank-you';
             }
         });
 
-        function readFileAsBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // File upload preview
-        document.getElementById('receiptUpload').addEventListener('change', function (e) {
-            if (this.files.length > 0) {
-                const fileName = this.files[0].name;
-                document.querySelector('.upload-text').textContent = `File selected: ${fileName}`;
-                document.querySelector('.upload-section').style.borderColor = '#2E7D32';
-                document.querySelector('.upload-section').style.borderStyle = 'solid';
-                document.querySelector('.upload-icon').textContent = '✓';
-            }
-        });
-
-        // Animate step completion
-        document.querySelectorAll('.payment-form input, .payment-form textarea, .payment-form select').forEach(input => {
+        // ==================== INPUT ANIMATION ====================
+        document.querySelectorAll('#fullName, #email, #mobile, #availability, #targetClient, #coachingGoals').forEach(input => {
             input.addEventListener('input', function () {
-                if (this.value.trim()) {
-                    this.style.borderColor = '#2E7D32';
-                }
+                this.style.borderColor = this.value.trim() ? '#2E7D32' : '#E0E0E0';
             });
         });
 
-        // Timezone and experience level styling
-        const selectElements = document.querySelectorAll('select');
-        selectElements.forEach(select => {
+        // ==================== SELECT ELEMENTS STYLING ====================
+        document.querySelectorAll('#timezone, #experienceLevel').forEach(select => {
             select.addEventListener('change', function () {
-                if (this.value) {
-                    this.style.borderColor = '#2E7D32';
-                }
+                this.style.borderColor = this.value ? '#2E7D32' : '#E0E0E0';
             });
+        });
+
+        // ==================== INITIALIZE ====================
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof selectPaymentMethod === 'function') {
+                selectPaymentMethod('gcash');
+            }
         });
     </script>
 </body>

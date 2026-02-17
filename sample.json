@@ -1,0 +1,257 @@
+{
+    "data": {
+        "id": "evt_p3nSoN813WXBH33tuwEeiHRF",
+        "type": "event",
+        "attributes": {
+            "type": "checkout_session.payment.paid",
+            "livemode": false,
+            "data": {
+                "id": "cs_dad961ec9a268057084ab95d",
+                "type": "checkout_session",
+                "attributes": {
+                    "billing": {
+                        "address": {
+                            "city": null,
+                            "country": null,
+                            "line1": null,
+                            "line2": null,
+                            "postal_code": null,
+                            "state": null
+                        },
+                        "email": null,
+                        "name": null,
+                        "phone": null
+                    },
+                    "billing_information_fields_editable": "enabled",
+                    "cancel_url": "https://nxacademy.nexistrydigitalsolutions.com/payment-cancelled",
+                    "checkout_url": "https://checkout.paymongo.com/cs_dad961ec9a268057084ab95d_client_4dc06ff27477b84d9116ddf4#cGtfdGVzdF80UUJ3dHZQQkZKanBoYkdUOTFTamVLQmg=",
+                    "client_key": "cs_dad961ec9a268057084ab95d_client_4dc06ff27477b84d9116ddf4",
+                    "customer_email": null,
+                    "customer_id": null,
+                    "description": "START UP VA Course - Nexistry Info",
+                    "line_items": [],
+                    "livemode": false,
+                    "merchant": "NEXISTRY DIGITAL SOLUTIONS",
+                    "paid_at": 1770992093,
+                    "payments": [
+                        {
+                            "id": "pay_uuA9FToYYDkB8A3CUFYYehjK",
+                            "type": "payment",
+                            "attributes": {
+                                "access_url": null,
+                                "amount": 150000,
+                                "balance_transaction_id": "bal_txn_SSXjomEcf8onHWRGVqy9xbx6",
+                                "billing": {
+                                    "address": {
+                                        "city": null,
+                                        "country": null,
+                                        "line1": null,
+                                        "line2": null,
+                                        "postal_code": null,
+                                        "state": null
+                                    },
+                                    "email": "assist@nexistrydigitalsolutions.com",
+                                    "name": "Nexistry Info",
+                                    "phone": "9090900909"
+                                },
+                                "currency": "PHP",
+                                "description": "START UP VA Course - Nexistry Info",
+                                "digital_withholding_vat_amount": 0,
+                                "disputed": false,
+                                "external_reference_number": null,
+                                "fee": 3750,
+                                "instant_settlement": null,
+                                "livemode": false,
+                                "net_amount": 146250,
+                                "origin": "api",
+                                "payment_intent_id": "pi_pcj7SVyM7brnGyg57CWvZUaM",
+                                "payout": null,
+                                "source": {
+                                    "id": "src_HHE5W56WgkFJTZsjeTRsfZz2",
+                                    "type": "gcash",
+                                    "provider": {
+                                        "id": null
+                                    },
+                                    "provider_id": null
+                                },
+                                "statement_descriptor": "NEXISTRY DIGITAL SOLUTIONS",
+                                "status": "paid",
+                                "tax_amount": null,
+                                "metadata": {
+                                    "mobile": "09090900909",
+                                    "source": "startup_va_course",
+                                    "product": "START UP VA Course",
+                                    "paymentMethod": "gcash",
+                                    "paymentReference": "PAYMLKYYGSPH5X0IT",
+                                    "email": "assist@nexistrydigitalsolutions.com",
+                                    "timestamp": "2026-02-13T14:14:37.706Z",
+                                    "fullName": "Nexistry Info"
+                                },
+                                "promotion": null,
+                                "refunds": [],
+                                "taxes": [],
+                                "available_at": 1771405200,
+                                "created_at": 1770992094,
+                                "credited_at": 1771462800,
+                                "paid_at": 1770992093,
+                                "updated_at": 1770992094
+                            }
+                        }
+                    ],
+                    "payment_intent": {
+                        "id": "pi_pcj7SVyM7brnGyg57CWvZUaM",
+                        "type": "payment_intent",
+                        "attributes": {
+                            "amount": 150000,
+                            "capture_type": "automatic",
+                            "client_key": "pi_pcj7SVyM7brnGyg57CWvZUaM_client_dtwASV2M1HEz6X928zwPNtaJ",
+                            "currency": "PHP",
+                            "description": "START UP VA Course - Nexistry Info",
+                            "livemode": false,
+                            "original_amount": 150000,
+                            "statement_descriptor": "NEXISTRY DIGITAL SOLUTIONS",
+                            "status": "succeeded",
+                            "last_payment_error": null,
+                            "payment_method_allowed": [
+                                "gcash",
+                                "card",
+                                "paymaya"
+                            ],
+                            "payments": [
+                                {
+                                    "id": "pay_uuA9FToYYDkB8A3CUFYYehjK",
+                                    "type": "payment",
+                                    "attributes": {
+                                        "access_url": null,
+                                        "amount": 150000,
+                                        "balance_transaction_id": "bal_txn_SSXjomEcf8onHWRGVqy9xbx6",
+                                        "billing": {
+                                            "address": {
+                                                "city": null,
+                                                "country": null,
+                                                "line1": null,
+                                                "line2": null,
+                                                "postal_code": null,
+                                                "state": null
+                                            },
+                                            "email": "assist@nexistrydigitalsolutions.com",
+                                            "name": "Nexistry Info",
+                                            "phone": "9090900909"
+                                        },
+                                        "currency": "PHP",
+                                        "description": "START UP VA Course - Nexistry Info",
+                                        "digital_withholding_vat_amount": 0,
+                                        "disputed": false,
+                                        "external_reference_number": null,
+                                        "fee": 3750,
+                                        "instant_settlement": null,
+                                        "livemode": false,
+                                        "net_amount": 146250,
+                                        "origin": "api",
+                                        "payment_intent_id": "pi_pcj7SVyM7brnGyg57CWvZUaM",
+                                        "payout": null,
+                                        "source": {
+                                            "id": "src_HHE5W56WgkFJTZsjeTRsfZz2",
+                                            "type": "gcash",
+                                            "provider": {
+                                                "id": null
+                                            },
+                                            "provider_id": null
+                                        },
+                                        "statement_descriptor": "NEXISTRY DIGITAL SOLUTIONS",
+                                        "status": "paid",
+                                        "tax_amount": null,
+                                        "metadata": {
+                                            "mobile": "09090900909",
+                                            "source": "startup_va_course",
+                                            "product": "START UP VA Course",
+                                            "paymentMethod": "gcash",
+                                            "paymentReference": "PAYMLKYYGSPH5X0IT",
+                                            "email": "assist@nexistrydigitalsolutions.com",
+                                            "timestamp": "2026-02-13T14:14:37.706Z",
+                                            "fullName": "Nexistry Info"
+                                        },
+                                        "promotion": null,
+                                        "refunds": [],
+                                        "taxes": [],
+                                        "available_at": 1771405200,
+                                        "created_at": 1770992094,
+                                        "credited_at": 1771462800,
+                                        "paid_at": 1770992093,
+                                        "updated_at": 1770992094
+                                    }
+                                }
+                            ],
+                            "next_action": null,
+                            "payment_method_options": {
+                                "card": {
+                                    "request_three_d_secure": "any"
+                                }
+                            },
+                            "metadata": {
+                                "email": "assist@nexistrydigitalsolutions.com",
+                                "timestamp": "2026-02-13T14:14:37.706Z",
+                                "mobile": "09090900909",
+                                "paymentMethod": "gcash",
+                                "fullName": "Nexistry Info",
+                                "product": "START UP VA Course",
+                                "source": "startup_va_course",
+                                "paymentReference": "PAYMLKYYGSPH5X0IT"
+                            },
+                            "setup_future_usage": null,
+                            "created_at": 1770992079,
+                            "updated_at": 1770992094
+                        }
+                    },
+                    "payment_method_types": [],
+                    "payment_method_used": "gcash",
+                    "reference_number": null,
+                    "send_email_receipt": true,
+                    "show_description": true,
+                    "show_line_items": true,
+                    "status": "active",
+                    "success_url": "https://nxacademy.nexistrydigitalsolutions.com/thank-you",
+                    "created_at": 1770992079,
+                    "updated_at": 1770992091,
+                    "metadata": null
+                }
+            },
+            "previous_data": {},
+            "pending_webhooks": 1,
+            "created_at": 1770992095,
+            "updated_at": 1770992095
+        }
+    },
+    "headers": {
+        "host": "services.leadconnectorhq.com",
+        "cf-ray": "9cd4ef540f69fd1c-SIN",
+        "x-forwarded-for": "13.215.113.49,10.10.1.160",
+        "paymongo-signature": "t=1770992095,te=30f00b4482fd6306fcf917fc3ba06101bc566f42d1a234fcadb23b0ec4e9c946,li=",
+        "cdn-loop": "cloudflare; loops=1",
+        "accept-encoding": "gzip, br",
+        "x-datadog-tags": "_dd.p.dm=-3,_dd.p.tid=698f31df00000000",
+        "x-forwarded-proto": "https",
+        "x-datadog-sampling-priority": "2",
+        "cf-ipcountry": "SG",
+        "cf-visitor": {
+            "scheme": "https"
+        },
+        "cf-connecting-ip": "13.215.113.49",
+        "x-datadog-parent-id": "1828182233857195982",
+        "tracestate": "dd=p:195f020e39bcffce;s:2;t.dm:-3",
+        "x-datadog-trace-id": "2772302730375198089",
+        "user-agent": "Ruby",
+        "traceparent": "00-698f31df00000000267932a51ddbf589-195f020e39bcffce-01",
+        "content-length": "4812",
+        "accept": "*/*",
+        "content-type": "application/json",
+        "x-envoy-external-address": "10.10.1.160",
+        "x-request-id": "0acd4a7e-ec09-419b-94e7-2ecd36366251",
+        "x-envoy-attempt-count": "1",
+        "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=7219aa775c4e8abf01ad0be8fe7881fe778838b4b35f919ad60438eeb21f8456;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
+        "x-b3-traceid": "8d828b44a069520a1293fe42f52f0853",
+        "x-b3-spanid": "a7d3d506d74ce4ca",
+        "x-b3-parentspanid": "1293fe42f52f0853",
+        "x-b3-sampled": "0"
+    }
+}

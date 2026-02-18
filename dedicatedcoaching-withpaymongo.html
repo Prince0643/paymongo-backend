@@ -1121,7 +1121,7 @@ Example: 'Land my first VA client within 2 months'
                         coachingGoals: coachingGoals,
                         paymentMethod: 'gcash',
                         source: 'dedicated_coaching',
-                        amount: TOTAL_AMOUNT, // Send as pesos, not centavos
+                        amount: Math.round(TOTAL_AMOUNT),
                         baseAmount: BASE_AMOUNT,
                         taxAmount: TAX_AMOUNT,
                         description: `Dedicated Coaching - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT} = ₱${TOTAL_AMOUNT}/month`

@@ -43,7 +43,7 @@ class PayMongoService {
                         currency: formattedCurrency,
                         description,
                         statement_descriptor: 'Nexistry Academy',
-                        payment_method_allowed: paymentMethodAllowed || ['gcash', 'card'],
+                        payment_method_allowed: paymentMethodAllowed || ['gcash'],
                         metadata
                     }
                 }
@@ -72,7 +72,7 @@ class PayMongoService {
                                 quantity: 1
                             }
                         ],
-                        payment_method_types: ['qrph'],
+                        payment_method_types: ['gcash'],
                         description,
                         metadata,
                         success_url: process.env.FRONTEND_SUCCESS_URL || 'https://nxacademy.nexistrydigitalsolutions.com/success?session_id={CHECKOUT_SESSION_ID}',
@@ -153,7 +153,7 @@ class PayMongoService {
                                 quantity: 1
                             }
                         ],
-                        payment_method_types: ['qrph'],
+                        payment_method_types: ['gcash'],
                         description,
                         metadata,
                         success_url: process.env.FRONTEND_SUCCESS_URL || 'https://nxacademy.nexistrydigitalsolutions.com/success?session_id={CHECKOUT_SESSION_ID}',

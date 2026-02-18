@@ -678,7 +678,7 @@
                             placeholder="Any special requests or questions?"></textarea>
                     </div>
 
-                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="qrph">
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="gcash">
                     <input type="hidden" id="baseAmount" name="baseAmount" value="500">
                     <input type="hidden" id="taxAmount" name="taxAmount" value="50">
                     <input type="hidden" id="totalAmountInput" name="totalAmount" value="550">
@@ -811,7 +811,7 @@
                         mobile: mobile,
                         product: 'GHL Practice Access',
                         notes: notes,
-                        paymentMethod: 'qrph',
+                        paymentMethod: 'gcash',
                         source: 'ghl_practice_access',
                         amount: TOTAL_AMOUNT,
                         baseAmount: BASE_AMOUNT,
@@ -891,7 +891,7 @@
 
         // ==================== SET DEFAULT PAYMENT METHOD ====================
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('paymentMethod').value = 'qrph';
+            document.getElementById('paymentMethod').value = 'gcash';
         });
     </script>
 </body>

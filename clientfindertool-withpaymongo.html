@@ -133,6 +133,36 @@
             border-bottom: 2px solid var(--light-gray);
         }
 
+        .price-breakdown {
+            background: var(--light-blue);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            color: var(--dark);
+        }
+
+        .price-row.total {
+            border-top: 2px dashed var(--tool-purple);
+            margin-top: 8px;
+            padding-top: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--tool-purple);
+        }
+
+        .price-row.tax {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
         .price-amount {
             font-family: 'Playfair Display', serif;
             font-size: 64px;
@@ -343,51 +373,6 @@
         .step.active .step-label {
             color: var(--tool-purple);
             font-weight: 700;
-        }
-
-        /* NEW: Payment Options Section */
-        .payment-options {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .payment-option {
-            flex: 1;
-            min-width: 120px;
-            background: var(--light-gray);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 20px 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .payment-option:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .payment-option.selected {
-            border-color: var(--tool-purple);
-            background: linear-gradient(135deg, rgba(123, 31, 162, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
-        }
-
-        .payment-option span {
-            display: block;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 16px;
-        }
-
-        .payment-option small {
-            display: block;
-            color: var(--gray);
-            font-size: 12px;
-            margin-top: 4px;
         }
 
         /* Payment Form */
@@ -655,10 +640,6 @@
                 flex-shrink: 0;
             }
 
-            .payment-options {
-                flex-direction: column;
-            }
-
             .feature-item {
                 padding: 12px;
             }
@@ -701,9 +682,24 @@
                 </div>
 
                 <div class="price-section">
-                    <div class="price-amount">₱500</div>
-                    <p class="price-note">per month subscription</p>
+                    <div class="price-amount" id="totalAmount">₱550</div>
+                    <p class="price-note">per month including 10% tax</p>
                     <span class="subscription-badge">Recurring Monthly Payment</span>
+
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Subscription Fee</span>
+                            <span>₱500.00</span>
+                        </div>
+                        <div class="price-row tax">
+                            <span>Tax (10%)</span>
+                            <span>₱50.00</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total Monthly</span>
+                            <span>₱550.00</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="description-box">
@@ -769,11 +765,11 @@
                 </div>
             </div>
 
-            <!-- Payment Section - UPDATED with PayMongo -->
+            <!-- Payment Section with PayMongo -->
             <div class="payment-section">
                 <div class="payment-header">
                     <h2>Complete Your Tool Access</h2>
-                    <p>Choose your payment method below</p>
+                    <p>Enter your details to proceed with payment</p>
                 </div>
 
                 <div class="payment-steps">
@@ -793,22 +789,6 @@
 
                 <!-- Error Message Container -->
                 <div id="errorMessage" class="error-message"></div>
-
-                <!-- Payment Options -->
-                <div class="payment-options">
-                    <div class="payment-option selected" data-method="gcash" onclick="selectPaymentMethod('gcash')">
-                        <span>GCash</span>
-                        <small>Instant Payment</small>
-                    </div>
-                    <div class="payment-option" data-method="paymaya" onclick="selectPaymentMethod('paymaya')">
-                        <span>PayMaya</span>
-                        <small>Via PayMaya App</small>
-                    </div>
-                    <div class="payment-option" data-method="card" onclick="selectPaymentMethod('card')">
-                        <span>Card</span>
-                        <small>Credit/Debit Card</small>
-                    </div>
-                </div>
 
                 <!-- PayMongo Payment Form -->
                 <form class="payment-form" id="paymentForm">
@@ -878,10 +858,13 @@
                         <small>Helps us provide more relevant search suggestions</small>
                     </div>
 
-                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="gcash">
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="qrph">
+                    <input type="hidden" id="baseAmount" name="baseAmount" value="500">
+                    <input type="hidden" id="taxAmount" name="taxAmount" value="50">
+                    <input type="hidden" id="totalAmountInput" name="totalAmount" value="550">
 
                     <button type="submit" class="submit-button" id="submitBtn">
-                        Proceed to Payment (₱300/month)
+                        Proceed to Payment (₱550/month)
                     </button>
 
                     <div class="subscription-note">
@@ -901,18 +884,10 @@
     <script>
         // ==================== CONFIGURATION ====================
         const BACKEND_URL = 'https://paymongo-backend-5if2.onrender.com';
-
-        // ==================== PAYMENT METHOD SELECTION ====================
-        window.selectPaymentMethod = function (method) {
-            document.querySelectorAll('.payment-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            const selectedOption = document.querySelector(`[data-method="${method}"]`);
-            if (selectedOption) {
-                selectedOption.classList.add('selected');
-            }
-            document.getElementById('paymentMethod').value = method;
-        };
+        const BASE_AMOUNT = 500;
+        const TAX_RATE = 0.10; // 10%
+        const TAX_AMOUNT = BASE_AMOUNT * TAX_RATE;
+        const TOTAL_AMOUNT = BASE_AMOUNT + TAX_AMOUNT;
 
         // ==================== FORM VALIDATION ====================
         function validateForm() {
@@ -997,7 +972,6 @@
             const mobile = document.getElementById('mobile').value.trim();
             const notes = document.getElementById('notes').value.trim();
             const selectedIndustries = getSelectedIndustries();
-            const paymentMethod = document.getElementById('paymentMethod').value;
 
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
@@ -1012,7 +986,9 @@
                     product: 'Client Finder Tool',
                     selectedIndustries,
                     notes,
-                    paymentMethod
+                    amount: TOTAL_AMOUNT,
+                    baseAmount: BASE_AMOUNT,
+                    taxAmount: TAX_AMOUNT
                 });
 
                 const response = await fetch(`${BACKEND_URL}/api/payments/create-payment-intent`, {
@@ -1025,8 +1001,12 @@
                         product: 'Client Finder Tool',
                         notes: notes,
                         selectedIndustries: selectedIndustries,
-                        paymentMethod: paymentMethod,
-                        source: 'client_finder_tool'
+                        paymentMethod: 'qrph',
+                        source: 'client_finder_tool',
+                        amount: TOTAL_AMOUNT,
+                        baseAmount: BASE_AMOUNT,
+                        taxAmount: TAX_AMOUNT,
+                        description: `Client Finder Tool - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT} = ₱${TOTAL_AMOUNT}/month`
                     })
                 });
 
@@ -1042,7 +1022,9 @@
                     localStorage.setItem('lastPayment', JSON.stringify({
                         paymentIntentId: data.paymentIntentId,
                         paymentReference: data.paymentReference,
-                        amount: data.amount,
+                        amount: TOTAL_AMOUNT,
+                        baseAmount: BASE_AMOUNT,
+                        taxAmount: TAX_AMOUNT,
                         product: 'Client Finder Tool',
                         fullName: fullName,
                         email: email,
@@ -1111,11 +1093,9 @@
             });
         });
 
-        // ==================== INITIALIZE ====================
+        // ==================== SET DEFAULT PAYMENT METHOD ====================
         document.addEventListener('DOMContentLoaded', function () {
-            if (typeof selectPaymentMethod === 'function') {
-                selectPaymentMethod('gcash');
-            }
+            document.getElementById('paymentMethod').value = 'qrph';
         });
     </script>
 </body>

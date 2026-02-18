@@ -133,6 +133,36 @@
             border-bottom: 2px solid var(--light-gray);
         }
 
+        .price-breakdown {
+            background: var(--light-blue);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            color: var(--dark);
+        }
+
+        .price-row.total {
+            border-top: 2px dashed var(--coaching-teal);
+            margin-top: 8px;
+            padding-top: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--coaching-teal);
+        }
+
+        .price-row.tax {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
         .price-amount {
             font-family: 'Playfair Display', serif;
             font-size: 64px;
@@ -364,51 +394,6 @@
             font-weight: 700;
         }
 
-        /* NEW: Payment Options Section */
-        .payment-options {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .payment-option {
-            flex: 1;
-            min-width: 120px;
-            background: var(--light-gray);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 20px 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .payment-option:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .payment-option.selected {
-            border-color: var(--coaching-teal);
-            background: linear-gradient(135deg, rgba(0, 137, 123, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
-        }
-
-        .payment-option span {
-            display: block;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 16px;
-        }
-
-        .payment-option small {
-            display: block;
-            color: var(--gray);
-            font-size: 12px;
-            margin-top: 4px;
-        }
-
         /* Payment Form */
         .payment-form {
             margin-top: 40px;
@@ -562,7 +547,7 @@
             color: var(--success-green);
         }
 
-        /* Coaching Specific */
+        /* ========== FIXED: Coaching Specific Section ========== */
         .coaching-options {
             background: linear-gradient(135deg, rgba(0, 137, 123, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
             padding: 24px;
@@ -572,8 +557,17 @@
 
         .coaching-options h4 {
             color: var(--coaching-teal);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             font-size: 18px;
+            font-weight: 700;
+        }
+
+        .coaching-options label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
         }
 
         .timezone-select {
@@ -583,16 +577,59 @@
             border-radius: 8px;
             font-family: 'DM Sans', sans-serif;
             font-size: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
+            background-color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .timezone-select:focus {
+            outline: none;
+            border-color: var(--coaching-teal);
+            box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.1);
+        }
+
+        .coaching-options textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            margin-bottom: 12px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .coaching-options textarea:focus {
+            outline: none;
+            border-color: var(--coaching-teal);
+            box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.1);
+        }
+
+        .coaching-options small {
+            display: block;
+            color: var(--gray);
+            font-size: 12px;
+            margin-bottom: 24px;
+            line-height: 1.5;
         }
 
         .availability-note {
             background: var(--white);
-            padding: 12px;
+            padding: 16px;
             border-radius: 8px;
             font-size: 14px;
             color: var(--gray);
-            margin-top: 8px;
+            margin-top: 16px;
+            border-left: 4px solid var(--coaching-teal);
+            line-height: 1.6;
+        }
+
+        .availability-note strong {
+            color: var(--coaching-teal);
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
         }
 
         /* Mobile Responsiveness */
@@ -659,16 +696,16 @@
                 flex-shrink: 0;
             }
 
-            .payment-options {
-                flex-direction: column;
-            }
-
             .benefit-item {
                 padding: 16px;
             }
 
             .coaching-process {
                 padding: 16px;
+            }
+
+            .coaching-options {
+                padding: 20px;
             }
         }
 
@@ -680,6 +717,10 @@
 
             .description-box p {
                 font-size: 16px;
+            }
+
+            .coaching-options textarea {
+                min-height: 80px;
             }
         }
     </style>
@@ -709,9 +750,24 @@
                 </div>
 
                 <div class="price-section">
-                    <div class="price-amount">₱999</div>
-                    <p class="price-note">per month subscription</p>
+                    <div class="price-amount" id="totalAmount">₱1,099</div>
+                    <p class="price-note">per month including 10% tax</p>
                     <span class="subscription-badge">Recurring Monthly Payment</span>
+
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Coaching Fee</span>
+                            <span>₱999.00</span>
+                        </div>
+                        <div class="price-row tax">
+                            <span>Tax (10%)</span>
+                            <span>₱100.00</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total Monthly</span>
+                            <span>₱1,099.00</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="description-box">
@@ -798,11 +854,11 @@
                 </div>
             </div>
 
-            <!-- Payment Section - UPDATED with PayMongo -->
+            <!-- Payment Section with PayMongo -->
             <div class="payment-section">
                 <div class="payment-header">
                     <h2>Start Your Coaching Journey</h2>
-                    <p>Choose your payment method below</p>
+                    <p>Enter your details to proceed with payment</p>
                 </div>
 
                 <div class="payment-steps">
@@ -822,22 +878,6 @@
 
                 <!-- Error Message Container -->
                 <div id="errorMessage" class="error-message"></div>
-
-                <!-- Payment Options -->
-                <div class="payment-options">
-                    <div class="payment-option selected" data-method="gcash" onclick="selectPaymentMethod('gcash')">
-                        <span>GCash</span>
-                        <small>Instant Payment</small>
-                    </div>
-                    <div class="payment-option" data-method="paymaya" onclick="selectPaymentMethod('paymaya')">
-                        <span>PayMaya</span>
-                        <small>Via PayMaya App</small>
-                    </div>
-                    <div class="payment-option" data-method="card" onclick="selectPaymentMethod('card')">
-                        <span>Card</span>
-                        <small>Credit/Debit Card</small>
-                    </div>
-                </div>
 
                 <!-- PayMongo Payment Form -->
                 <form class="payment-form" id="paymentForm">
@@ -859,8 +899,10 @@
                         <small>For direct messenger support and appointment reminders</small>
                     </div>
 
+                    <!-- FIXED: Coaching Schedule Preferences Section -->
                     <div class="coaching-options">
                         <h4>Coaching Schedule Preferences</h4>
+
                         <label for="timezone">Your Timezone <span class="required">*</span></label>
                         <select id="timezone" name="timezone" class="timezone-select" required>
                             <option value="">Select your timezone</option>
@@ -873,13 +915,14 @@
                         </select>
 
                         <label for="availability">Preferred Call Days/Times</label>
-                        <textarea id="availability" name="availability" rows="3"
+                        <textarea id="availability" name="availability" rows="4"
                             placeholder="Example: 'Weekdays 6-9PM PST' or 'Monday/Wednesday mornings'"></textarea>
                         <small>Your mentor will schedule sessions based on your availability</small>
 
                         <div class="availability-note">
-                            <strong>Note:</strong> Coaching calls are typically scheduled on weekdays between 9AM-9PM in
-                            your timezone. Weekend sessions may be available upon request.
+                            <strong>📅 Schedule Note</strong>
+                            Coaching calls are typically scheduled on weekdays between 9AM-9PM in your timezone. Weekend
+                            sessions may be available upon request.
                         </div>
                     </div>
 
@@ -911,10 +954,13 @@ Example: 'Land my first VA client within 2 months'
                         <small>Be specific about what you want to accomplish with your mentor</small>
                     </div>
 
-                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="gcash">
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="qrph">
+                    <input type="hidden" id="baseAmount" name="baseAmount" value="999">
+                    <input type="hidden" id="taxAmount" name="taxAmount" value="100">
+                    <input type="hidden" id="totalAmountInput" name="totalAmount" value="1099">
 
                     <button type="submit" class="submit-button" id="submitBtn">
-                        Proceed to Payment (₱999/month)
+                        Proceed to Payment (₱1,099/month)
                     </button>
 
                     <div class="subscription-note">
@@ -936,17 +982,11 @@ Example: 'Land my first VA client within 2 months'
         // ==================== CONFIGURATION ====================
         const BACKEND_URL = 'https://paymongo-backend-5if2.onrender.com';
 
-        // ==================== PAYMENT METHOD SELECTION ====================
-        window.selectPaymentMethod = function (method) {
-            document.querySelectorAll('.payment-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            const selectedOption = document.querySelector(`[data-method="${method}"]`);
-            if (selectedOption) {
-                selectedOption.classList.add('selected');
-            }
-            document.getElementById('paymentMethod').value = method;
-        };
+        // Amounts in pesos (for display AND for backend)
+        const BASE_AMOUNT = 999;
+        const TAX_RATE = 0.10; // 10%
+        const TAX_AMOUNT = Math.round(BASE_AMOUNT * TAX_RATE); // 100
+        const TOTAL_AMOUNT = BASE_AMOUNT + TAX_AMOUNT; // 1099
 
         // ==================== FORM VALIDATION ====================
         function validateForm() {
@@ -1049,7 +1089,6 @@ Example: 'Land my first VA client within 2 months'
             const experienceLevel = document.getElementById('experienceLevel').value;
             const targetClient = document.getElementById('targetClient').value.trim();
             const coachingGoals = document.getElementById('coachingGoals').value.trim();
-            const paymentMethod = document.getElementById('paymentMethod').value;
 
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
@@ -1062,12 +1101,9 @@ Example: 'Land my first VA client within 2 months'
                     email,
                     mobile,
                     product: 'Dedicated Coaching',
-                    timezone,
-                    availability,
-                    experienceLevel,
-                    targetClient,
-                    coachingGoals,
-                    paymentMethod
+                    amount: TOTAL_AMOUNT,
+                    baseAmount: BASE_AMOUNT,
+                    taxAmount: TAX_AMOUNT
                 });
 
                 const response = await fetch(`${BACKEND_URL}/api/payments/create-payment-intent`, {
@@ -1083,8 +1119,12 @@ Example: 'Land my first VA client within 2 months'
                         experienceLevel: experienceLevel,
                         targetClient: targetClient,
                         coachingGoals: coachingGoals,
-                        paymentMethod: paymentMethod,
-                        source: 'dedicated_coaching'
+                        paymentMethod: 'qrph',
+                        source: 'dedicated_coaching',
+                        amount: TOTAL_AMOUNT, // Send as pesos, not centavos
+                        baseAmount: BASE_AMOUNT,
+                        taxAmount: TAX_AMOUNT,
+                        description: `Dedicated Coaching - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT} = ₱${TOTAL_AMOUNT}/month`
                     })
                 });
 
@@ -1100,7 +1140,9 @@ Example: 'Land my first VA client within 2 months'
                     localStorage.setItem('lastPayment', JSON.stringify({
                         paymentIntentId: data.paymentIntentId,
                         paymentReference: data.paymentReference,
-                        amount: data.amount,
+                        amount: TOTAL_AMOUNT,
+                        baseAmount: BASE_AMOUNT,
+                        taxAmount: TAX_AMOUNT,
                         product: 'Dedicated Coaching',
                         fullName: fullName,
                         email: email,
@@ -1152,11 +1194,19 @@ Example: 'Land my first VA client within 2 months'
         });
 
         // ==================== INPUT ANIMATION ====================
-        document.querySelectorAll('#fullName, #email, #mobile, #availability, #targetClient, #coachingGoals').forEach(input => {
+        document.querySelectorAll('#fullName, #email, #mobile, #targetClient, #coachingGoals').forEach(input => {
             input.addEventListener('input', function () {
                 this.style.borderColor = this.value.trim() ? '#2E7D32' : '#E0E0E0';
             });
         });
+
+        // Add animation for availability textarea
+        const availabilityInput = document.getElementById('availability');
+        if (availabilityInput) {
+            availabilityInput.addEventListener('input', function () {
+                this.style.borderColor = this.value.trim() ? '#2E7D32' : '#E0E0E0';
+            });
+        }
 
         // ==================== SELECT ELEMENTS STYLING ====================
         document.querySelectorAll('#timezone, #experienceLevel').forEach(select => {
@@ -1165,11 +1215,9 @@ Example: 'Land my first VA client within 2 months'
             });
         });
 
-        // ==================== INITIALIZE ====================
+        // ==================== SET DEFAULT PAYMENT METHOD ====================
         document.addEventListener('DOMContentLoaded', function () {
-            if (typeof selectPaymentMethod === 'function') {
-                selectPaymentMethod('gcash');
-            }
+            document.getElementById('paymentMethod').value = 'qrph';
         });
     </script>
 </body>

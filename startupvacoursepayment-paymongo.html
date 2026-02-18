@@ -133,6 +133,36 @@
             border-bottom: 2px solid var(--light-gray);
         }
 
+        .price-breakdown {
+            background: var(--light-blue);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            color: var(--dark);
+        }
+
+        .price-row.total {
+            border-top: 2px dashed var(--primary-blue);
+            margin-top: 8px;
+            padding-top: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--dark-blue);
+        }
+
+        .price-row.tax {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
         .price-amount {
             font-family: 'Playfair Display', serif;
             font-size: 64px;
@@ -258,44 +288,6 @@
         .step.active .step-label {
             color: var(--dark-blue);
             font-weight: 700;
-        }
-
-        /* NEW: Payment Options Section */
-        .payment-options {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .payment-option {
-            flex: 1;
-            min-width: 120px;
-            background: var(--light-gray);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 20px 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .payment-option:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        .payment-option.selected {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .payment-option span {
-            display: block;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 16px;
         }
 
         /* Payment Form */
@@ -492,10 +484,6 @@
                 margin: 0;
                 flex-shrink: 0;
             }
-
-            .payment-options {
-                flex-direction: column;
-            }
         }
 
         @media (max-width: 480px) {
@@ -531,8 +519,23 @@
                 </div>
 
                 <div class="price-section">
-                    <div class="price-amount">₱1,500</div>
-                    <p class="price-note">One-time payment - LIFETIME ACCESS</p>
+                    <div class="price-amount" id="totalAmount">₱1,650</div>
+                    <p class="price-note">Total including 10% tax</p>
+
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Course Fee</span>
+                            <span>₱1,500.00</span>
+                        </div>
+                        <div class="price-row tax">
+                            <span>Tax (10%)</span>
+                            <span>₱150.00</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total Amount</span>
+                            <span>₱1,650.00</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="features-list">
@@ -584,7 +587,7 @@
             <div class="payment-section">
                 <div class="payment-header">
                     <h2>Complete Your Payment</h2>
-                    <p>Choose your payment method below</p>
+                    <p>Enter your details to proceed with payment</p>
                 </div>
 
                 <div class="payment-steps">
@@ -604,19 +607,6 @@
 
                 <!-- Error Message Container -->
                 <div id="errorMessage" class="error-message"></div>
-
-                <!-- Payment Options - Simplified -->
-                <div class="payment-options">
-                    <div class="payment-option selected" data-method="gcash" onclick="selectPaymentMethod('gcash')">
-                        <span>GCash</span>
-                    </div>
-                    <div class="payment-option" data-method="paymaya" onclick="selectPaymentMethod('paymaya')">
-                        <span>PayMaya</span>
-                    </div>
-                    <div class="payment-option" data-method="card" onclick="selectPaymentMethod('card')">
-                        <span>Credit/Debit Card</span>
-                    </div>
-                </div>
 
                 <!-- PayMongo Payment Form -->
                 <form class="payment-form" id="paymentForm">
@@ -644,10 +634,13 @@
                             placeholder="Any special requests or questions?"></textarea>
                     </div>
 
-                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="gcash">
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="qrph">
+                    <input type="hidden" id="baseAmount" name="baseAmount" value="1500">
+                    <input type="hidden" id="taxAmount" name="taxAmount" value="150">
+                    <input type="hidden" id="totalAmountInput" name="totalAmount" value="1650">
 
                     <button type="submit" class="submit-button" id="submitBtn">
-                        Proceed to Payment (₱1,500)
+                        Proceed to Payment (₱1,650)
                     </button>
 
                     <div class="security-badge">
@@ -662,18 +655,10 @@
     <script>
         // ==================== CONFIGURATION ====================
         const BACKEND_URL = 'https://paymongo-backend-5if2.onrender.com';
-
-        // ==================== PAYMENT METHOD SELECTION ====================
-        window.selectPaymentMethod = function (method) {
-            document.querySelectorAll('.payment-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            const selectedOption = document.querySelector(`[data-method="${method}"]`);
-            if (selectedOption) {
-                selectedOption.classList.add('selected');
-            }
-            document.getElementById('paymentMethod').value = method;
-        };
+        const BASE_AMOUNT = 1500;
+        const TAX_RATE = 0.10; // 10%
+        const TAX_AMOUNT = BASE_AMOUNT * TAX_RATE;
+        const TOTAL_AMOUNT = BASE_AMOUNT + TAX_AMOUNT;
 
         // ==================== FORM VALIDATION ====================
         function validateForm() {
@@ -748,7 +733,6 @@
             const email = document.getElementById('email').value.trim();
             const mobile = document.getElementById('mobile').value.trim();
             const notes = document.getElementById('notes').value.trim();
-            const paymentMethod = document.getElementById('paymentMethod').value;
 
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
@@ -762,7 +746,9 @@
                     mobile,
                     product: 'START UP VA Course',
                     notes,
-                    paymentMethod
+                    amount: TOTAL_AMOUNT,
+                    baseAmount: BASE_AMOUNT,
+                    taxAmount: TAX_AMOUNT
                 });
 
                 const response = await fetch(`${BACKEND_URL}/api/payments/create-payment-intent`, {
@@ -774,8 +760,12 @@
                         mobile: mobile,
                         product: 'START UP VA Course',
                         notes: notes,
-                        paymentMethod: paymentMethod,
-                        source: 'startup_va_course'
+                        paymentMethod: 'qrph',
+                        source: 'startup_va_course',
+                        amount: TOTAL_AMOUNT,
+                        baseAmount: BASE_AMOUNT,
+                        taxAmount: TAX_AMOUNT,
+                        description: `START UP VA Course - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT} = ₱${TOTAL_AMOUNT}`
                     })
                 });
 
@@ -791,7 +781,9 @@
                     localStorage.setItem('lastPayment', JSON.stringify({
                         paymentIntentId: data.paymentIntentId,
                         paymentReference: data.paymentReference,
-                        amount: data.amount,
+                        amount: TOTAL_AMOUNT,
+                        baseAmount: BASE_AMOUNT,
+                        taxAmount: TAX_AMOUNT,
                         product: 'START UP VA Course',
                         fullName: fullName,
                         email: email,
@@ -846,11 +838,9 @@
             });
         });
 
-        // ==================== INITIALIZE ====================
+        // ==================== SET DEFAULT PAYMENT METHOD ====================
         document.addEventListener('DOMContentLoaded', function () {
-            if (typeof selectPaymentMethod === 'function') {
-                selectPaymentMethod('gcash');
-            }
+            document.getElementById('paymentMethod').value = 'qrph';
         });
     </script>
 </body>

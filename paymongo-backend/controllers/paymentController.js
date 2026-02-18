@@ -1,6 +1,7 @@
 // controllers/paymentController.js
 const paymongoService = require('../services/paymongoService');
 const webhookService = require('../services/webhookService');
+const ghlService = require('../services/ghlService');
 const { generateId, validateEmail, validateMobile, calculateTaxedAmount } = require('../utils/helpers');
 
 // Product pricing mapping
@@ -207,12 +208,13 @@ exports.getPaymentStatus = async (req, res) => {
 exports.handleWebhook = async (req, res) => {
     try {
         const event = req.body;
+        const eventType = event.data?.attributes?.type || event.data?.type;
 
-        console.log('Webhook received:', event.data.type);
+        console.log('Webhook received:', eventType);
         console.log('Event data:', JSON.stringify(event.data, null, 2));
 
         // Handle different event types
-        switch (event.data.type) {
+        switch (eventType) {
             case 'payment.paid':
                 await handlePaymentSuccess(event.data.attributes);
                 break;
@@ -226,7 +228,7 @@ exports.handleWebhook = async (req, res) => {
                 break;
 
             default:
-                console.log('Unhandled event type:', event.data.type);
+                console.log('Unhandled event type:', eventType);
         }
 
         // Always return 200 to acknowledge receipt
@@ -330,6 +332,91 @@ async function handlePaymentSuccess(attributes) {
 
     const paymentData = attributes.data || {};
     const metadata = paymentData.attributes?.metadata || {};
+
+    try {
+        if (process.env.GHL_PRIVATE_KEY && process.env.GHL_LOCATION_ID) {
+            const amountCentavos = Number(paymentData.attributes?.amount);
+            const currency = paymentData.attributes?.currency || 'PHP';
+            const amount = Number.isFinite(amountCentavos) ? Math.round(amountCentavos) : undefined;
+
+            const fullName = metadata.fullName;
+            const email = metadata.email;
+            const phone = metadata.mobile;
+            const product = metadata.product;
+
+            const upsertResult = await ghlService.upsertContact({
+                fullName,
+                email,
+                phone
+            });
+
+            const contactId = upsertResult?.contact?.id || upsertResult?.id || upsertResult?.contactId;
+
+            if (!contactId) {
+                console.log('GHL upsertContact did not return contact id, skipping invoice creation');
+            } else if (!amount) {
+                console.log('PayMongo amount missing, skipping invoice creation');
+            } else {
+                const now = new Date();
+                const issueDate = now.toISOString().slice(0, 10);
+                const dueDate = issueDate;
+
+                const invoice = await ghlService.createInvoice({
+                    contactId,
+                    contactDetails: {
+                        name: fullName,
+                        phoneNo: phone,
+                        email
+                    },
+                    name: product ? String(product) : 'PayMongo Payment',
+                    currency: String(currency).toUpperCase(),
+                    issueDate,
+                    dueDate,
+                    items: [
+                        {
+                            name: product ? String(product) : 'PayMongo Payment',
+                            description: metadata.paymentReference ? `Ref: ${metadata.paymentReference}` : undefined,
+                            currency: String(currency).toUpperCase(),
+                            amount,
+                            qty: 1,
+                            type: 'one_time'
+                        }
+                    ].map(item => {
+                        Object.keys(item).forEach(k => item[k] === undefined && delete item[k]);
+                        return item;
+                    })
+                });
+
+                console.log('GHL invoice created:', invoice?.id || invoice?.invoice?.id || invoice);
+
+                const invoiceId = invoice?.invoice?._id || invoice?._id || invoice?.id;
+                if (invoiceId) {
+                    try {
+                        const paySource = paymentData.attributes?.source || {};
+                        const cardBrand = paySource?.brand || paySource?.card_brand;
+                        const cardLast4 = paySource?.last4 || paySource?.last_4;
+
+                        const paymentResult = await ghlService.recordInvoicePayment({
+                            invoiceId,
+                            amount,
+                            mode: 'card',
+                            cardBrand,
+                            cardLast4,
+                            notes: `PayMongo payment ${paymentData.id}`,
+                            fulfilledAt: new Date().toISOString()
+                        });
+                        console.log('GHL payment recorded, transaction created:', paymentResult?.id || paymentResult?.transaction?.id || 'OK');
+                    } catch (payErr) {
+                        console.log('GHL record-payment error (non-fatal):', payErr.response?.data || payErr.message);
+                    }
+                } else {
+                    console.log('GHL invoice created but no invoiceId found for record-payment');
+                }
+            }
+        }
+    } catch (err) {
+        console.log('GHL sync error (non-fatal):', err.response?.data || err.message);
+    }
 
     await webhookService.sendToLeadConnector({
         ...metadata,

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customization Plan Consultation - Nexistry Academy</title>
+    <title>Complete Your Customization Plan - Nexistry Academy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -131,6 +131,36 @@
             margin-bottom: 32px;
             padding-bottom: 32px;
             border-bottom: 2px solid var(--light-gray);
+        }
+
+        .price-breakdown {
+            background: var(--light-blue);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            color: var(--dark);
+        }
+
+        .price-row.total {
+            border-top: 2px dashed var(--custom-purple);
+            margin-top: 8px;
+            padding-top: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--custom-purple);
+        }
+
+        .price-row.tax {
+            color: var(--gray);
+            font-size: 14px;
         }
 
         .price-amount {
@@ -292,34 +322,34 @@
             margin-bottom: 20px;
         }
 
-        /* Consultation Section */
-        .consultation-section {
+        /* Payment Section */
+        .payment-section {
             background: var(--white);
             border-radius: 16px;
             padding: 40px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
         }
 
-        .consultation-header {
+        .payment-header {
             text-align: center;
             margin-bottom: 40px;
         }
 
-        .consultation-header h2 {
+        .payment-header h2 {
             font-family: 'Playfair Display', serif;
             font-size: 32px;
             color: var(--custom-purple);
             margin-bottom: 12px;
         }
 
-        .consultation-steps {
+        .payment-steps {
             display: flex;
             justify-content: space-between;
             position: relative;
             margin-bottom: 40px;
         }
 
-        .consultation-steps::before {
+        .payment-steps::before {
             content: '';
             position: absolute;
             top: 20px;
@@ -376,8 +406,8 @@
             font-weight: 700;
         }
 
-        /* Consultation Form */
-        .consultation-form {
+        /* Payment Form */
+        .payment-form {
             margin-top: 40px;
         }
 
@@ -423,7 +453,7 @@
             color: var(--error-red);
         }
 
-        /* Customization Options */
+        /* Customization Options - FIXED CSS */
         .customization-options {
             background: linear-gradient(135deg, rgba(106, 27, 154, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
             padding: 24px;
@@ -437,11 +467,17 @@
             font-size: 18px;
         }
 
-        .option-group {
+        .option-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-bottom: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .option-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .option-item {
@@ -453,15 +489,35 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: 1px solid transparent;
+            height: 100%;
         }
 
         .option-item:hover {
             background: var(--light-gray);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .option-item input[type="checkbox"] {
             margin-top: 4px;
-            width: auto;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--custom-purple);
+            flex-shrink: 0;
+        }
+
+        .option-item span {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--dark);
+        }
+
+        .option-item.checked {
+            background: var(--light-blue);
+            border-color: var(--custom-purple);
         }
 
         /* Submit Button */
@@ -550,8 +606,8 @@
             font-size: 20px;
         }
 
-        /* Consultation Note */
-        .consultation-note {
+        /* Payment Note */
+        .payment-note {
             background: #E8F5E9;
             padding: 16px;
             border-radius: 8px;
@@ -560,13 +616,13 @@
             border-left: 4px solid var(--success-green);
         }
 
-        .consultation-note p {
+        .payment-note p {
             color: var(--dark);
             font-size: 14px;
             margin: 0;
         }
 
-        .consultation-note strong {
+        .payment-note strong {
             color: var(--success-green);
         }
 
@@ -595,8 +651,7 @@
                 position: static;
             }
 
-            .inclusion-grid,
-            .option-group {
+            .inclusion-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -619,12 +674,12 @@
             }
 
             .order-summary,
-            .consultation-section {
+            .payment-section {
                 padding: 24px;
             }
 
             .order-header h1,
-            .consultation-header h2 {
+            .payment-header h2 {
                 font-size: 24px;
             }
 
@@ -632,12 +687,12 @@
                 font-size: 48px;
             }
 
-            .consultation-steps {
+            .payment-steps {
                 flex-direction: column;
                 gap: 24px;
             }
 
-            .consultation-steps::before {
+            .payment-steps::before {
                 display: none;
             }
 
@@ -699,9 +754,24 @@
                 </div>
 
                 <div class="price-section">
-                    <div class="price-amount">₱5,000</div>
-                    <p class="price-note">per month subscription</p>
-                    <span class="subscription-badge">Starts After Consultation</span>
+                    <div class="price-amount" id="totalAmount">₱5,500</div>
+                    <p class="price-note">per month including 10% tax</p>
+                    <span class="subscription-badge">Recurring Monthly Payment</span>
+
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Base Plan</span>
+                            <span>₱5,000.00</span>
+                        </div>
+                        <div class="price-row tax">
+                            <span>Tax (10%)</span>
+                            <span>₱500.00</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total Monthly</span>
+                            <span>₱5,500.00</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="description-box">
@@ -780,58 +850,58 @@
                 <div class="consultation-cta">
                     <h3>Contact Us Now!</h3>
                     <p>Para sa personalized consultation at custom package mo!</p>
-                    <p><strong>Complete the form to schedule your free consultation and receive a custom quote.</strong>
+                    <p><strong>Complete the form to start your customization plan with payment.</strong>
                     </p>
                 </div>
 
                 <div class="security-badge">
                     <span class="lock-icon">🔒</span>
-                    <span>Secure Form • Your Information is Protected</span>
+                    <span>Secure Payment • Your Information is Protected</span>
                 </div>
             </div>
 
-            <!-- Consultation Section -->
-            <div class="consultation-section">
-                <div class="consultation-header">
-                    <h2>Schedule Your Free Consultation</h2>
-                    <p>Get a personalized quote and custom plan tailored to your business needs</p>
+            <!-- Payment Section with PayMongo -->
+            <div class="payment-section">
+                <div class="payment-header">
+                    <h2>Complete Your Customization Plan</h2>
+                    <p>Enter your details to proceed with payment</p>
                 </div>
 
-                <div class="consultation-steps">
+                <div class="payment-steps">
                     <div class="step active">
                         <div class="step-number">1</div>
-                        <div class="step-label">Complete Form</div>
+                        <div class="step-label">Enter Details</div>
                     </div>
                     <div class="step">
                         <div class="step-number">2</div>
-                        <div class="step-label">Schedule Call</div>
+                        <div class="step-label">Choose Payment</div>
                     </div>
                     <div class="step">
                         <div class="step-number">3</div>
-                        <div class="step-label">Get Custom Quote</div>
+                        <div class="step-label">Complete Payment</div>
                     </div>
                 </div>
 
                 <!-- Error Message Container -->
                 <div id="errorMessage" class="error-message"></div>
 
-                <form class="consultation-form" id="consultationForm">
+                <form class="payment-form" id="paymentForm">
                     <div class="form-group">
                         <label for="fullName">Full Name <span class="required">*</span></label>
                         <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
-                        <small>Who will be the primary contact for this consultation?</small>
+                        <small>Who will be the primary contact for this plan?</small>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address <span class="required">*</span></label>
                         <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                        <small>We'll send consultation details and follow-up to this email</small>
+                        <small>We'll send setup instructions and updates to this email</small>
                     </div>
 
                     <div class="form-group">
                         <label for="mobile">Mobile Number <span class="required">*</span></label>
                         <input type="tel" id="mobile" name="mobile" required placeholder="09171234567">
-                        <small>For SMS reminders and quick follow-ups about your consultation</small>
+                        <small>For account verification and support communication</small>
                     </div>
 
                     <div class="business-details">
@@ -871,11 +941,12 @@
                         </div>
                     </div>
 
+                    <!-- FIXED: Customization Needs Section with Improved Grid Layout -->
                     <div class="customization-options">
                         <h4>Customization Needs</h4>
                         <p style="margin-bottom: 16px; color: var(--gray); font-size: 14px;">Select the areas where you
                             need personalized customization:</p>
-                        <div class="option-group">
+                        <div class="option-grid">
                             <label class="option-item">
                                 <input type="checkbox" name="needs[]" value="branding">
                                 <span>Custom Branding & White-labeling</span>
@@ -909,7 +980,7 @@
                                 <span>Data Migration from Existing Systems</span>
                             </label>
                         </div>
-                        <small>These selections help us prepare for our consultation call</small>
+                        <small>These selections help us prepare your custom setup</small>
                     </div>
 
                     <div class="form-group">
@@ -917,19 +988,6 @@
                         <input type="text" id="currentSystem" name="currentSystem"
                             placeholder="Example: 'Currently using HubSpot and Calendly'">
                         <small>What tools are you currently using? This helps with integration planning.</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="monthlyBudget">Monthly Budget Range <span class="required">*</span></label>
-                        <select id="monthlyBudget" name="monthlyBudget" required>
-                            <option value="">Select budget range</option>
-                            <option value="5k">₱5,000 - ₱7,500</option>
-                            <option value="7.5k">₱7,500 - ₱10,000</option>
-                            <option value="10k">₱10,000 - ₱15,000</option>
-                            <option value="15k">₱15,000 - ₱20,000</option>
-                            <option value="20k+">₱20,000+ (Enterprise)</option>
-                        </select>
-                        <small>This helps us prepare appropriate customization options for your budget</small>
                     </div>
 
                     <div class="form-group">
@@ -955,26 +1013,24 @@ Example: 'Automate lead generation and follow-up'
                         <small>When would you like to start the customization process?</small>
                     </div>
 
-                    <div class="form-group">
-                        <label for="availability">Preferred Consultation Times</label>
-                        <textarea id="availability" name="availability" rows="3"
-                            placeholder="Example: 'Weekdays 10AM-4PM' or 'Tuesday/Thursday afternoons'"></textarea>
-                        <small>Our team will contact you to schedule based on your availability</small>
-                    </div>
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="qrph">
+                    <input type="hidden" id="baseAmount" name="baseAmount" value="5000">
+                    <input type="hidden" id="taxAmount" name="taxAmount" value="500">
+                    <input type="hidden" id="totalAmountInput" name="totalAmount" value="5500">
 
                     <button type="submit" class="submit-button" id="submitBtn">
-                        Request Free Consultation
+                        Proceed to Payment (₱5,500/month)
                     </button>
 
-                    <div class="consultation-note">
-                        <p><strong>What happens next:</strong> Our customization specialist will review your information
-                            and contact you within 24 hours to schedule your free consultation call and prepare a
-                            personalized quote.</p>
+                    <div class="payment-note">
+                        <p><strong>What happens next:</strong> After successful payment, our customization specialist
+                            will review your information and contact you within 24 hours to begin your custom CRM setup.
+                        </p>
                     </div>
 
                     <div class="security-badge">
                         <span class="lock-icon">🔒</span>
-                        <span>256-bit SSL Encryption • Your Business Information is Secure</span>
+                        <span>256-bit SSL Encryption • Powered by PayMongo</span>
                     </div>
                 </form>
             </div>
@@ -983,12 +1039,15 @@ Example: 'Automate lead generation and follow-up'
 
     <script>
         // ==================== CONFIGURATION ====================
-        // This is a consultation form - no payment needed
-        // Data will be sent to your backend for processing
+        const BACKEND_URL = 'https://paymongo-backend-5if2.onrender.com';
+        const BASE_AMOUNT = 5000;
+        const TAX_RATE = 0.10; // 10%
+        const TAX_AMOUNT = BASE_AMOUNT * TAX_RATE;
+        const TOTAL_AMOUNT = BASE_AMOUNT + TAX_AMOUNT;
 
         // ==================== FORM VALIDATION ====================
         function validateForm() {
-            const requiredFields = ['fullName', 'email', 'mobile', 'businessName', 'businessType', 'teamSize', 'monthlyBudget', 'goals'];
+            const requiredFields = ['fullName', 'email', 'mobile', 'businessName', 'businessType', 'teamSize', 'goals'];
             let isValid = true;
             const errors = [];
 
@@ -1057,7 +1116,7 @@ Example: 'Automate lead generation and follow-up'
         }
 
         // ==================== MAIN FORM SUBMISSION ====================
-        document.getElementById('consultationForm').addEventListener('submit', async function (e) {
+        document.getElementById('paymentForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const { isValid, errors } = validateForm();
@@ -1067,62 +1126,130 @@ Example: 'Automate lead generation and follow-up'
             }
 
             // Get form values
-            const formData = {
-                fullName: document.getElementById('fullName').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                mobile: document.getElementById('mobile').value.trim(),
-                businessName: document.getElementById('businessName').value.trim(),
-                businessType: document.getElementById('businessType').value,
-                teamSize: document.getElementById('teamSize').value,
-                monthlyBudget: document.getElementById('monthlyBudget').value,
-                goals: document.getElementById('goals').value.trim(),
-                currentSystem: document.getElementById('currentSystem')?.value.trim() || '',
-                timeline: document.getElementById('timeline')?.value || '',
-                availability: document.getElementById('availability')?.value.trim() || '',
-                selectedOptions: getSelectedOptions(),
-                product: 'Customization Plan',
-                source: 'customization_consultation',
-                timestamp: new Date().toISOString()
-            };
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const businessName = document.getElementById('businessName').value.trim();
+            const businessType = document.getElementById('businessType').value;
+            const teamSize = document.getElementById('teamSize').value;
+            const goals = document.getElementById('goals').value.trim();
+            const currentSystem = document.getElementById('currentSystem')?.value.trim() || '';
+            const timeline = document.getElementById('timeline')?.value || '';
+            const selectedOptions = getSelectedOptions();
 
-            // Show loading state
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="spinner"></span> Sending Request...';
+            submitBtn.innerHTML = '<span class="spinner"></span> Creating payment...';
             submitBtn.disabled = true;
 
             try {
-                console.log('Sending consultation request:', formData);
+                console.log('Creating payment intent with data:', {
+                    fullName,
+                    email,
+                    mobile,
+                    product: 'Customization Plan',
+                    businessName,
+                    businessType,
+                    teamSize,
+                    goals,
+                    currentSystem,
+                    timeline,
+                    selectedOptions,
+                    amount: TOTAL_AMOUNT,
+                    baseAmount: BASE_AMOUNT,
+                    taxAmount: TAX_AMOUNT
+                });
 
-                // Simulate successful submission (replace with actual API call)
-                // In a real implementation, you would send this to your backend
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                const response = await fetch(`${BACKEND_URL}/api/payments/create-payment-intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fullName: fullName,
+                        email: email,
+                        mobile: mobile,
+                        product: 'Customization Plan',
+                        businessName: businessName,
+                        businessType: businessType,
+                        teamSize: teamSize,
+                        goals: goals,
+                        currentSystem: currentSystem,
+                        timeline: timeline,
+                        selectedOptions: selectedOptions,
+                        paymentMethod: 'qrph',
+                        source: 'customization_plan',
+                        amount: TOTAL_AMOUNT,
+                        baseAmount: BASE_AMOUNT,
+                        taxAmount: TAX_AMOUNT,
+                        description: `Customization Plan - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT} = ₱${TOTAL_AMOUNT}/month`
+                    })
+                });
 
-                // Store in localStorage for reference
-                localStorage.setItem('lastConsultation', JSON.stringify({
-                    ...formData,
-                    submittedAt: new Date().toISOString()
-                }));
+                const data = await response.json();
 
-                // Show success message
-                showError('✓ Request sent successfully! Redirecting...');
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to create payment');
+                }
 
-                // Redirect to thank you page
-                setTimeout(() => {
-                    window.location.href = 'https://nxacademy.nexistrydigitalsolutions.com/thank-you';
-                }, 2000);
+                if (data.success && data.checkoutUrl) {
+                    console.log('Payment intent created:', data.paymentIntentId);
+
+                    localStorage.setItem('lastPayment', JSON.stringify({
+                        paymentIntentId: data.paymentIntentId,
+                        paymentReference: data.paymentReference,
+                        amount: TOTAL_AMOUNT,
+                        baseAmount: BASE_AMOUNT,
+                        taxAmount: TAX_AMOUNT,
+                        product: 'Customization Plan',
+                        fullName: fullName,
+                        email: email,
+                        businessName: businessName,
+                        businessType: businessType,
+                        timestamp: new Date().toISOString()
+                    }));
+
+                    window.location.href = data.checkoutUrl;
+                } else {
+                    throw new Error('Invalid response from server');
+                }
 
             } catch (error) {
-                console.error('Submission error:', error);
-                showError('Failed to send request. Please try again.');
+                console.error('Payment error:', error);
+
+                if (error.message && (error.message.includes('ECONNREFUSED') || error.message.includes('Failed to fetch'))) {
+                    showError('Cannot connect to payment server. Please try again.');
+                } else {
+                    showError(error.message || 'Payment failed. Please try again.');
+                }
 
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         });
 
+        // ==================== CHECK PAYMENT STATUS ON RETURN ====================
+        window.addEventListener('load', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+            const paymentId = urlParams.get('payment_intent_id');
+
+            if (sessionId || paymentId) {
+                const submitBtn = document.getElementById('submitBtn');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '✓ Payment completed! Redirecting...';
+                    submitBtn.disabled = true;
+                }
+
+                // Clear the stored payment
+                localStorage.removeItem('lastPayment');
+
+                setTimeout(() => {
+                    window.location.href = 'https://nxacademy.nexistrydigitalsolutions.com/thank-you';
+                }, 2000);
+            }
+        });
+
         // ==================== INPUT ANIMATION ====================
-        document.querySelectorAll('.consultation-form input, .consultation-form textarea, .consultation-form select').forEach(input => {
+        document.querySelectorAll('#fullName, #email, #mobile, #businessName, #currentSystem, #goals').forEach(input => {
             input.addEventListener('input', function () {
                 if (this.value.trim()) {
                     this.style.borderColor = '#2E7D32';
@@ -1133,7 +1260,7 @@ Example: 'Automate lead generation and follow-up'
         });
 
         // ==================== SELECT ELEMENTS STYLING ====================
-        document.querySelectorAll('select').forEach(select => {
+        document.querySelectorAll('#businessType, #teamSize, #timeline').forEach(select => {
             select.addEventListener('change', function () {
                 this.style.borderColor = this.value ? '#2E7D32' : '#E0E0E0';
             });
@@ -1142,12 +1269,11 @@ Example: 'Automate lead generation and follow-up'
         // ==================== CHECKBOX STYLING ====================
         document.querySelectorAll('.option-item input[type="checkbox"]').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
+                const optionItem = this.closest('.option-item');
                 if (this.checked) {
-                    this.closest('.option-item').style.background = 'var(--light-blue)';
-                    this.closest('.option-item').style.border = '1px solid var(--custom-purple)';
+                    optionItem.classList.add('checked');
                 } else {
-                    this.closest('.option-item').style.background = 'var(--white)';
-                    this.closest('.option-item').style.border = 'none';
+                    optionItem.classList.remove('checked');
                 }
             });
         });

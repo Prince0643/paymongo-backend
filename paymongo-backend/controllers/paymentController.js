@@ -206,9 +206,16 @@ exports.getPaymentStatus = async (req, res) => {
 
 // Handle PayMongo webhook
 exports.handleWebhook = async (req, res) => {
+    // Log raw request immediately
+    console.log('=== WEBHOOK REQUEST RECEIVED ===');
+    console.log('Headers:', JSON.stringify(req.headers, null, 2));
+    console.log('Raw body:', JSON.stringify(req.body, null, 2));
+
     try {
         const event = req.body;
-        const eventType = event.data?.attributes?.type || event.data?.type;
+
+        // Handle both PayMongo structures
+        const eventType = event.data?.attributes?.type || event.data?.type || event.type;
 
         console.log('Webhook received:', eventType);
         console.log('Event data:', JSON.stringify(event.data, null, 2));
@@ -216,15 +223,15 @@ exports.handleWebhook = async (req, res) => {
         // Handle different event types
         switch (eventType) {
             case 'payment.paid':
-                await handlePaymentSuccess(event.data.attributes);
+                await handlePaymentSuccess(event.data?.attributes || event.data);
                 break;
 
             case 'payment.failed':
-                await handlePaymentFailure(event.data.attributes);
+                await handlePaymentFailure(event.data?.attributes || event.data);
                 break;
 
             case 'payment.pending':
-                await handlePaymentPending(event.data.attributes);
+                await handlePaymentPending(event.data?.attributes || event.data);
                 break;
 
             default:

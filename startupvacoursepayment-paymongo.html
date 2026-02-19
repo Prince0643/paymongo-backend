@@ -158,6 +158,16 @@
             color: var(--dark-blue);
         }
 
+        .price-row.discount {
+            color: var(--success-green);
+            font-size: 14px;
+            display: none;
+        }
+
+        .price-row.discount.show {
+            display: flex;
+        }
+
         .price-row.tax {
             color: var(--gray);
             font-size: 14px;
@@ -332,6 +342,61 @@
         }
 
         .required {
+            color: var(--error-red);
+        }
+
+        /* Promo Code Section */
+        .promo-section {
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(244, 184, 64, 0.05) 100%);
+            border: 2px dashed var(--primary-blue);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .promo-section h4 {
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .promo-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .promo-input-group input {
+            flex: 1;
+            text-transform: uppercase;
+        }
+
+        .promo-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .promo-btn:hover {
+            background: var(--primary-gold);
+            color: var(--dark);
+        }
+
+        .promo-message {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .promo-message.success {
+            color: var(--success-green);
+        }
+
+        .promo-message.error {
             color: var(--error-red);
         }
 
@@ -531,9 +596,13 @@
                             <span>Tax (10%)</span>
                             <span>₱150.00</span>
                         </div>
+                        <div class="price-row discount" id="discountRow">
+                            <span>Promo Discount (5%)</span>
+                            <span id="discountAmount">-₱0.00</span>
+                        </div>
                         <div class="price-row total">
-                            <span>Total Amount</span>
-                            <span>₱1,650.00</span>
+                            <span>Total</span>
+                            <span id="finalTotal">₱1,650.00</span>
                         </div>
                     </div>
                 </div>
@@ -634,13 +703,23 @@
                             placeholder="Any special requests or questions?"></textarea>
                     </div>
 
-                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="gcash">
+                    <div class="promo-section">
+                        <h4>Have a promo code?</h4>
+                        <div class="promo-input-group">
+                            <input type="text" id="promoCode" name="promoCode" placeholder="Enter promo code">
+                            <button type="button" class="promo-btn" id="applyPromoBtn">Apply</button>
+                        </div>
+                        <div class="promo-message" id="promoMessage"></div>
+                    </div>
+
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="qrph">
                     <input type="hidden" id="baseAmount" name="baseAmount" value="1500">
                     <input type="hidden" id="taxAmount" name="taxAmount" value="150">
-                    <input type="hidden" id="totalAmountInput" name="totalAmount" value="1650">
+                    <input type="hidden" id="promoDiscount" name="promoDiscount" value="0">
+                    <input type="hidden" id="finalAmount" name="finalAmount" value="1650">
 
                     <button type="submit" class="submit-button" id="submitBtn">
-                        Proceed to Payment (₱1,650)
+                        Proceed to Payment (₱<span id="btnAmount">1,650</span>)
                     </button>
 
                     <div class="security-badge">
@@ -657,8 +736,82 @@
         const BACKEND_URL = 'https://paymongo-backend-5if2.onrender.com';
         const BASE_AMOUNT = 1500;
         const TAX_RATE = 0.10; // 10%
+        const DISCOUNT_RATE = 0.05; // 5%
+        const VALID_PROMO_CODE = 'NXACADEARLY5';
         const TAX_AMOUNT = BASE_AMOUNT * TAX_RATE;
-        const TOTAL_AMOUNT = BASE_AMOUNT + TAX_AMOUNT;
+        const SUBTOTAL_WITH_TAX = BASE_AMOUNT + TAX_AMOUNT;
+        let DISCOUNT_AMOUNT = 0;
+        let FINAL_AMOUNT = SUBTOTAL_WITH_TAX;
+
+        // ==================== PROMO CODE HANDLING ====================
+        function calculateFinalAmount(promoCode) {
+            if (promoCode.toUpperCase() === VALID_PROMO_CODE) {
+                DISCOUNT_AMOUNT = SUBTOTAL_WITH_TAX * DISCOUNT_RATE;
+                FINAL_AMOUNT = SUBTOTAL_WITH_TAX - DISCOUNT_AMOUNT;
+                return true;
+            } else {
+                DISCOUNT_AMOUNT = 0;
+                FINAL_AMOUNT = SUBTOTAL_WITH_TAX;
+                return false;
+            }
+        }
+
+        function updatePriceDisplay() {
+            const discountRow = document.getElementById('discountRow');
+            const discountAmountEl = document.getElementById('discountAmount');
+            const finalTotalEl = document.getElementById('finalTotal');
+            const totalAmountEl = document.getElementById('totalAmount');
+            const btnAmountEl = document.getElementById('btnAmount');
+            const promoDiscountInput = document.getElementById('promoDiscount');
+            const finalAmountInput = document.getElementById('finalAmount');
+
+            if (DISCOUNT_AMOUNT > 0) {
+                discountRow.classList.add('show');
+                discountAmountEl.textContent = `-₱${DISCOUNT_AMOUNT.toFixed(2)}`;
+            } else {
+                discountRow.classList.remove('show');
+            }
+
+            finalTotalEl.textContent = `₱${FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            btnAmountEl.textContent = FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            promoDiscountInput.value = DISCOUNT_AMOUNT;
+            finalAmountInput.value = FINAL_AMOUNT;
+        }
+
+        function applyPromoCode() {
+            const promoInput = document.getElementById('promoCode');
+            const promoMessage = document.getElementById('promoMessage');
+            const code = promoInput.value.trim();
+
+            if (!code) {
+                promoMessage.textContent = 'Please enter a promo code';
+                promoMessage.className = 'promo-message error';
+                return;
+            }
+
+            const isValid = calculateFinalAmount(code);
+
+            if (isValid) {
+                promoMessage.textContent = '✓ Promo code applied! You saved 5%';
+                promoMessage.className = 'promo-message success';
+                updatePriceDisplay();
+            } else {
+                promoMessage.textContent = 'Invalid promo code';
+                promoMessage.className = 'promo-message error';
+                DISCOUNT_AMOUNT = 0;
+                FINAL_AMOUNT = SUBTOTAL_WITH_TAX;
+                updatePriceDisplay();
+            }
+        }
+
+        document.getElementById('applyPromoBtn').addEventListener('click', applyPromoCode);
+        document.getElementById('promoCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                applyPromoCode();
+            }
+        });
 
         // ==================== FORM VALIDATION ====================
         function validateForm() {
@@ -746,9 +899,13 @@
                     mobile,
                     product: 'START UP VA Course',
                     notes,
-                    amount: TOTAL_AMOUNT,
+                    amount: FINAL_AMOUNT,
                     baseAmount: BASE_AMOUNT,
-                    taxAmount: TAX_AMOUNT
+                    taxAmount: TAX_AMOUNT,
+                    discountAmount: DISCOUNT_AMOUNT,
+                    promoCode: document.getElementById('promoCode').value.trim(),
+                    description: `START UP VA Course - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT}${DISCOUNT_AMOUNT > 0 ? ` - Discount (5%): ₱${DISCOUNT_AMOUNT.toFixed(2)}` : ''} = ₱${FINAL_AMOUNT.toFixed(2)}`
+
                 });
 
                 const response = await fetch(`${BACKEND_URL}/api/payments/create-payment-intent`, {
@@ -760,12 +917,15 @@
                         mobile: mobile,
                         product: 'START UP VA Course',
                         notes: notes,
-                        paymentMethod: 'gcash',
+                        paymentMethod: 'qrph',
                         source: 'startup_va_course',
-                        amount: TOTAL_AMOUNT,
+                        amount: FINAL_AMOUNT,
                         baseAmount: BASE_AMOUNT,
                         taxAmount: TAX_AMOUNT,
-                        description: `START UP VA Course - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT} = ₱${TOTAL_AMOUNT}`
+                        discountAmount: DISCOUNT_AMOUNT,
+                        promoCode: document.getElementById('promoCode').value.trim(),
+                        description: `START UP VA Course - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT}${DISCOUNT_AMOUNT > 0 ? ` - Discount (5%): ₱${DISCOUNT_AMOUNT.toFixed(2)}` : ''} = ₱${FINAL_AMOUNT.toFixed(2)}`
+
                     })
                 });
 
@@ -781,9 +941,10 @@
                     localStorage.setItem('lastPayment', JSON.stringify({
                         paymentIntentId: data.paymentIntentId,
                         paymentReference: data.paymentReference,
-                        amount: TOTAL_AMOUNT,
+                        amount: FINAL_AMOUNT,
                         baseAmount: BASE_AMOUNT,
                         taxAmount: TAX_AMOUNT,
+                        discountAmount: DISCOUNT_AMOUNT,
                         product: 'START UP VA Course',
                         fullName: fullName,
                         email: email,

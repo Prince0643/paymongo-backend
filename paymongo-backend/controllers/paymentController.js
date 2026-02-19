@@ -32,6 +32,9 @@ exports.createPaymentIntent = async (req, res) => {
             targetClient,
             paymentMethod, // ✅ ADD THIS - was missing!
             source,        // ✅ ADD THIS - was missing!
+            amount,        // ✅ ADD: Receive amount from frontend (with discount)
+            discountAmount, // ✅ ADD: Receive discount amount
+            promoCode,     // ✅ ADD: Receive promo code used
             metadata = {}
         } = req.body;
 
@@ -53,7 +56,7 @@ exports.createPaymentIntent = async (req, res) => {
             return res.status(400).json({ error: 'Invalid mobile number format' });
         }
 
-        // Get product amount
+        // Get product amount - Use frontend amount if provided (with discount), otherwise use product mapping
         const productInfo = PRODUCTS[product];
         if (!productInfo) {
             return res.status(400).json({ error: 'Invalid product' });
@@ -63,7 +66,34 @@ exports.createPaymentIntent = async (req, res) => {
         const paymentReference = generateId('PAY');
 
         const taxRate = process.env.TAX_RATE ?? 0.10;
-        const taxed = calculateTaxedAmount(productInfo.amount, taxRate);
+        
+        // ✅ FIXED: Use frontend amount if provided and valid, otherwise calculate from product
+        let finalAmount, baseAmount, taxAmount;
+        
+        if (amount && amount > 0 && amount !== productInfo.amount) {
+            // Frontend provided a discounted amount - use it
+            finalAmount = Math.round(amount);
+            // Calculate base and tax from the discounted total
+            // finalAmount = base + tax, and tax = base * taxRate
+            // So: finalAmount = base + (base * taxRate) = base * (1 + taxRate)
+            // Therefore: base = finalAmount / (1 + taxRate)
+            baseAmount = Math.round(finalAmount / (1 + taxRate));
+            taxAmount = finalAmount - baseAmount;
+            console.log('Using frontend amount with discount:', {
+                frontendAmount: amount,
+                finalAmount,
+                baseAmount,
+                taxAmount,
+                discountAmount: discountAmount || 0,
+                promoCode: promoCode || 'none'
+            });
+        } else {
+            // Use product mapping (no discount)
+            const taxed = calculateTaxedAmount(productInfo.amount, taxRate);
+            finalAmount = taxed.totalAmount;
+            baseAmount = taxed.baseAmount;
+            taxAmount = taxed.taxAmount;
+        }
 
         // Log what we received for debugging
         console.log('Received payment request:', {
@@ -72,7 +102,10 @@ exports.createPaymentIntent = async (req, res) => {
             mobile,
             product,
             paymentMethod,
-            source
+            source,
+            frontendAmount: amount,
+            discountAmount,
+            promoCode
         });
 
         // ✅ FIXED: Flatten metadata - include paymentMethod and source
@@ -84,10 +117,14 @@ exports.createPaymentIntent = async (req, res) => {
             product: String(product || ''),
             paymentReference: String(paymentReference || ''),
 
-            baseAmount: String(taxed.baseAmount),
-            taxRate: String(taxed.taxRate),
-            taxAmount: String(taxed.taxAmount),
-            totalAmount: String(taxed.totalAmount),
+            baseAmount: String(baseAmount),
+            taxRate: String(taxRate),
+            taxAmount: String(taxAmount),
+            totalAmount: String(finalAmount),
+
+            // ✅ ADD: Discount information
+            discountAmount: String(discountAmount || 0),
+            promoCode: String(promoCode || ''),
 
             // Optional fields
             notes: String(notes || ''),
@@ -118,9 +155,9 @@ exports.createPaymentIntent = async (req, res) => {
 
         // Create PayMongo payment intent with flattened metadata
         const paymentIntent = await paymongoService.createPaymentIntent({
-            amount: taxed.totalAmount,
+            amount: finalAmount,
             currency: productInfo.currency,
-            description: `${product} - ${fullName}`,
+            description: `${product} - ${fullName}${discountAmount > 0 ? ` (Promo: ${promoCode})` : ''}`,
             paymentMethodAllowed: ['gcash'],
             metadata: flattenedMetadata
         });
@@ -133,12 +170,14 @@ exports.createPaymentIntent = async (req, res) => {
             email,
             mobile,
             product,
-            amount: taxed.totalAmount,
+            amount: finalAmount,
             currency: productInfo.currency,
             paymentReference,
-            baseAmount: taxed.baseAmount,
-            taxRate: taxed.taxRate,
-            taxAmount: taxed.taxAmount,
+            baseAmount: baseAmount,
+            taxRate: taxRate,
+            taxAmount: taxAmount,
+            discountAmount: discountAmount || 0,
+            promoCode: promoCode || '',
             notes,
             businessName,
             setupType,
@@ -161,10 +200,12 @@ exports.createPaymentIntent = async (req, res) => {
             clientSecret: paymentIntent.attributes.client_secret,
             checkoutUrl: paymentIntent.attributes.checkout_url,
             paymentReference,
-            amount: taxed.totalAmount,
-            baseAmount: taxed.baseAmount,
-            taxRate: taxed.taxRate,
-            taxAmount: taxed.taxAmount,
+            amount: finalAmount,
+            baseAmount: baseAmount,
+            taxRate: taxRate,
+            taxAmount: taxAmount,
+            discountAmount: discountAmount || 0,
+            promoCode: promoCode || '',
             currency: productInfo.currency
         });
 

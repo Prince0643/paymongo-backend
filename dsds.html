@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Your Subscription - Client Finder Tool</title>
+    <title>Complete Your Enrollment - Nexistry Academy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap"
         rel="stylesheet">
     <style>
+        /* ALL YOUR EXISTING STYLES REMAIN THE SAME */
         :root {
             --primary-blue: #1976D2;
             --primary-gold: #F4B840;
@@ -22,7 +23,6 @@
             --white: #FFFFFF;
             --success-green: #2E7D32;
             --error-red: #D32F2F;
-            --tool-purple: #7B1FA2;
         }
 
         * {
@@ -106,7 +106,7 @@
         .order-header h1 {
             font-family: 'Playfair Display', serif;
             font-size: 32px;
-            color: var(--tool-purple);
+            color: var(--dark-blue);
             margin-bottom: 8px;
         }
 
@@ -150,12 +150,12 @@
         }
 
         .price-row.total {
-            border-top: 2px dashed var(--tool-purple);
+            border-top: 2px dashed var(--primary-blue);
             margin-top: 8px;
             padding-top: 16px;
             font-weight: 700;
             font-size: 18px;
-            color: var(--tool-purple);
+            color: var(--dark-blue);
         }
 
         .price-row.tax {
@@ -163,21 +163,11 @@
             font-size: 14px;
         }
 
-        .price-row.discount {
-            color: var(--success-green);
-            font-size: 14px;
-            display: none;
-        }
-
-        .price-row.discount.show {
-            display: flex;
-        }
-
         .price-amount {
             font-family: 'Playfair Display', serif;
             font-size: 64px;
             font-weight: 900;
-            color: var(--tool-purple);
+            color: var(--primary-blue);
             line-height: 1;
             margin-bottom: 8px;
         }
@@ -187,61 +177,26 @@
             font-size: 16px;
         }
 
-        .subscription-badge {
-            display: inline-block;
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 12px;
-            border: 1px solid var(--primary-blue);
-        }
-
-        .description-box {
-            background: linear-gradient(135deg, rgba(123, 31, 162, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            text-align: center;
-            border-left: 4px solid var(--tool-purple);
-        }
-
-        .description-box p {
-            color: var(--dark);
-            font-weight: 500;
-            margin: 0;
-        }
-
         .features-list {
             margin-bottom: 40px;
         }
 
         .feature-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 12px;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            background: var(--light-gray);
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            background: var(--light-blue);
-            transform: translateX(8px);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--light-gray);
         }
 
         .feature-item:last-child {
-            margin-bottom: 0;
+            border-bottom: none;
         }
 
-        .tool-icon {
+        .check-icon {
             width: 24px;
             height: 24px;
-            background: var(--tool-purple);
+            background: var(--primary-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -249,56 +204,6 @@
             color: var(--white);
             font-weight: bold;
             flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .feature-text {
-            flex: 1;
-        }
-
-        .feature-text strong {
-            color: var(--tool-purple);
-            font-weight: 600;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .feature-text small {
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        /* Tool Preview */
-        .tool-preview {
-            background: var(--white);
-            border: 2px solid var(--light-gray);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 24px;
-            text-align: center;
-        }
-
-        .tool-preview h4 {
-            color: var(--tool-purple);
-            margin-bottom: 16px;
-            font-size: 18px;
-        }
-
-        .preview-image {
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            border: 2px dashed var(--light-gray);
-        }
-
-        .preview-placeholder {
-            color: var(--gray);
-            font-size: 14px;
         }
 
         /* Payment Section */
@@ -317,7 +222,7 @@
         .payment-header h2 {
             font-family: 'Playfair Display', serif;
             font-size: 32px;
-            color: var(--tool-purple);
+            color: var(--dark-blue);
             margin-bottom: 12px;
         }
 
@@ -362,9 +267,9 @@
         }
 
         .step.active .step-number {
-            background: var(--tool-purple);
+            background: var(--primary-blue);
             color: var(--white);
-            border-color: var(--tool-purple);
+            border-color: var(--primary-blue);
             transform: scale(1.1);
         }
 
@@ -381,7 +286,7 @@
         }
 
         .step.active .step-label {
-            color: var(--tool-purple);
+            color: var(--dark-blue);
             font-weight: 700;
         }
 
@@ -402,8 +307,7 @@
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
             padding: 14px 16px;
             border: 2px solid var(--light-gray);
@@ -414,11 +318,10 @@
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
-            border-color: var(--tool-purple);
-            box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1);
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
         }
 
         .form-group small {
@@ -451,10 +354,10 @@
         }
 
         .submit-button:hover {
-            background: var(--tool-purple);
+            background: var(--primary-blue);
             color: var(--white);
             transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(123, 31, 162, 0.4);
+            box-shadow: 0 12px 32px rgba(25, 118, 210, 0.4);
         }
 
         .submit-button:active {
@@ -465,6 +368,24 @@
             opacity: 0.7;
             cursor: not-allowed;
             transform: none;
+        }
+
+        /* Security Badge */
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--light-gray);
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .lock-icon {
+            color: var(--success-green);
+            font-size: 20px;
         }
 
         /* Error Message */
@@ -500,141 +421,6 @@
             }
         }
 
-        /* Security Badge */
-        .security-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 32px;
-            padding-top: 32px;
-            border-top: 1px solid var(--light-gray);
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        .lock-icon {
-            color: var(--success-green);
-            font-size: 20px;
-        }
-
-        /* Subscription Note */
-        .subscription-note {
-            background: #E8F5E9;
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 24px;
-            text-align: center;
-            border-left: 4px solid var(--success-green);
-        }
-
-        .subscription-note p {
-            color: var(--dark);
-            font-size: 14px;
-            margin: 0;
-        }
-
-        .subscription-note strong {
-            color: var(--success-green);
-        }
-
-        /* Promo Code Section */
-        .promo-section {
-            background: linear-gradient(135deg, rgba(123, 31, 162, 0.05) 0%, rgba(244, 184, 64, 0.05) 100%);
-            border: 2px dashed var(--tool-purple);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 24px;
-        }
-
-        .promo-section h4 {
-            color: var(--tool-purple);
-            margin-bottom: 12px;
-            font-size: 16px;
-        }
-
-        .promo-input-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .promo-input-group input {
-            flex: 1;
-            text-transform: uppercase;
-        }
-
-        .promo-btn {
-            background: var(--tool-purple);
-            color: var(--white);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .promo-btn:hover {
-            background: var(--primary-gold);
-            color: var(--dark);
-        }
-
-        .promo-message {
-            margin-top: 8px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .promo-message.success {
-            color: var(--success-green);
-        }
-
-        .promo-message.error {
-            color: var(--error-red);
-        }
-        .targeting-options {
-            background: linear-gradient(135deg, rgba(123, 31, 162, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 32px;
-        }
-
-        .targeting-options h4 {
-            color: var(--tool-purple);
-            margin-bottom: 16px;
-            font-size: 18px;
-        }
-
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .checkbox-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px;
-            background: var(--white);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .checkbox-option:hover {
-            background: var(--light-gray);
-        }
-
-        .checkbox-option input[type="checkbox"] {
-            width: auto;
-            margin: 0;
-        }
-
-        .checkbox-option span {
-            flex: 1;
-        }
-
         /* Mobile Responsiveness */
         @media (max-width: 1024px) {
             .main-content {
@@ -644,10 +430,6 @@
 
             .order-summary {
                 position: static;
-            }
-
-            .checkbox-group {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -702,20 +484,12 @@
                 margin: 0;
                 flex-shrink: 0;
             }
-
-            .feature-item {
-                padding: 12px;
-            }
         }
 
         @media (max-width: 480px) {
             .submit-button {
                 padding: 16px;
                 font-size: 16px;
-            }
-
-            .tool-preview {
-                padding: 16px;
             }
         }
     </style>
@@ -739,91 +513,68 @@
             <!-- Order Summary -->
             <div class="order-summary">
                 <div class="order-header">
-                    <span class="course-badge">PROSPECTING TOOL</span>
-                    <h1>Client Finder Tool</h1>
-                    <p class="order-subtitle">Advanced Lead Generation & Prospecting Platform</p>
+                    <span class="course-badge">MAIN COURSE</span>
+                    <h1>START UP VA Course</h1>
+                    <p class="order-subtitle">Complete Enrollment - Secure Your Spot</p>
                 </div>
 
                 <div class="price-section">
-                    <div class="price-amount" id="totalAmount">₱550</div>
-                    <p class="price-note">per month including 10% tax</p>
-                    <span class="subscription-badge">Recurring Monthly Payment</span>
+                    <div class="price-amount" id="totalAmount">₱1,650</div>
+                    <p class="price-note">Total including 10% tax</p>
 
                     <div class="price-breakdown">
                         <div class="price-row">
-                            <span>Subscription Fee</span>
-                            <span>₱500.00</span>
+                            <span>Course Fee</span>
+                            <span>₱1,500.00</span>
                         </div>
                         <div class="price-row tax">
                             <span>Tax (10%)</span>
-                            <span>₱50.00</span>
-                        </div>
-                        <div class="price-row discount" id="discountRow">
-                            <span>Promo Discount (5%)</span>
-                            <span id="discountAmount">-₱0.00</span>
+                            <span>₱150.00</span>
                         </div>
                         <div class="price-row total">
-                            <span>Total Monthly</span>
-                            <span id="finalTotal">₱550.00</span>
+                            <span>Total Amount</span>
+                            <span>₱1,650.00</span>
                         </div>
                     </div>
-                </div>
-
-                <div class="description-box">
-                    <p>Advanced prospecting tool para makahanap ng potential clients</p>
                 </div>
 
                 <div class="features-list">
                     <div class="feature-item">
-                        <div class="tool-icon">✓</div>
-                        <div class="feature-text">
-                            <strong>Client Database Access</strong>
-                            <small>Access to thousands of verified business contacts and leads</small>
-                        </div>
+                        <div class="check-icon">✓</div>
+                        <span>Client-Ready Preparation Program</span>
                     </div>
                     <div class="feature-item">
-                        <div class="tool-icon">✓</div>
-                        <div class="feature-text">
-                            <strong>Advanced Search Filters</strong>
-                            <small>Filter by industry, location, company size, revenue, and more</small>
-                        </div>
+                        <div class="check-icon">✓</div>
+                        <span>Video Tutorials (Self-Paced, Lifetime Access)</span>
                     </div>
                     <div class="feature-item">
-                        <div class="tool-icon">✓</div>
-                        <div class="feature-text">
-                            <strong>Contact Information</strong>
-                            <small>Direct emails, phone numbers, and social media profiles</small>
-                        </div>
+                        <div class="check-icon">✓</div>
+                        <span>40 Hours Real OJT Experience</span>
                     </div>
                     <div class="feature-item">
-                        <div class="tool-icon">✓</div>
-                        <div class="feature-text">
-                            <strong>Industry Insights</strong>
-                            <small>Market trends, company analysis, and business intelligence</small>
-                        </div>
+                        <div class="check-icon">✓</div>
+                        <span>Free Tracker at PM Tool During OJT</span>
                     </div>
                     <div class="feature-item">
-                        <div class="tool-icon">✓</div>
-                        <div class="feature-text">
-                            <strong>Regular Updates</strong>
-                            <small>Database refreshed monthly with new leads and information</small>
-                        </div>
+                        <div class="check-icon">✓</div>
+                        <span>Mock Interview with Client</span>
                     </div>
-                </div>
-
-                <div class="tool-preview">
-                    <h4>Tool Interface Preview</h4>
-                    <div class="preview-image">
-                        <div class="preview-placeholder">
-                            Search Filters | Lead Lists | Contact Details | Export Options
-                        </div>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>Certificate of Completion</span>
                     </div>
-                    <p><small>User-friendly interface designed for efficient lead generation</small></p>
-                </div>
-
-                <div class="subscription-note">
-                    <p><strong>Prospecting Power:</strong> This is a monthly subscription. Your access to the client
-                        finder tool will be renewed automatically every month.</p>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>1-on-1 Session (30 mins)</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>Exclusive Community Access</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>Beginner-Friendly Job Board</span>
+                    </div>
                 </div>
 
                 <div class="security-badge">
@@ -835,7 +586,7 @@
             <!-- Payment Section with PayMongo -->
             <div class="payment-section">
                 <div class="payment-header">
-                    <h2>Complete Your Tool Access</h2>
+                    <h2>Complete Your Payment</h2>
                     <p>Enter your details to proceed with payment</p>
                 </div>
 
@@ -862,92 +613,35 @@
                     <div class="form-group">
                         <label for="fullName">Full Name <span class="required">*</span></label>
                         <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
-                        <small>This will be your account name in the Client Finder Tool</small>
+                        <small>Please enter your complete name</small>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address <span class="required">*</span></label>
                         <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                        <small>We'll send your login credentials and tool access to this email</small>
+                        <small>We'll send course access and updates to this email</small>
                     </div>
 
                     <div class="form-group">
                         <label for="mobile">Mobile Number <span class="required">*</span></label>
                         <input type="tel" id="mobile" name="mobile" required placeholder="09171234567">
-                        <small>For account verification and security updates</small>
-                    </div>
-
-                    <div class="targeting-options">
-                        <h4>Primary Target Industries (Optional)</h4>
-                        <p style="margin-bottom: 16px; color: var(--gray); font-size: 14px;">Select industries you're
-                            most interested in to help us customize your experience</p>
-                        <div class="checkbox-group">
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="industries[]" value="ecommerce">
-                                <span>E-commerce</span>
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="industries[]" value="realestate">
-                                <span>Real Estate</span>
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="industries[]" value="consulting">
-                                <span>Consulting</span>
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="industries[]" value="healthcare">
-                                <span>Healthcare</span>
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="industries[]" value="education">
-                                <span>Education</span>
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="industries[]" value="technology">
-                                <span>Technology</span>
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="industries[]" value="marketing">
-                                <span>Marketing Agencies</span>
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="industries[]" value="services">
-                                <span>Professional Services</span>
-                            </label>
-                        </div>
-                        <small>You can change these preferences anytime in your account settings</small>
+                        <small>For payment confirmation and course updates</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="notes">Specific Client Types Needed (Optional)</label>
+                        <label for="notes">Additional Notes (Optional)</label>
                         <textarea id="notes" name="notes" rows="3"
-                            placeholder="Example: 'Looking for small business owners in Manila' or 'Need leads for social media management services'"></textarea>
-                        <small>Helps us provide more relevant search suggestions</small>
+                            placeholder="Any special requests or questions?"></textarea>
                     </div>
 
-                    <div class="promo-section">
-                        <h4>Have a promo code?</h4>
-                        <div class="promo-input-group">
-                            <input type="text" id="promoCode" name="promoCode" placeholder="Enter promo code">
-                            <button type="button" class="promo-btn" id="applyPromoBtn">Apply</button>
-                        </div>
-                        <div class="promo-message" id="promoMessage"></div>
-                    </div>
-
-                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="qrph">
-                    <input type="hidden" id="baseAmount" name="baseAmount" value="500">
-                    <input type="hidden" id="taxAmount" name="taxAmount" value="50">
-                    <input type="hidden" id="promoDiscount" name="promoDiscount" value="0">
-                    <input type="hidden" id="finalAmount" name="finalAmount" value="550">
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="gcash">
+                    <input type="hidden" id="baseAmount" name="baseAmount" value="1500">
+                    <input type="hidden" id="taxAmount" name="taxAmount" value="150">
+                    <input type="hidden" id="totalAmountInput" name="totalAmount" value="1650">
 
                     <button type="submit" class="submit-button" id="submitBtn">
-                        Proceed to Payment (₱<span id="btnAmount">550</span>/month)
+                        Proceed to Payment (₱1,650)
                     </button>
-
-                    <div class="subscription-note">
-                        <p><strong>After payment:</strong> You will receive an email within 24 hours with your Client
-                            Finder Tool login credentials, user guide, and access link.</p>
-                    </div>
 
                     <div class="security-badge">
                         <span class="lock-icon">🔒</span>
@@ -961,84 +655,10 @@
     <script>
         // ==================== CONFIGURATION ====================
         const BACKEND_URL = 'https://paymongo-backend-5if2.onrender.com';
-        const BASE_AMOUNT = 500;
+        const BASE_AMOUNT = 1500;
         const TAX_RATE = 0.10; // 10%
-        const DISCOUNT_RATE = 0.05; // 5%
-        const VALID_PROMO_CODE = 'NXACADEARLY5';
         const TAX_AMOUNT = BASE_AMOUNT * TAX_RATE;
-        const SUBTOTAL_WITH_TAX = BASE_AMOUNT + TAX_AMOUNT;
-        let DISCOUNT_AMOUNT = 0;
-        let FINAL_AMOUNT = SUBTOTAL_WITH_TAX;
-
-        // ==================== PROMO CODE HANDLING ====================
-        function calculateFinalAmount(promoCode) {
-            if (promoCode.toUpperCase() === VALID_PROMO_CODE) {
-                DISCOUNT_AMOUNT = SUBTOTAL_WITH_TAX * DISCOUNT_RATE;
-                FINAL_AMOUNT = SUBTOTAL_WITH_TAX - DISCOUNT_AMOUNT;
-                return true;
-            } else {
-                DISCOUNT_AMOUNT = 0;
-                FINAL_AMOUNT = SUBTOTAL_WITH_TAX;
-                return false;
-            }
-        }
-
-        function updatePriceDisplay() {
-            const discountRow = document.getElementById('discountRow');
-            const discountAmountEl = document.getElementById('discountAmount');
-            const finalTotalEl = document.getElementById('finalTotal');
-            const totalAmountEl = document.getElementById('totalAmount');
-            const btnAmountEl = document.getElementById('btnAmount');
-            const promoDiscountInput = document.getElementById('promoDiscount');
-            const finalAmountInput = document.getElementById('finalAmount');
-
-            if (DISCOUNT_AMOUNT > 0) {
-                discountRow.classList.add('show');
-                discountAmountEl.textContent = `-₱${DISCOUNT_AMOUNT.toFixed(2)}`;
-            } else {
-                discountRow.classList.remove('show');
-            }
-
-            finalTotalEl.textContent = `₱${FINAL_AMOUNT.toFixed(2)}`;
-            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toFixed(0)}`;
-            btnAmountEl.textContent = FINAL_AMOUNT.toFixed(0);
-            promoDiscountInput.value = DISCOUNT_AMOUNT;
-            finalAmountInput.value = FINAL_AMOUNT;
-        }
-
-        function applyPromoCode() {
-            const promoInput = document.getElementById('promoCode');
-            const promoMessage = document.getElementById('promoMessage');
-            const code = promoInput.value.trim();
-
-            if (!code) {
-                promoMessage.textContent = 'Please enter a promo code';
-                promoMessage.className = 'promo-message error';
-                return;
-            }
-
-            const isValid = calculateFinalAmount(code);
-
-            if (isValid) {
-                promoMessage.textContent = '✓ Promo code applied! You saved 5%';
-                promoMessage.className = 'promo-message success';
-                updatePriceDisplay();
-            } else {
-                promoMessage.textContent = 'Invalid promo code';
-                promoMessage.className = 'promo-message error';
-                DISCOUNT_AMOUNT = 0;
-                FINAL_AMOUNT = SUBTOTAL_WITH_TAX;
-                updatePriceDisplay();
-            }
-        }
-
-        document.getElementById('applyPromoBtn').addEventListener('click', applyPromoCode);
-        document.getElementById('promoCode').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                applyPromoCode();
-            }
-        });
+        const TOTAL_AMOUNT = BASE_AMOUNT + TAX_AMOUNT;
 
         // ==================== FORM VALIDATION ====================
         function validateForm() {
@@ -1099,15 +719,6 @@
             }
         }
 
-        // ==================== GET SELECTED INDUSTRIES ====================
-        function getSelectedIndustries() {
-            const selected = [];
-            document.querySelectorAll('input[name="industries[]"]:checked').forEach(checkbox => {
-                selected.push(checkbox.value);
-            });
-            return selected;
-        }
-
         // ==================== MAIN FORM SUBMISSION ====================
         document.getElementById('paymentForm').addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -1122,7 +733,6 @@
             const email = document.getElementById('email').value.trim();
             const mobile = document.getElementById('mobile').value.trim();
             const notes = document.getElementById('notes').value.trim();
-            const selectedIndustries = getSelectedIndustries();
 
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
@@ -1134,15 +744,11 @@
                     fullName,
                     email,
                     mobile,
-                    product: 'Client Finder Tool',
-                    selectedIndustries,
+                    product: 'START UP VA Course',
                     notes,
-                    amount: FINAL_AMOUNT,
+                    amount: TOTAL_AMOUNT,
                     baseAmount: BASE_AMOUNT,
-                    taxAmount: TAX_AMOUNT,
-                    discountAmount: DISCOUNT_AMOUNT,
-                    promoCode: document.getElementById('promoCode').value.trim(),
-                    description: `Client Finder Tool - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT}${DISCOUNT_AMOUNT > 0 ? ` - Discount (5%): ₱${DISCOUNT_AMOUNT.toFixed(2)}` : ''} = ₱${FINAL_AMOUNT.toFixed(2)}/month`
+                    taxAmount: TAX_AMOUNT
                 });
 
                 const response = await fetch(`${BACKEND_URL}/api/payments/create-payment-intent`, {
@@ -1152,17 +758,14 @@
                         fullName: fullName,
                         email: email,
                         mobile: mobile,
-                        product: 'Client Finder Tool',
+                        product: 'START UP VA Course',
                         notes: notes,
-                        selectedIndustries: selectedIndustries,
-                        paymentMethod: 'qrph',
-                        source: 'client_finder_tool',
-                        amount: FINAL_AMOUNT,
+                        paymentMethod: 'gcash',
+                        source: 'startup_va_course',
+                        amount: TOTAL_AMOUNT,
                         baseAmount: BASE_AMOUNT,
                         taxAmount: TAX_AMOUNT,
-                        discountAmount: DISCOUNT_AMOUNT,
-                        promoCode: document.getElementById('promoCode').value.trim(),
-                        description: `Client Finder Tool - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT}${DISCOUNT_AMOUNT > 0 ? ` - Discount (5%): ₱${DISCOUNT_AMOUNT.toFixed(2)}` : ''} = ₱${FINAL_AMOUNT.toFixed(2)}/month`
+                        description: `START UP VA Course - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT} = ₱${TOTAL_AMOUNT}`
                     })
                 });
 
@@ -1178,14 +781,12 @@
                     localStorage.setItem('lastPayment', JSON.stringify({
                         paymentIntentId: data.paymentIntentId,
                         paymentReference: data.paymentReference,
-                        amount: FINAL_AMOUNT,
+                        amount: TOTAL_AMOUNT,
                         baseAmount: BASE_AMOUNT,
                         taxAmount: TAX_AMOUNT,
-                        discountAmount: DISCOUNT_AMOUNT,
-                        product: 'Client Finder Tool',
+                        product: 'START UP VA Course',
                         fullName: fullName,
                         email: email,
-                        selectedIndustries: selectedIndustries,
                         timestamp: new Date().toISOString()
                     }));
 
@@ -1225,7 +826,7 @@
                 localStorage.removeItem('lastPayment');
 
                 setTimeout(() => {
-                    window.location.href = 'https://nxacademy.nexistrydigitalsolutions.com/thank-you';
+                    window.location.href = 'https://nxacademy.nexistrydigitalsolutions.com/home';
                 }, 2000);
             }
         });
@@ -1234,19 +835,6 @@
         document.querySelectorAll('#fullName, #email, #mobile, #notes').forEach(input => {
             input.addEventListener('input', function () {
                 this.style.borderColor = this.value.trim() ? '#2E7D32' : '#E0E0E0';
-            });
-        });
-
-        // ==================== CHECKBOX STYLING ====================
-        document.querySelectorAll('.checkbox-option input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                if (this.checked) {
-                    this.closest('.checkbox-option').style.background = 'var(--light-blue)';
-                    this.closest('.checkbox-option').style.border = '1px solid var(--tool-purple)';
-                } else {
-                    this.closest('.checkbox-option').style.background = 'var(--white)';
-                    this.closest('.checkbox-option').style.border = 'none';
-                }
             });
         });
 

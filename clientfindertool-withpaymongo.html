@@ -1000,10 +1000,10 @@
             }
 
             finalTotalEl.textContent = `₱${FINAL_AMOUNT.toFixed(2)}`;
-            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toFixed(0)}`;
-            btnAmountEl.textContent = FINAL_AMOUNT.toFixed(0);
-            promoDiscountInput.value = DISCOUNT_AMOUNT;
-            finalAmountInput.value = FINAL_AMOUNT;
+            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toFixed(2)}`;
+            btnAmountEl.textContent = FINAL_AMOUNT.toFixed(2);
+            promoDiscountInput.value = DISCOUNT_AMOUNT.toFixed(2);
+            finalAmountInput.value = FINAL_AMOUNT.toFixed(2);
         }
 
         function applyPromoCode() {

@@ -29,7 +29,7 @@ class PayMongoService {
             const formattedCurrency = this.formatCurrency(currency);
 
             console.log('1. Creating payment intent with:', {
-                amount: Math.round(Math.round(amount * 100)),
+                amount: Math.floor(amount * 100),
                 currency: formattedCurrency,
                 description,
                 metadataKeys: Object.keys(metadata)
@@ -39,7 +39,7 @@ class PayMongoService {
             const paymentIntentResponse = await this.client.post('/payment_intents', {
                 data: {
                     attributes: {
-                        amount: Math.round(Math.round(amount * 100)),
+                        amount: Math.floor(amount * 100),
                         currency: formattedCurrency,
                         description,
                         statement_descriptor: 'Nexistry Academy',
@@ -65,7 +65,7 @@ class PayMongoService {
                         show_line_items: true,
                         line_items: [
                             {
-                                amount: Math.round(amount * 100),
+                                amount: Math.floor(amount * 100),
                                 currency: formattedCurrency,
                                 description,
                                 name: description,
@@ -146,7 +146,7 @@ class PayMongoService {
                         show_line_items: true,
                         line_items: [
                             {
-                                amount: Math.round(amount * 100),
+                                amount: Math.floor(amount * 100),
                                 currency: formattedCurrency,
                                 description,
                                 name: description,
@@ -247,7 +247,7 @@ class PayMongoService {
                 data: {
                     attributes: {
                         payment_id: paymentId,
-                        amount: Math.round(amount * 100),
+                        amount: Math.floor(amount * 100),
                         reason
                     }
                 }

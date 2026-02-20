@@ -44,14 +44,21 @@ function generatePaymentReference(product, name) {
 function calculateTaxedAmount(amount, taxRate = 0.10) {
     const rate = Number(taxRate);
     const safeRate = Number.isFinite(rate) ? rate : 0;
-    const baseCentavos = Math.round(Number(amount) * 100);
-    const taxCentavos = Math.round(baseCentavos * safeRate);
+    
+    // Keep decimal precision until final centavo conversion
+    const baseAmount = Number(Number(amount).toFixed(2));
+    const taxAmount = Number((baseAmount * safeRate).toFixed(2));
+    const totalAmount = Number((baseAmount + taxAmount).toFixed(2));
+    
+    // Convert to centavos at final step using floor
+    const baseCentavos = Math.floor(baseAmount * 100);
+    const taxCentavos = Math.floor(taxAmount * 100);
     const totalCentavos = baseCentavos + taxCentavos;
 
     return {
-        baseAmount: baseCentavos / 100,
-        taxAmount: taxCentavos / 100,
-        totalAmount: totalCentavos / 100,
+        baseAmount,
+        taxAmount,
+        totalAmount,
         baseCentavos,
         taxCentavos,
         totalCentavos,

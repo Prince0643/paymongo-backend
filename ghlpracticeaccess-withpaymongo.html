@@ -44,7 +44,6 @@
             padding: 0 24px;
         }
 
-        /* Header */
         .header {
             background: var(--white);
             padding: 24px 0;
@@ -78,7 +77,6 @@
             gap: 12px;
         }
 
-        /* Main Content */
         .main-content {
             padding: 60px 0;
             display: grid;
@@ -87,7 +85,6 @@
             align-items: start;
         }
 
-        /* Order Summary */
         .order-summary {
             background: var(--white);
             border-radius: 16px;
@@ -242,7 +239,6 @@
             flex-shrink: 0;
         }
 
-        /* Payment Section */
         .payment-section {
             background: var(--white);
             border-radius: 16px;
@@ -326,7 +322,6 @@
             font-weight: 700;
         }
 
-        /* Payment Form */
         .payment-form {
             margin-top: 40px;
         }
@@ -371,7 +366,6 @@
             color: var(--error-red);
         }
 
-        /* Submit Button */
         .submit-button {
             width: 100%;
             background: var(--primary-gold);
@@ -406,7 +400,6 @@
             transform: none;
         }
 
-        /* Security Badge */
         .security-badge {
             display: flex;
             align-items: center;
@@ -424,7 +417,6 @@
             font-size: 20px;
         }
 
-        /* Promo Code Section */
         .promo-section {
             background: linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(244, 184, 64, 0.05) 100%);
             border: 2px dashed var(--primary-blue);
@@ -479,7 +471,6 @@
             color: var(--error-red);
         }
 
-        /* Error Message */
         .error-message {
             background: #ffebee;
             color: var(--error-red);
@@ -494,7 +485,6 @@
             display: block;
         }
 
-        /* Loading Spinner */
         .spinner {
             display: inline-block;
             width: 20px;
@@ -512,7 +502,6 @@
             }
         }
 
-        /* Subscription Note */
         .subscription-note {
             background: #E8F5E9;
             padding: 16px;
@@ -532,7 +521,6 @@
             color: var(--success-green);
         }
 
-        /* Mobile Responsiveness */
         @media (max-width: 1024px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -634,174 +622,163 @@
                     <p class="price-note">per month including 10% tax</p>
                     <span class="subscription-badge">Recurring Monthly Payment</span>
 
-                .header {
-                    padding: 16px 0;
-                }
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Subscription Fee</span>
+                            <span>₱500.00</span>
+                        </div>
+                        <div class="price-row tax">
+                            <span>Tax (10%)</span>
+                            <span>₱50.00</span>
+                        </div>
+                        <div class="price-row discount" id="discountRow">
+                            <span>Promo Discount (5%)</span>
+                            <span id="discountAmount">-₱0.00</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total Monthly</span>
+                            <span id="finalTotal">₱550.00</span>
+                        </div>
+                    </div>
+                </div>
 
-                .logo-img {
-                    height: 60px;
-                }
+                <div class="description-box">
+                    <p>Sandbox Environment - Practice unlimited funnels, forms, websites, and automation</p>
+                </div>
 
-                .main-content {
-                    padding: 40px 0;
-                }
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>GoHighLevel Sandbox Access</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>Unlimited Funnel Building Practice</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>Form Builder Practice</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>Website Builder Practice</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>Automation Workflow Practice</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="check-icon">✓</div>
+                        <span>Community Support</span>
+                    </div>
+                </div>
 
-                .order-summary,
-                .payment-section {
-                    padding: 24px;
-                }
+                <div class="subscription-note">
+                    <p><strong>Note:</strong> This is a monthly subscription. Access will be renewed automatically every
+                        month until cancelled.</p>
+                </div>
 
-                .order-header h1,
-                .payment-header h2 {
-                    font-size: 24px;
-                }
-
-                .price-amount {
-                    font-size: 48px;
-                }
-
-                .payment-steps {
-                    flex-direction: column;
-                    gap: 24px;
-                }
-
-                .payment-steps::before {
-                    display: none;
-                }
-
-                .step {
-                    display: flex;
-                    align-items: center;
-                    gap: 16px;
-                    text-align: left;
-                }
-
-                .step-number {
-                    margin: 0;
-                    flex-shrink: 0;
-                }
-            }
-
-            @media (max-width: 480px) {
-                .submit-button {
-                    padding: 16px;
-                    font-size: 16px;
-                }
-            }
-        </style>
-    </head>
-
-    <body>
-        <header class="header">
-            <div class="container">
-                <div class="header-content">
-                    <img src="https://storage.googleapis.com/msgsndr/nb61f4OQ7o9Wsxx0zOsY/media/6989c2997305aa171dedd354.png"
-                        alt="Nexistry Academy Logo" class="logo-img">
-                    <a href="https://nxacademy.nexistrydigitalsolutions.com/home" class="back-link">
-                        ← Back to Home
-                    </a>
+                <div class="security-badge">
+                    <span class="lock-icon">🔒</span>
+                    <span>Secure Payment • 100% Safe & Encrypted</span>
                 </div>
             </div>
-        </header>
 
-        <main class="container">
-            <div class="main-content">
-                <!-- Order Summary -->
-                <div class="order-summary">
-                    <div class="order-header">
-                        <span class="course-badge">PRACTICE ACCESS</span>
-                        <h1>GHL Practice Access</h1>
-                        <p class="order-subtitle">Monthly Subscription - Sandbox Environment</p>
+            <!-- Payment Section with PayMongo -->
+            <div class="payment-section">
+                <div class="payment-header">
+                    <h2>Complete Your Subscription</h2>
+                    <p>Enter your details to proceed with payment</p>
+                </div>
+
+                <div class="payment-steps">
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Enter Details</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Choose Payment</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Complete Payment</div>
+                    </div>
+                </div>
+
+                <!-- Error Message Container -->
+                <div id="errorMessage" class="error-message"></div>
+
+                <!-- PayMongo Payment Form -->
+                <form class="payment-form" id="paymentForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name <span class="required">*</span></label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                        <small>Please enter your complete name</small>
                     </div>
 
-                    <div class="price-section">
-                        <div class="price-amount" id="totalAmount">₱550</div>
-                        <p class="price-note">per month including 10% tax</p>
-                        <span class="subscription-badge">Recurring Monthly Payment</span>
-
-                        <div class="price-breakdown">
-                            <div class="price-row">
-                                <span>Subscription Fee</span>
-                                <span>₱500.00</span>
-                            </div>
-                            <div class="price-row tax">
-                                <span>Tax (10%)</span>
-                                <span>₱50.00</span>
-                            </div>
-                            <div class="price-row discount" id="discountRow">
-                                <span>Promo Discount (5%)</span>
-                                <span id="discountAmount">-₱0.00</span>
-                            </div>
-                            <div class="price-row total">
-                                <span>Total Monthly</span>
-                                <span id="finalTotal">₱550.00</span>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        <small>We'll send subscription details and updates to this email</small>
                     </div>
 
-                    <div class="description-box">
-                        <p>Sandbox Environment - Practice unlimited funnels, forms, websites, and automation</p>
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number <span class="required">*</span></label>
+                        <input type="tel" id="mobile" name="mobile" required placeholder="09171234567">
+                        <small>For payment confirmation and subscription updates</small>
                     </div>
 
-                    <div class="features-list">
-                        <div class="feature-item">
-                            <div class="check-icon">✓</div>
-                            <span>GoHighLevel Sandbox Access</span>
-                        </div>
-                        <div class="feature-item">
-                            <div class="check-icon">✓</div>
-                            <span>Unlimited Funnel Building Practice</span>
-                        </div>
-                        <div class="feature-item">
-                            <div class="check-icon">✓</div>
-                            <span>Form Builder Practice</span>
-                        </div>
-                        <div class="feature-item">
-                            <div class="check-icon">✓</div>
-                            <span>Website Builder Practice</span>
-                        </div>
-                        <div class="feature-item">
-                            <div class="check-icon">✓</div>
-                            <span>Automation Workflow Practice</span>
-                        </div>
-                        <div class="feature-item">
-                            <div class="check-icon">✓</div>
-                            <span>Community Support</span>
-                        </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes (Optional)</label>
+                        <textarea id="notes" name="notes" rows="3"
+                            placeholder="Any special requests or questions?"></textarea>
                     </div>
 
-                    <div class="subscription-note">
-                        <p><strong>Note:</strong> This is a monthly subscription. Access will be renewed automatically every
-                            month until cancelled.</p>
+                    <div class="promo-section">
+                        <h4>Have a promo code?</h4>
+                        <div class="promo-input-group">
+                            <input type="text" id="promoCode" name="promoCode" placeholder="Enter promo code">
+                            <button type="button" class="promo-btn" id="applyPromoBtn">Apply</button>
+                        </div>
+                        <div class="promo-message" id="promoMessage"></div>
                     </div>
+
+                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="qrph">
+                    <input type="hidden" id="baseAmount" name="baseAmount" value="500">
+                    <input type="hidden" id="taxAmount" name="taxAmount" value="50">
+                    <input type="hidden" id="promoDiscount" name="promoDiscount" value="0">
+                    <input type="hidden" id="finalAmount" name="finalAmount" value="550">
+
+                    <button type="submit" class="submit-button" id="submitBtn">
+                        Proceed to Payment (₱<span id="btnAmount">550</span>/month)
+                    </button>
 
                     <div class="security-badge">
                         <span class="lock-icon">🔒</span>
-                        <span>Secure Payment • 100% Safe & Encrypted</span>
+                        <span>256-bit SSL Encryption • Powered by PayMongo</span>
                     </div>
-                </div>
+                </form>
+            </div>
+        </div>
+    </main>
 
-                <!-- Payment Section with PayMongo -->
-                <div class="payment-section">
-                    <div class="payment-header">
-                        <h2>Complete Your Subscription</h2>
-                        <p>Enter your details to proceed with payment</p>
-                    </div>
+    <script>
+        // ==================== CONFIGURATION ====================
+        const BACKEND_URL = 'https://paymongo-backend-5if2.onrender.com';
+        const BASE_AMOUNT = 500;
+        const TAX_RATE = 0.10;
+        const DISCOUNT_RATE = 0.05;
+        const VALID_PROMO_CODE = 'NXACADEARLY5';
+        const TAX_AMOUNT = BASE_AMOUNT * TAX_RATE;
+        const SUBTOTAL_WITH_TAX = BASE_AMOUNT + TAX_AMOUNT;
+        let DISCOUNT_AMOUNT = 0;
+        let FINAL_AMOUNT = SUBTOTAL_WITH_TAX;
 
-                    <div class="payment-steps">
-                        <div class="step active">
-                            <div class="step-number">1</div>
-                            <div class="step-label">Enter Details</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-label">Choose Payment</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-label">Complete Payment</div>
-                        </div>
-                    </div>
+        // ==================== PROMO CODE HANDLING ====================
+        function calculateFinalAmount(promoCode) {
+            if (promoCode.toUpperCase() === VALID_PROMO_CODE) {
+                DISCOUNT_AMOUNT = SUBTOTAL_WITH_TAX * DISCOUNT_RATE;
                 FINAL_AMOUNT = SUBTOTAL_WITH_TAX - DISCOUNT_AMOUNT;
                 return true;
             } else {
@@ -828,8 +805,8 @@
             }
 
             finalTotalEl.textContent = `₱${FINAL_AMOUNT.toFixed(2)}`;
-            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toFixed(0)}`;
-            btnAmountEl.textContent = FINAL_AMOUNT.toFixed(0);
+            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toFixed(2)}`;
+            btnAmountEl.textContent = FINAL_AMOUNT.toFixed(2);
             promoDiscountInput.value = DISCOUNT_AMOUNT;
             finalAmountInput.value = FINAL_AMOUNT;
         }
@@ -915,7 +892,6 @@
             return /^(09|\+639)\d{9}$/.test(cleaned) || /^09\d{9}$/.test(mobile);
         }
 
-        // ==================== SHOW ERROR ====================
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
             if (errorDiv) {
@@ -948,17 +924,6 @@
             submitBtn.disabled = true;
 
             try {
-                console.log('Creating payment intent with data:', {
-                    fullName,
-                    email,
-                    mobile,
-                    product: 'GHL Practice Access',
-                    notes,
-                    amount: TOTAL_AMOUNT,
-                    baseAmount: BASE_AMOUNT,
-                    taxAmount: TAX_AMOUNT
-                });
-
                 const response = await fetch(`${BACKEND_URL}/api/payments/create-payment-intent`, {
                     method: 'POST',
                     headers: {
@@ -972,10 +937,12 @@
                         notes: notes,
                         paymentMethod: 'qrph',
                         source: 'ghl_practice_access',
-                        amount: TOTAL_AMOUNT,
+                        amount: FINAL_AMOUNT,
                         baseAmount: BASE_AMOUNT,
                         taxAmount: TAX_AMOUNT,
-                        description: `GHL Practice Access - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT} = ₱${TOTAL_AMOUNT}/month`
+                        discountAmount: DISCOUNT_AMOUNT,
+                        promoCode: document.getElementById('promoCode').value.trim(),
+                        description: `GHL Practice Access - Base: ₱${BASE_AMOUNT} + Tax (10%): ₱${TAX_AMOUNT}${DISCOUNT_AMOUNT > 0 ? ` - Discount (5%): ₱${DISCOUNT_AMOUNT.toFixed(2)}` : ''} = ₱${FINAL_AMOUNT.toFixed(2)}/month`
                     })
                 });
 
@@ -986,14 +953,13 @@
                 }
 
                 if (data.success && data.checkoutUrl) {
-                    console.log('Payment intent created:', data.paymentIntentId);
-
                     localStorage.setItem('lastPayment', JSON.stringify({
                         paymentIntentId: data.paymentIntentId,
                         paymentReference: data.paymentReference,
-                        amount: TOTAL_AMOUNT,
+                        amount: FINAL_AMOUNT,
                         baseAmount: BASE_AMOUNT,
                         taxAmount: TAX_AMOUNT,
+                        discountAmount: DISCOUNT_AMOUNT,
                         product: 'GHL Practice Access',
                         fullName: fullName,
                         email: email,
@@ -1019,7 +985,6 @@
             }
         });
 
-        // ==================== CHECK PAYMENT STATUS ON RETURN ====================
         window.addEventListener('load', function () {
             const urlParams = new URLSearchParams(window.location.search);
             const sessionId = urlParams.get('session_id');
@@ -1032,23 +997,20 @@
                     submitBtn.disabled = true;
                 }
 
-                // Clear the stored payment
                 localStorage.removeItem('lastPayment');
 
                 setTimeout(() => {
-                    window.location.href = 'https://nxacademy.nexistrydigitalsolutions.com/thank-you';
+                    window.location.href = 'https://nxacademy.nexistrydigitalsolutions.com/home';
                 }, 2000);
             }
         });
 
-        // ==================== INPUT ANIMATION ====================
         document.querySelectorAll('#fullName, #email, #mobile, #notes').forEach(input => {
             input.addEventListener('input', function () {
                 this.style.borderColor = this.value.trim() ? '#2E7D32' : '#E0E0E0';
             });
         });
 
-        // ==================== SET DEFAULT PAYMENT METHOD ====================
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('paymentMethod').value = 'qrph';
         });

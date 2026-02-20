@@ -737,6 +737,61 @@
                 padding: 12px;
             }
         }
+
+        /* Promo Code Section */
+        .promo-section {
+            background: linear-gradient(135deg, rgba(106, 27, 154, 0.05) 0%, rgba(244, 184, 64, 0.05) 100%);
+            border: 2px dashed var(--custom-purple);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .promo-section h4 {
+            color: var(--custom-purple);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .promo-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .promo-input-group input {
+            flex: 1;
+            text-transform: uppercase;
+        }
+
+        .promo-btn {
+            background: var(--custom-purple);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .promo-btn:hover {
+            background: var(--primary-gold);
+            color: var(--dark);
+        }
+
+        .promo-message {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .promo-message.success {
+            color: var(--success-green);
+        }
+
+        .promo-message.error {
+            color: var(--error-red);
+        }
     </style>
 </head>
 
@@ -1103,8 +1158,8 @@ Example: 'Automate lead generation and follow-up'
             }
 
             finalTotalEl.textContent = `₱${FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
-            btnAmountEl.textContent = FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            btnAmountEl.textContent = FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             promoDiscountInput.value = DISCOUNT_AMOUNT;
             finalAmountInput.value = FINAL_AMOUNT;
         }

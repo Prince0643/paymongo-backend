@@ -72,13 +72,13 @@ exports.createPaymentIntent = async (req, res) => {
         
         if (amount && amount > 0 && amount !== productInfo.amount) {
             // Frontend provided a discounted amount - use it
-            finalAmount = Math.round(amount);
+            finalAmount = Number(Number(amount).toFixed(2));
             // Calculate base and tax from the discounted total
             // finalAmount = base + tax, and tax = base * taxRate
             // So: finalAmount = base + (base * taxRate) = base * (1 + taxRate)
             // Therefore: base = finalAmount / (1 + taxRate)
-            baseAmount = Math.round(finalAmount / (1 + taxRate));
-            taxAmount = finalAmount - baseAmount;
+            baseAmount = Number((finalAmount / (1 + taxRate)).toFixed(2));
+            taxAmount = Number((finalAmount - baseAmount).toFixed(2));
             console.log('Using frontend amount with discount:', {
                 frontendAmount: amount,
                 finalAmount,
@@ -90,9 +90,9 @@ exports.createPaymentIntent = async (req, res) => {
         } else {
             // Use product mapping (no discount)
             const taxed = calculateTaxedAmount(productInfo.amount, taxRate);
-            finalAmount = taxed.totalAmount;
-            baseAmount = taxed.baseAmount;
-            taxAmount = taxed.taxAmount;
+            finalAmount = Number(taxed.totalAmount.toFixed(2));
+            baseAmount = Number(taxed.baseAmount.toFixed(2));
+            taxAmount = Number(taxed.taxAmount.toFixed(2));
         }
 
         // Log what we received for debugging
@@ -386,7 +386,7 @@ async function handlePaymentSuccess(attributes) {
             const amountCentavos = Number(paymentData.attributes?.amount);
             const currency = paymentData.attributes?.currency || 'PHP';
             // Convert centavos to whole currency units (e.g., 165000 -> 1650)
-            const amount = Number.isFinite(amountCentavos) ? Math.round(amountCentavos / 100) : undefined;
+            const amount = Number.isFinite(amountCentavos) ? Math.floor(amountCentavos / 100) : undefined;
 
             const fullName = metadata.fullName;
             const email = metadata.email;

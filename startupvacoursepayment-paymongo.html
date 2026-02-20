@@ -773,8 +773,8 @@
             }
 
             finalTotalEl.textContent = `₱${FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
-            btnAmountEl.textContent = FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            totalAmountEl.textContent = `₱${FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            btnAmountEl.textContent = FINAL_AMOUNT.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             promoDiscountInput.value = DISCOUNT_AMOUNT;
             finalAmountInput.value = FINAL_AMOUNT;
         }

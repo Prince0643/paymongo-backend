@@ -385,8 +385,8 @@ async function handlePaymentSuccess(attributes) {
         if (process.env.GHL_PRIVATE_KEY && process.env.GHL_LOCATION_ID) {
             const amountCentavos = Number(paymentData.attributes?.amount);
             const currency = paymentData.attributes?.currency || 'PHP';
-            // Convert centavos to whole currency units (e.g., 165000 -> 1650)
-            const amount = Number.isFinite(amountCentavos) ? Math.floor(amountCentavos / 100) : undefined;
+            // Convert centavos to whole currency units with decimals preserved (e.g., 165000 -> 1650.00)
+            const amount = Number.isFinite(amountCentavos) ? (amountCentavos / 100) : undefined;
 
             const fullName = metadata.fullName;
             const email = metadata.email;

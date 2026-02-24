@@ -163,10 +163,12 @@ exports.createPaymentIntent = async (req, res) => {
         const methodMap = {
             'gcash': 'gcash',
             'grabpay': 'grab_pay',
-            'maya': 'maya',
-            'shopeepay': 'shopee_pay',
-            'bpi': 'bpi',
-            'unionbank': 'unionbank',
+            'maya': 'paymaya',
+            'shopeepay': 'shopeepay',
+            // Online banking is represented by `dob` (Direct Online Banking). The checkout UI will
+            // handle bank selection (BPI/UBP) based on what your PayMongo account is enabled for.
+            'bpi': 'dob',
+            'unionbank': 'dob',
             'qrph': 'qrph',
             'card': 'card'
         };
@@ -174,10 +176,9 @@ exports.createPaymentIntent = async (req, res) => {
         const allSupportedPaymongoMethods = [
             'gcash',
             'grab_pay',
-            'maya',
-            'shopee_pay',
-            'bpi',
-            'unionbank'
+            'paymaya',
+            'shopeepay',
+            'dob'
         ];
 
         const normalized = methodMap[selectedPaymentMethod] || 'qrph';

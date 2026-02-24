@@ -33,11 +33,11 @@ class PayMongoService {
             const methodTypeMap = {
                 'gcash': 'gcash',
                 'grab_pay': 'grab_pay',
-                'maya': 'maya',
-                'paymaya': 'maya',
-                'shopee_pay': 'shopee_pay',
-                'bpi': 'bpi',
-                'unionbank': 'unionbank',
+                'maya': 'paymaya',
+                'paymaya': 'paymaya',
+                'shopeepay': 'shopeepay',
+                // Online banking is represented by `dob` (Direct Online Banking)
+                'dob': 'dob',
                 'card': 'card',
                 'qrph': 'qrph'
             };

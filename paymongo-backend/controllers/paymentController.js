@@ -543,7 +543,7 @@ async function handlePaymentFailure(attributes) {
         ...metadata,
         status: 'payment_failed',
         paymentId: paymentData.id,
-        failureReason: attributes.attributes?.source?.message || 'Unknown error',
+        failureReason: attributes.attributes?.source?.message || 'Unknown failure reason',
         failedAt: new Date().toISOString()
     }).catch(err => console.log('LeadConnector webhook error:', err));
 }

@@ -172,6 +172,7 @@ exports.createPaymentIntent = async (req, res) => {
         };
 
         const allSupportedPaymongoMethods = [
+            'qrph',
             'gcash',
             'grab_pay',
             'paymaya',
@@ -182,9 +183,26 @@ exports.createPaymentIntent = async (req, res) => {
         const normalized = methodMap[selectedPaymentMethod] || 'qrph';
 
         // If the user didn’t pick a specific method (or picked qrph/all), show all options.
-        const paymentMethods = (selectedPaymentMethod === 'qrph' || selectedPaymentMethod === 'all')
+        let paymentMethods = (selectedPaymentMethod === 'qrph' || selectedPaymentMethod === 'all')
             ? allSupportedPaymongoMethods
             : [normalized];
+
+        // Filter by what PayMongo says your merchant account is eligible for.
+        // This also explains why UnionBank might not appear under Online Banking even if `dob` is included.
+        try {
+            const capabilities = await paymongoService.getMerchantPaymentMethodCapabilities();
+            const allowed = new Set((capabilities || []).map(pm => pm?.attributes?.type).filter(Boolean));
+
+            // Keep only allowed types; if filtering removes everything, fall back to qrph.
+            const filtered = paymentMethods.filter(m => allowed.has(m));
+            if (filtered.length > 0) {
+                paymentMethods = filtered;
+            } else {
+                paymentMethods = ['qrph'];
+            }
+        } catch (capErr) {
+            console.log('Non-fatal: unable to fetch PayMongo capabilities, proceeding without filtering:', capErr.message);
+        }
 
         console.log('Payment method selected:', selectedPaymentMethod, '-> PayMongo:', normalized, 'checkout types:', paymentMethods);
 

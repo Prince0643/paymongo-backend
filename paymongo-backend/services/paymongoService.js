@@ -23,6 +23,17 @@ class PayMongoService {
         return currency.toUpperCase();
     }
 
+    // Retrieve list of possible merchant payment methods (capabilities)
+    async getMerchantPaymentMethodCapabilities() {
+        try {
+            const response = await this.client.get('/merchants/capabilities/payment_methods');
+            return response.data?.data;
+        } catch (error) {
+            console.error('PayMongo merchant capabilities error:', error.response?.data || error.message);
+            throw new Error('Failed to retrieve merchant payment method capabilities');
+        }
+    }
+
     // Create a payment intent
     async createPaymentIntent({ amount, currency, description, paymentMethodAllowed, metadata, paymentMethodTypes }) {
         try {

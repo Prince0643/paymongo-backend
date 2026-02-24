@@ -540,14 +540,16 @@ async function handlePaymentFailure(attributes) {
 
     const paymentData = attributes.data || {};
     const metadata = paymentData.attributes?.metadata || {};
-    
+
     await webhookService.sendToLeadConnector({
         ...metadata,
         status: 'payment_failed',
         paymentId: paymentData.id,
-        failureReason: attributes.attributes?.source?.message || 'Unknown error',
-        failedAt: new Date().toISOString()
-    }).catch(err=>console.log('LeadConnector webhook error:', err));
+        paymentDetails: attributes,
+        completedAt: new Date().toISOString()
+    }).catch(err => {
+        console.log('LeadConnector webhook error (non-fatal):', err.response?.data || err.message);
+    });
 }
 
 async function handlePaymentPending(attributes) {

@@ -154,9 +154,11 @@ exports.createPaymentIntent = async (req, res) => {
         console.log('Sending to PayMongo with metadata:', flattenedMetadata);
 
         // Create PayMongo payment intent with flattened metadata
-        // Determine payment method - use frontend selection or default to qrph (QRPh shows all options)
+        // NOTE: If you only pass ['qrph'], the checkout page will only show the QRPh scan option.
+        // To show the e-wallet + online banking list (GCash/GrabPay/Maya/ShopeePay/BPI/UnionBank),
+        // you must include those method types in the checkout session.
         const selectedPaymentMethod = paymentMethod || 'qrph';
-        
+
         // Map frontend payment method IDs to PayMongo identifiers
         const methodMap = {
             'gcash': 'gcash',
@@ -168,11 +170,24 @@ exports.createPaymentIntent = async (req, res) => {
             'qrph': 'qrph',
             'card': 'card'
         };
-        
-        const paymongoMethod = methodMap[selectedPaymentMethod] || 'qrph';
-        const paymentMethods = [paymongoMethod];
-        
-        console.log('Payment method selected:', selectedPaymentMethod, '-> PayMongo:', paymongoMethod);
+
+        const allSupportedPaymongoMethods = [
+            'gcash',
+            'grab_pay',
+            'maya',
+            'shopee_pay',
+            'bpi',
+            'unionbank'
+        ];
+
+        const normalized = methodMap[selectedPaymentMethod] || 'qrph';
+
+        // If the user didn’t pick a specific method (or picked qrph/all), show all options.
+        const paymentMethods = (selectedPaymentMethod === 'qrph' || selectedPaymentMethod === 'all')
+            ? allSupportedPaymongoMethods
+            : [normalized];
+
+        console.log('Payment method selected:', selectedPaymentMethod, '-> PayMongo:', normalized, 'checkout types:', paymentMethods);
 
         const paymentIntent = await paymongoService.createPaymentIntent({
             amount: finalAmount,

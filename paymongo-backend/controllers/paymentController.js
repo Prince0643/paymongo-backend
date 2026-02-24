@@ -164,9 +164,7 @@ exports.createPaymentIntent = async (req, res) => {
             'gcash': 'gcash',
             'grabpay': 'grab_pay',
             'maya': 'paymaya',
-            'shopeepay': 'shopeepay',
-            // Online banking is represented by `dob` (Direct Online Banking). The checkout UI will
-            // handle bank selection (BPI/UBP) based on what your PayMongo account is enabled for.
+            'shopeepay': 'shopee_pay',
             'bpi': 'dob',
             'unionbank': 'dob',
             'qrph': 'qrph',
@@ -177,7 +175,7 @@ exports.createPaymentIntent = async (req, res) => {
             'gcash',
             'grab_pay',
             'paymaya',
-            'shopeepay',
+            'shopee_pay',
             'dob'
         ];
 

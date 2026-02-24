@@ -35,7 +35,8 @@ class PayMongoService {
                 'grab_pay': 'grab_pay',
                 'maya': 'paymaya',
                 'paymaya': 'paymaya',
-                'shopeepay': 'shopeepay',
+                'shopeepay': 'shopee_pay',
+                'shopee_pay': 'shopee_pay',
                 // Online banking is represented by `dob` (Direct Online Banking)
                 'dob': 'dob',
                 'card': 'card',

@@ -24,14 +24,35 @@ class PayMongoService {
     }
 
     // Create a payment intent
-    async createPaymentIntent({ amount, currency, description, paymentMethodAllowed, metadata }) {
+    async createPaymentIntent({ amount, currency, description, paymentMethodAllowed, metadata, paymentMethodTypes }) {
         try {
             const formattedCurrency = this.formatCurrency(currency);
+
+            // Map payment methods for checkout session
+            // PayMongo uses different identifiers for checkout sessions vs payment intents
+            const methodTypeMap = {
+                'gcash': 'gcash',
+                'grab_pay': 'grab_pay',
+                'maya': 'maya',
+                'paymaya': 'maya',
+                'shopee_pay': 'shopee_pay',
+                'bpi': 'bpi',
+                'unionbank': 'unionbank',
+                'card': 'card',
+                'qrph': 'qrph'
+            };
+
+            // Convert payment methods to checkout session format
+            const checkoutMethodTypes = (paymentMethodTypes || paymentMethodAllowed || ['qrph']).map(method => {
+                return methodTypeMap[method] || method;
+            });
 
             console.log('1. Creating payment intent with:', {
                 amount: Math.floor(amount * 100),
                 currency: formattedCurrency,
                 description,
+                paymentMethodAllowed: paymentMethodAllowed || ['qrph'],
+                checkoutMethodTypes,
                 metadataKeys: Object.keys(metadata)
             });
 
@@ -72,7 +93,7 @@ class PayMongoService {
                                 quantity: 1
                             }
                         ],
-                        payment_method_types: ['qrph'],
+                        payment_method_types: checkoutMethodTypes,
                         description,
                         metadata,
                         success_url: process.env.FRONTEND_SUCCESS_URL || 'https://nxacademy.nexistrydigitalsolutions.com/success?session_id={CHECKOUT_SESSION_ID}',

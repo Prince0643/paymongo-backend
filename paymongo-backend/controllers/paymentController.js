@@ -154,11 +154,32 @@ exports.createPaymentIntent = async (req, res) => {
         console.log('Sending to PayMongo with metadata:', flattenedMetadata);
 
         // Create PayMongo payment intent with flattened metadata
+        // Determine payment method - use frontend selection or default to qrph (QRPh shows all options)
+        const selectedPaymentMethod = paymentMethod || 'qrph';
+        
+        // Map frontend payment method IDs to PayMongo identifiers
+        const methodMap = {
+            'gcash': 'gcash',
+            'grabpay': 'grab_pay',
+            'maya': 'maya',
+            'shopeepay': 'shopee_pay',
+            'bpi': 'bpi',
+            'unionbank': 'unionbank',
+            'qrph': 'qrph',
+            'card': 'card'
+        };
+        
+        const paymongoMethod = methodMap[selectedPaymentMethod] || 'qrph';
+        const paymentMethods = [paymongoMethod];
+        
+        console.log('Payment method selected:', selectedPaymentMethod, '-> PayMongo:', paymongoMethod);
+
         const paymentIntent = await paymongoService.createPaymentIntent({
             amount: finalAmount,
             currency: productInfo.currency,
             description: `${product} - ${fullName}${discountAmount > 0 ? ` (Promo: ${promoCode})` : ''}`,
-            paymentMethodAllowed: ['gcash'],
+            paymentMethodAllowed: paymentMethods,
+            paymentMethodTypes: paymentMethods,
             metadata: flattenedMetadata
         });
 
@@ -338,10 +359,14 @@ exports.retryPayment = async (req, res) => {
 exports.getPaymentMethods = (req, res) => {
     res.status(200).json({
         methods: [
-            { id: 'gcash', name: 'GCash', icon: 'gcash-icon.png' },
-            { id: 'paymaya', name: 'PayMaya', icon: 'paymaya-icon.png' },
-            { id: 'card', name: 'Credit/Debit Card', icon: 'card-icon.png' },
-            { id: 'grab_pay', name: 'GrabPay', icon: 'grab-icon.png' }
+            { id: 'qrph', name: 'QRPh (All Methods)', icon: 'qrph-icon.png', category: 'qr' },
+            { id: 'gcash', name: 'GCash', icon: 'gcash-icon.png', category: 'ewallet' },
+            { id: 'grabpay', name: 'GrabPay', icon: 'grab-icon.png', category: 'ewallet' },
+            { id: 'maya', name: 'Maya', icon: 'maya-icon.png', category: 'ewallet' },
+            { id: 'shopeepay', name: 'ShopeePay', icon: 'shopee-icon.png', category: 'ewallet' },
+            { id: 'bpi', name: 'BPI Online', icon: 'bpi-icon.png', category: 'bank' },
+            { id: 'unionbank', name: 'UnionBank Online', icon: 'unionbank-icon.png', category: 'bank' },
+            { id: 'card', name: 'Credit/Debit Card', icon: 'card-icon.png', category: 'card' }
         ]
     });
 };
